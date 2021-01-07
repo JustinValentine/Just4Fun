@@ -1,8 +1,17 @@
 import pygame, sys, math, time 
+import os
 from random import randint
 from pygame import mixer
   
-pygame.init() 
+# initialize
+pygame.mixer.pre_init()
+pygame.mixer.init()
+pygame.init()
+
+# start playing the background music
+pygame.mixer.music.load(os.path.join(os.getcwd(), 'assets', 'Loop.wav'))
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(loops=-1)  # loop forever
 
 # Set Screen res(1920, 1080)
 screen = pygame.display.set_mode(size = (1920, 1080)) 
@@ -93,11 +102,6 @@ light_t1 = pygame.image.load('assets/GlowTitle.png')
 light = pygame.transform.scale(light_t0, (width, height))
 light1 = pygame.transform.scale(light_t1, (width, height))
 
-# backgound sound
-pygame.mixer.init() 
-pygame.mixer.music.load('assets/Loop.wav')
-pygame.mixer.music.play(-1, 0.0)
-
 
 def SkyTiles(w, h, skyW, skyH):
     SkyHorzTile = math.ceil(w / skyW)
@@ -113,17 +117,39 @@ def GrassTiles(w, GrassW):
 RandSky = SkyTiles(width, height, SkyWidth, SkyHeight)
 RandGrass = GrassTiles(width, GrassWidth)
 
+TitleCount = 0
+
 def title():
+    global TitleCount
+
     if Title.get_rect().collidepoint(pygame.mouse.get_pos()):
+        TitleCount = TitleCount + 1
         screen.blit(Title1, (50, 50))
         screen.blit(light1, (0,0))
-        screen.blit(light1, (0,0)
-        pygame.mixer.music.load('assets/Loop.wav')
-        pygame.mixer.music.play(-1, 0.0))
+        screen.blit(light1, (0,0))
+
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                return GameMenu()
+
+        if TitleCount == 1:
+            pygame.mixer.Channel(0).play(pygame.mixer.Sound('assets/Heaven.wav'), maxtime=-1)
+            pygame.mixer.Channel(0).set_volume(1)
+        pygame.mixer.music.set_volume(0)
+
+
+
     else:
         screen.blit(Title, (50, 50))
         screen.blit(light, (0,0))
         screen.blit(light, (0,0))
+        TitleCount = 0
+        pygame.mixer.Channel(0).set_volume(0)
+        pygame.mixer.music.set_volume(0.5)
+
+def GameMenu():
+    screen.fill((0,0,255))
+    pygame.display.flip()
 
 
 def MainMenu():
@@ -180,5 +206,4 @@ while True:
     MainMenu()
         
     # updates the frames of the game 
-    pygame.display.update()  
-
+    pygame.display.update() 
