@@ -1,5 +1,4 @@
-import pygame, sys, math, time 
-import os
+import pygame, sys, math, time, os
 from random import randint
 from pygame import mixer
   
@@ -20,6 +19,9 @@ screen = pygame.display.set_mode(size = (1920, 1080))
 width = screen.get_width() 
 # height of the screen
 height = screen.get_height()  
+
+InMenu = True
+InGame = True
 
 # ===== Assets ===== 
 
@@ -120,7 +122,7 @@ RandGrass = GrassTiles(width, GrassWidth)
 TitleCount = 0
 
 def title():
-    global TitleCount
+    global TitleCount, InMenu, GameMenu
 
     if Title.get_rect().collidepoint(pygame.mouse.get_pos()):
         TitleCount = TitleCount + 1
@@ -130,7 +132,8 @@ def title():
 
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
-                return GameMenu()
+                InMenu = False
+                InGame = True
 
         if TitleCount == 1:
             pygame.mixer.Channel(0).play(pygame.mixer.Sound('assets/Heaven.wav'), maxtime=-1)
@@ -148,6 +151,8 @@ def title():
         pygame.mixer.music.set_volume(0.5)
 
 def GameMenu():
+    pygame.mixer.Channel(0).set_volume(0)
+    pygame.mixer.music.set_volume(0.5)
     screen.fill((0,0,255))
     pygame.display.flip()
 
@@ -201,9 +206,13 @@ while True:
     for ev in pygame.event.get(): 
           
         if ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE or (ev.type == pygame.QUIT): 
-            pygame.quit() 
+            pygame.quit()
 
-    MainMenu()
+    if InMenu == True:
+        MainMenu()
+
+    elif InGame == True:
+        GameMenu()
         
     # updates the frames of the game 
     pygame.display.update() 
