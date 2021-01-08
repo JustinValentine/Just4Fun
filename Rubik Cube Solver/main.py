@@ -166,6 +166,13 @@ TitleBarHeight = TitleBarWidth
 TitleBart = pygame.image.load('assets/TitleBar.png')
 TitleBar = pygame.transform.scale(TitleBart, (TitleBarWidth, TitleBarHeight))
 
+# Exit Button 
+ScaleBut = 0.5
+ExitWidth = math.floor(100 * ScaleBut)
+ExitHeight = math.floor(110 * ScaleBut)
+ExitButtont = pygame.image.load('assets/Exit.png')
+ExitButton = pygame.transform.scale(ExitButtont, (ExitWidth, ExitHeight))
+
 
 
 def SkyTiles(w, h, skyW, skyH):
@@ -217,7 +224,7 @@ def title():
         pygame.mixer.music.set_volume(0.5)
 
 def MainMenu():
-    global FireFrame, CubeFrame, InGame, InMenu
+    global FireFrame, CubeFrame, InGame, InMenu, done
 
     # Draw Sky
     DrawSky()
@@ -243,18 +250,25 @@ def MainMenu():
     screen.blit(FireLst[FireFrame%12], (width-CubeWidth-FireWidth+45, height-GrassHeight-FireHeight+95))
     FireFrame = FireFrame + 1
 
+    # Draw Exit 
+    screen.blit(ExitButton, (width-ExitWidth, 0))
+
     # Draw Title
     title()
 
     for ev in pygame.event.get(): 
         if ev.type == pygame.MOUSEBUTTONDOWN:
             x, y = ev.pos
-            if Title1.get_rect().collidepoint(x, y):
+            if Title1.get_rect(topleft=(50, 50)).collidepoint(x, y):
                 InMenu = False
                 InGame = True
+            elif ExitButton.get_rect(topleft=(width-ExitWidth, 0)):
+                done = True
+
+GameMenuCount = 1
 
 def GameMenu():
-    global InGame, InMenu
+    global InGame, InMenu, GameMenuCount
     DrawSky()
     pygame.mixer.Channel(0).set_volume(0)
     pygame.mixer.music.set_volume(0.5)
@@ -297,22 +311,25 @@ def GameMenu():
     for ev in pygame.event.get(): 
         if ev.type == pygame.MOUSEBUTTONDOWN:
             x, y = ev.pos
-            print(HomeBut.get_rect())
-            print(x, y)
-            if HomeBut.get_rect().collidepoint(x, y):
+
+            if HomeBut.get_rect(topleft=(width-HomeButWidth-20, 10)).collidepoint(x, y):
                 InMenu = True
-                InGame = False     
+                InGame = False 
+            elif SoundOn.get_rect(topleft=(width-SoundOnWidth-HomeButWidth-40, 10)).collidepoint(x, y):
+                GameMenuCount = GameMenuCount + 1
+
+    if GameMenuCount%2 != 0:
+        pygame.mixer.music.unpause()
+    if GameMenuCount%2 == 0:
+        pygame.mixer.music.pause()
+
+
 
 clock = pygame.time.Clock()
-
-while True: 
+done = False
+while not done: 
     # Frame rate 
     clock.tick(60)
-
-    for ev in pygame.event.get(): 
-          
-        if ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE: 
-            pygame.quit()
 
     if InMenu == True:
         MainMenu()
