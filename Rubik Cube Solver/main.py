@@ -56,7 +56,16 @@ cube1 = pygame.transform.scale(cube1t, (CubeWidth, CubeHeight))
 cube2t = pygame.image.load('assets/Cube2.png')
 cube2 = pygame.transform.scale(cube2t, (CubeWidth, CubeHeight))
 
+scalerCs = 0.55
+CubeWidths = math.floor(690 * scalerCs)
+CubeHeights = math.floor(800 * scalerCs)
+cube0s = pygame.transform.scale(cube0t, (CubeWidths, CubeHeights))
+cube1s = pygame.transform.scale(cube1t, (CubeWidths, CubeHeights))
+cube2s = pygame.transform.scale(cube2t, (CubeWidths, CubeHeights))
+
 CubeLst = [cube0, cube1, cube2, cube1, cube0]
+CubeLsts = [cube2s, cube1s, cube0s, cube1s, cube2s]
+
 
 # Title 
 TitleWidth = 800
@@ -104,6 +113,60 @@ light_t1 = pygame.image.load('assets/GlowTitle.png')
 light = pygame.transform.scale(light_t0, (width, height))
 light1 = pygame.transform.scale(light_t1, (width, height))
 
+# FaceSelect 
+CubeSelWidth = 250
+CubeSelHeight = CubeSelWidth
+CubeEmptyt = pygame.image.load('assets/CubeEmpty.png')
+CubeEmpty = pygame.transform.scale(CubeEmptyt, (CubeSelWidth, CubeSelHeight))
+CubeTopt = pygame.image.load('assets/CubeTop.png')
+CubeTop = pygame.transform.scale(CubeTopt, (CubeSelWidth, CubeSelHeight))
+CubeBLt = pygame.image.load('assets/CubeBL.png')
+CubeBL = pygame.transform.scale(CubeBLt, (CubeSelWidth, CubeSelHeight))
+CubeBRt = pygame.image.load('assets/CubeBR.png')
+CubeBR = pygame.transform.scale(CubeBRt, (CubeSelWidth, CubeSelHeight))
+CubeFLt = pygame.image.load('assets/CubeFL.png')
+CubeFL = pygame.transform.scale(CubeFLt, (CubeSelWidth, CubeSelHeight))
+CubeFRt = pygame.image.load('assets/CubeFR.png')
+CubeFR = pygame.transform.scale(CubeFRt, (CubeSelWidth, CubeSelHeight))
+CubeBott = pygame.image.load('assets/CubeBot.png')
+CubeBot = pygame.transform.scale(CubeBott, (CubeSelWidth, CubeSelHeight))
+
+# Cube Fold 
+scalerCube = 1
+CubeFoldWidth = 1035*scalerCube
+CubeFoldHeight = 775*scalerCube
+CubeFoldt = pygame.image.load('assets/CubeFold.png')
+CubeFold = pygame.transform.scale(CubeFoldt,(CubeFoldWidth, CubeFoldHeight))
+
+# Solve Button 
+scaleSBut = 1
+SolveButtonWidth = math.floor(400*scaleSBut)
+SolveButtonHeight = math.floor(146*scaleSBut)
+SolveButt = pygame.image.load('assets/Solve.png')
+SolveBut = pygame.transform.scale(SolveButt, (SolveButtonWidth, SolveButtonHeight))
+
+# Home Button 
+scalerHome = 6
+HomeButWidth = math.floor(11*scalerHome)
+HomeButHeight = math.floor(7*scalerHome)
+HomeButt = pygame.image.load('assets/Home.png')
+HomeBut = pygame.transform.scale(HomeButt, (HomeButWidth, HomeButHeight))
+
+# Sound-On Button 
+scalerSound = 6
+SoundOnWidth = math.floor(11*scalerHome)
+SoundOnHeight = math.floor(7*scalerHome)
+SoundOnt = pygame.image.load('assets/SoundON.png')
+SoundOn = pygame.transform.scale(SoundOnt, (SoundOnWidth, SoundOnHeight))
+
+# Title Bar 
+scalerTitleBar = 0.25
+TitleBarWidth = math.floor(250 * scalerTitleBar)
+TitleBarHeight = TitleBarWidth
+TitleBart = pygame.image.load('assets/TitleBar.png')
+TitleBar = pygame.transform.scale(TitleBart, (TitleBarWidth, TitleBarHeight))
+
+
 
 def SkyTiles(w, h, skyW, skyH):
     SkyHorzTile = math.ceil(w / skyW)
@@ -119,48 +182,7 @@ def GrassTiles(w, GrassW):
 RandSky = SkyTiles(width, height, SkyWidth, SkyHeight)
 RandGrass = GrassTiles(width, GrassWidth)
 
-TitleCount = 0
-
-def title():
-    global TitleCount, InMenu, GameMenu
-
-    if Title.get_rect().collidepoint(pygame.mouse.get_pos()):
-        TitleCount = TitleCount + 1
-        screen.blit(Title1, (50, 50))
-        screen.blit(light1, (0,0))
-        screen.blit(light1, (0,0))
-
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                InMenu = False
-                InGame = True
-
-        if TitleCount == 1:
-            pygame.mixer.Channel(0).play(pygame.mixer.Sound('assets/Heaven.wav'), maxtime=-1)
-            pygame.mixer.Channel(0).set_volume(1)
-        pygame.mixer.music.set_volume(0)
-
-
-
-    else:
-        screen.blit(Title, (50, 50))
-        screen.blit(light, (0,0))
-        screen.blit(light, (0,0))
-        TitleCount = 0
-        pygame.mixer.Channel(0).set_volume(0)
-        pygame.mixer.music.set_volume(0.5)
-
-def GameMenu():
-    pygame.mixer.Channel(0).set_volume(0)
-    pygame.mixer.music.set_volume(0.5)
-    screen.fill((0,0,255))
-    pygame.display.flip()
-
-
-def MainMenu():
-    global FireFrame, CubeFrame
-
-    # Draw Sky
+def DrawSky():
     count = 0
     for y in range(0, height, SkyHeight):
         for x in range(0, width, SkyWidth):
@@ -172,6 +194,33 @@ def MainMenu():
             elif rand == 3:
                 screen.blit( sky3, (x,y))
             count = count + 1
+
+TitleCount = 0
+
+def title():
+    global TitleCount, InMenu, GameMenu
+
+    if Title.get_rect().collidepoint(pygame.mouse.get_pos()):
+        TitleCount = TitleCount + 1
+        screen.blit(Title1, (50, 50))
+
+        if TitleCount == 1:
+            pygame.mixer.Channel(0).play(pygame.mixer.Sound('assets/Heaven.wav'), maxtime=-1)
+            pygame.mixer.Channel(0).set_volume(1)
+        pygame.mixer.music.set_volume(0)
+
+    else:
+        screen.blit(Title, (50, 50))
+        screen.blit(light, (0,0))
+        TitleCount = 0
+        pygame.mixer.Channel(0).set_volume(0)
+        pygame.mixer.music.set_volume(0.5)
+
+def MainMenu():
+    global FireFrame, CubeFrame, InGame, InMenu
+
+    # Draw Sky
+    DrawSky()
 
     # Draw Grass 
     count = 0
@@ -187,6 +236,7 @@ def MainMenu():
 
     # Draw Cube
     screen.blit(CubeLst[math.ceil((CubeFrame%12)/3)], (width-CubeWidth, height-GrassHeight-CubeHeight+40))
+    screen.blit(CubeLsts[math.ceil((CubeFrame%12)/3)], (width-CubeWidth-FireWidth-CubeWidths+80, height-GrassHeight-CubeHeights+40))
     CubeFrame = CubeFrame + 1
 
     # Draw Fire 
@@ -196,6 +246,62 @@ def MainMenu():
     # Draw Title
     title()
 
+    for ev in pygame.event.get(): 
+        if ev.type == pygame.MOUSEBUTTONDOWN:
+            x, y = ev.pos
+            if Title1.get_rect().collidepoint(x, y):
+                InMenu = False
+                InGame = True
+
+def GameMenu():
+    global InGame, InMenu
+    DrawSky()
+    pygame.mixer.Channel(0).set_volume(0)
+    pygame.mixer.music.set_volume(0.5)
+
+    # Draw Solve Button
+    screen.blit(SolveBut, (width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight))
+
+    # Draw Title Bar 
+    for x in range(0, width, TitleBarWidth):
+        screen.blit(TitleBar, (x,0))
+
+    # Draw Home Button 
+    screen.blit(HomeBut, (width-HomeButWidth-20, 10))
+
+    # Draw Sound Button 
+    screen.blit(SoundOn, (width-SoundOnWidth-HomeButWidth-40, 10))
+
+    # Draw cube Fold
+    cubeDisX = width//2 - CubeFoldWidth//2 
+    cubeDisY = height//2 - CubeFoldHeight//2 + TitleBarHeight 
+    screen.blit(CubeFold, (cubeDisX, cubeDisY))
+
+    # Draw selection cube
+    x, y = pygame.mouse.get_pos() 
+    if x > cubeDisX+20 and x < cubeDisX+257 and y > cubeDisY+262 and y < cubeDisY+500:
+        screen.blit(CubeBL, (20, 20 + TitleBarHeight))
+    elif x > cubeDisX+278 and x<cubeDisX+513 and y > cubeDisY+262 and y < cubeDisY+500:
+        screen.blit(CubeTop, (20, 20 + TitleBarHeight))
+    elif x > cubeDisX+534 and x < cubeDisX+769 and y > cubeDisY+262 and y < cubeDisY+500:
+        screen.blit(CubeFR, (20, 20 + TitleBarHeight))
+    elif x > cubeDisX+790 and x < cubeDisX+1025 and y > cubeDisY+262 and y < cubeDisY+500:
+        screen.blit(CubeBot, (20, 20 + TitleBarHeight))
+    elif x > cubeDisX+278 and x<cubeDisX+513 and y > cubeDisY+11 and y < cubeDisY+245:
+        screen.blit(CubeBR, (20, 20 + TitleBarHeight))
+    elif x > cubeDisX+278 and x<cubeDisX+513 and y > cubeDisY+520 and y < cubeDisY+758:
+        screen.blit(CubeFL, (20, 20 + TitleBarHeight))
+    else:
+        screen.blit(CubeEmpty, (20, 20 + TitleBarHeight))
+
+    for ev in pygame.event.get(): 
+        if ev.type == pygame.MOUSEBUTTONDOWN:
+            x, y = ev.pos
+            print(HomeBut.get_rect())
+            print(x, y)
+            if HomeBut.get_rect().collidepoint(x, y):
+                InMenu = True
+                InGame = False     
 
 clock = pygame.time.Clock()
 
@@ -205,7 +311,7 @@ while True:
 
     for ev in pygame.event.get(): 
           
-        if ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE or (ev.type == pygame.QUIT): 
+        if ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE: 
             pygame.quit()
 
     if InMenu == True:
@@ -213,6 +319,7 @@ while True:
 
     elif InGame == True:
         GameMenu()
+        
         
     # updates the frames of the game 
     pygame.display.update() 
