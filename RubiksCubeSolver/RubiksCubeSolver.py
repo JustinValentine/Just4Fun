@@ -178,6 +178,20 @@ StickerWidth = 13*scalerCube
 StickerHeight = StickerWidth
 Stickert = pygame.image.load('assets/Test.png')
 Sticker = pygame.transform.scale(Stickert, (StickerWidth, StickerHeight))
+StickerDt = pygame.image.load('assets/TestD.png')
+StickerD = pygame.transform.scale(StickerDt, (StickerWidth, StickerHeight))
+Redt = pygame.image.load('assets/Red.png')
+Red = pygame.transform.scale(Redt, (StickerWidth, StickerHeight))
+Bluet = pygame.image.load('assets/Blue.png')
+Blue = pygame.transform.scale(Bluet, (StickerWidth, StickerHeight))
+Greent = pygame.image.load('assets/Green.png')
+Green = pygame.transform.scale(Greent, (StickerWidth, StickerHeight))
+Whitet = pygame.image.load('assets/White.png')
+White = pygame.transform.scale(Whitet, (StickerWidth, StickerHeight))
+Yellowt = pygame.image.load('assets/Yellow.png')
+Yellow = pygame.transform.scale(Yellowt, (StickerWidth, StickerHeight))
+Oranget = pygame.image.load('assets/Orange.png')
+Orange = pygame.transform.scale(Oranget, (StickerWidth, StickerHeight))
 
 
 
@@ -268,13 +282,43 @@ def MainMenu():
             if Title1.get_rect(topleft=(50, 50)).collidepoint(x, y):
                 InMenu = False
                 InGame = True
-            elif ExitButton.get_rect(topleft=(width-ExitWidth, 0)):
+            elif ExitButton.get_rect(topleft=(width-ExitWidth, 0)).collidepoint(x, y):
                 done = True
 
+def StickerSel(y, cubeDisX, cubeDisY, xdis1, ydis1): 
+    if y > cubeDisY+ydis1 and y < cubeDisY+ydis1+65:
+        screen.blit(Sticker, (cubeDisX + xdis1, cubeDisY+ydis1))
+    elif y > cubeDisY+ydis1+65+10 and y < cubeDisY+ydis1+65+10+65:
+        screen.blit(Sticker, (cubeDisX + xdis1, cubeDisY+ydis1+65+10))
+    elif y > cubeDisY+ydis1+65+10+65+10 and y < cubeDisY+ydis1+65+10+65+10+65:
+        screen.blit(Sticker, (cubeDisX + xdis1, cubeDisY+ydis1+65+10+65+10)) 
+
+
+def DrawStick(i, j, cubeDisX, cubeDisY, DisX, DisY):
+    if CubeClick[i][j]%6 == 0:
+        screen.blit(Green, (cubeDisX + DisX, cubeDisY+DisY))
+    elif CubeClick[i][j]%6 == 1:
+        screen.blit(White, (cubeDisX + DisX, cubeDisY+DisY))
+    elif CubeClick[i][j]%6 == 2:
+        screen.blit(Blue, (cubeDisX + DisX, cubeDisY+DisY))
+    elif CubeClick[i][j]%6 == 3:
+        screen.blit(Yellow, (cubeDisX + DisX, cubeDisY+DisY))
+    elif CubeClick[i][j]%6 == 4:
+        screen.blit(Orange, (cubeDisX + DisX, cubeDisY+DisY))
+    elif CubeClick[i][j]%6 == 5:
+        screen.blit(Red, (cubeDisX + DisX, cubeDisY+DisY))
+
 GameMenuCount = 1
+              
+CubeClick = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [1, 1, 1, 1, 1, 1, 1, 1, 1],
+             [2, 2, 2, 2, 2, 2, 2, 2, 2],
+             [3, 3, 3, 3, 3, 3, 3, 3, 3],
+             [4, 4, 4, 4, 4, 4, 4, 4, 4],
+             [5, 5, 5, 5, 5, 5, 5, 5, 5]]
 
 def GameMenu():
-    global InGame, InMenu, GameMenuCount
+    global InGame, InMenu, GameMenuCount, StickerLst, CubeClick
     DrawSky()
     pygame.mixer.Channel(0).set_volume(0)
     pygame.mixer.music.set_volume(0.5)
@@ -312,156 +356,300 @@ def GameMenu():
     elif x > cubeDisX+245 and x<cubeDisX+460 and y > cubeDisY+480 and y < cubeDisY+695:
         screen.blit(CubeFL, (20, 20 + TitleBarHeight))
     else:
-        screen.blit(CubeEmpty, (20, 20 + TitleBarHeight))
+        screen.blit(CubeEmpty, (20, 20 + TitleBarHeight)) 
 
-    # Draw Stickers Selection 
-    if x > cubeDisX + 10 and x < cubeDisX+75: 
-        if y > cubeDisY+245 and y < cubeDisY+310:
-            screen.blit(Sticker, (cubeDisX + 10, cubeDisY+245))
-        elif y > cubeDisY+320 and y < cubeDisY+385:
-            screen.blit(Sticker, (cubeDisX + 10, cubeDisY+320))
-        elif y > cubeDisY+395 and y < cubeDisY+460:
-            screen.blit(Sticker, (cubeDisX + 10, cubeDisY+395)) 
-
-    elif x > cubeDisX + 85 and x < cubeDisX+150:
-        if y > cubeDisY+245 and y < cubeDisY+310:
-            screen.blit(Sticker, (cubeDisX + 85, cubeDisY+245))
-        elif y > cubeDisY+320 and y < cubeDisY+385:
-            screen.blit(Sticker, (cubeDisX + 85, cubeDisY+320))
-        elif y > cubeDisY+395 and y < cubeDisY+460:
-            screen.blit(Sticker, (cubeDisX + 85, cubeDisY+395))   
-
-    elif x > cubeDisX + 160 and x < cubeDisX+225:
-        if y > cubeDisY+245 and y < cubeDisY+310:
-            screen.blit(Sticker, (cubeDisX + 160, cubeDisY+245))
-        elif y > cubeDisY+320 and y < cubeDisY+385:
-            screen.blit(Sticker, (cubeDisX + 160, cubeDisY+320))
-        elif y > cubeDisY+395 and y < cubeDisY+460:
-            screen.blit(Sticker, (cubeDisX + 160, cubeDisY+395)) 
-
-    elif x > cubeDisX+245 and x < cubeDisX+310:
-        if y > cubeDisY+245 and y < cubeDisY+310:
-            screen.blit(Sticker, (cubeDisX + 245, cubeDisY+245))
-        elif y > cubeDisY+320 and y < cubeDisY+385:
-            screen.blit(Sticker, (cubeDisX + 245, cubeDisY+320))
-        elif y > cubeDisY+395 and y < cubeDisY+460:
-            screen.blit(Sticker, (cubeDisX + 245, cubeDisY+395)) 
-        
-        elif y>cubeDisY+480 and y<cubeDisY+545:
-            screen.blit(Sticker, (cubeDisX + 245, cubeDisY+480))
-        elif y>cubeDisY+555 and y<cubeDisY+620:
-            screen.blit(Sticker, (cubeDisX + 245, cubeDisY+555))
-        elif y>cubeDisY+630 and y<cubeDisY+695:
-            screen.blit(Sticker, (cubeDisX + 245, cubeDisY+630))
-
-        elif y>cubeDisY+10 and y<cubeDisY+75:
-            screen.blit(Sticker, (cubeDisX + 245, cubeDisY+10))
-        elif y>cubeDisY+85 and y<cubeDisY+150:
-            screen.blit(Sticker, (cubeDisX + 245, cubeDisY+85))
-        elif y>cubeDisY+160 and y<cubeDisY+225:
-            screen.blit(Sticker, (cubeDisX + 245, cubeDisY+160))
-
-    elif x > cubeDisX+320 and x < cubeDisX+385:
-        if y > cubeDisY+245 and y < cubeDisY+310:
-            screen.blit(Sticker, (cubeDisX + 320, cubeDisY+245))
-        elif y > cubeDisY+320 and y < cubeDisY+385:
-            screen.blit(Sticker, (cubeDisX + 320, cubeDisY+320))
-        elif y > cubeDisY+395 and y < cubeDisY+460:
-            screen.blit(Sticker, (cubeDisX + 320, cubeDisY+395))  
-
-        elif y>cubeDisY+480 and y<cubeDisY+545:
-            screen.blit(Sticker, (cubeDisX + 320, cubeDisY+480))
-        elif y>cubeDisY+555 and y<cubeDisY+620:
-            screen.blit(Sticker, (cubeDisX + 320, cubeDisY+555))
-        elif y>cubeDisY+630 and y<cubeDisY+695:
-            screen.blit(Sticker, (cubeDisX + 320, cubeDisY+630))
-
-        elif y>cubeDisY+10 and y<cubeDisY+75:
-            screen.blit(Sticker, (cubeDisX + 320, cubeDisY+10))
-        elif y>cubeDisY+85 and y<cubeDisY+150:
-            screen.blit(Sticker, (cubeDisX + 320, cubeDisY+85))
-        elif y>cubeDisY+160 and y<cubeDisY+225:
-            screen.blit(Sticker, (cubeDisX + 320, cubeDisY+160))
-
-    elif x > cubeDisX+395 and x < cubeDisX+460:
-        if y > cubeDisY+245 and y < cubeDisY+310:
-            screen.blit(Sticker, (cubeDisX + 395, cubeDisY+245))
-        elif y > cubeDisY+320 and y < cubeDisY+385:
-            screen.blit(Sticker, (cubeDisX + 395, cubeDisY+320))
-        elif y > cubeDisY+395 and y < cubeDisY+460:
-            screen.blit(Sticker, (cubeDisX + 395, cubeDisY+395)) 
-
-        elif y>cubeDisY+480 and y<cubeDisY+545:
-            screen.blit(Sticker, (cubeDisX + 395, cubeDisY+480))
-        elif y>cubeDisY+555 and y<cubeDisY+620:
-            screen.blit(Sticker, (cubeDisX + 395, cubeDisY+555))
-        elif y>cubeDisY+630 and y<cubeDisY+695:
-            screen.blit(Sticker, (cubeDisX + 395, cubeDisY+630)) 
-
-        elif y>cubeDisY+10 and y<cubeDisY+75:
-            screen.blit(Sticker, (cubeDisX + 395, cubeDisY+10))
-        elif y>cubeDisY+85 and y<cubeDisY+150:
-            screen.blit(Sticker, (cubeDisX + 395, cubeDisY+85))
-        elif y>cubeDisY+160 and y<cubeDisY+225:
-            screen.blit(Sticker, (cubeDisX + 395, cubeDisY+160))       
-    
-    elif x > cubeDisX+480 and x < cubeDisX+545:
-        if y > cubeDisY+245 and y < cubeDisY+310:
-            screen.blit(Sticker, (cubeDisX + 480, cubeDisY+245))
-        elif y > cubeDisY+320 and y < cubeDisY+385:
-            screen.blit(Sticker, (cubeDisX + 480, cubeDisY+320))
-        elif y > cubeDisY+395 and y < cubeDisY+460:
-            screen.blit(Sticker, (cubeDisX + 480, cubeDisY+395))   
-
-    elif x > cubeDisX+555 and x < cubeDisX+620:
-        if y > cubeDisY+245 and y < cubeDisY+310:
-            screen.blit(Sticker, (cubeDisX + 555, cubeDisY+245))
-        elif y > cubeDisY+320 and y < cubeDisY+385:
-            screen.blit(Sticker, (cubeDisX + 555, cubeDisY+320))
-        elif y > cubeDisY+395 and y < cubeDisY+460:
-            screen.blit(Sticker, (cubeDisX + 555, cubeDisY+395))  
-
-    elif x > cubeDisX+630 and x < cubeDisX+695:
-        if y > cubeDisY+245 and y < cubeDisY+310:
-            screen.blit(Sticker, (cubeDisX + 630, cubeDisY+245))
-        elif y > cubeDisY+320 and y < cubeDisY+385:
-            screen.blit(Sticker, (cubeDisX + 630, cubeDisY+320))
-        elif y > cubeDisY+395 and y < cubeDisY+460:
-            screen.blit(Sticker, (cubeDisX + 630, cubeDisY+395))
-
-    elif x > cubeDisX+715 and x < cubeDisX+780:
-        if y > cubeDisY+245 and y < cubeDisY+310:
-            screen.blit(Sticker, (cubeDisX + 715, cubeDisY+245))
-        elif y > cubeDisY+320 and y < cubeDisY+385:
-            screen.blit(Sticker, (cubeDisX + 715, cubeDisY+320))
-        elif y > cubeDisY+395 and y < cubeDisY+460:
-            screen.blit(Sticker, (cubeDisX + 715, cubeDisY+395))  
-
-    elif x > cubeDisX+790 and x < cubeDisX+855:
-        if y > cubeDisY+245 and y < cubeDisY+310:
-            screen.blit(Sticker, (cubeDisX + 790, cubeDisY+245))
-        elif y > cubeDisY+320 and y < cubeDisY+385:
-            screen.blit(Sticker, (cubeDisX + 790, cubeDisY+320))
-        elif y > cubeDisY+395 and y < cubeDisY+460:
-            screen.blit(Sticker, (cubeDisX + 790, cubeDisY+395)) 
-
-    elif x > cubeDisX+865 and x < cubeDisX+930:
-        if y > cubeDisY+245 and y < cubeDisY+310:
-            screen.blit(Sticker, (cubeDisX + 865, cubeDisY+245))
-        elif y > cubeDisY+320 and y < cubeDisY+385:
-            screen.blit(Sticker, (cubeDisX + 865, cubeDisY+320))
-        elif y > cubeDisY+395 and y < cubeDisY+460:
-            screen.blit(Sticker, (cubeDisX + 865, cubeDisY+395))      
-
+    # Changing Stickers + Exit To Menu
     for ev in pygame.event.get(): 
         if ev.type == pygame.MOUSEBUTTONDOWN:
             x, y = ev.pos
-
+            # Exit To Menu 
             if HomeBut.get_rect(topleft=(width-HomeButWidth-20, 10)).collidepoint(x, y):
                 InMenu = True
                 InGame = False 
+                CubeClick = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+                             [1, 1, 1, 1, 1, 1, 1, 1, 1],
+                             [2, 2, 2, 2, 2, 2, 2, 2, 2],
+                             [3, 3, 3, 3, 3, 3, 3, 3, 3],
+                             [4, 4, 4, 4, 4, 4, 4, 4, 4],
+                             [5, 5, 5, 5, 5, 5, 5, 5, 5]]
+            # Turn Sound Off 
             elif SoundOn.get_rect(topleft=(width-SoundOnWidth-HomeButWidth-40, 10)).collidepoint(x, y):
                 GameMenuCount = GameMenuCount + 1
+
+            # Green 
+            elif x > cubeDisX + 10 and x < cubeDisX+75: 
+                if y > cubeDisY+245 and y < cubeDisY+310:
+                    CubeClick[0][0] = CubeClick[0][0] + 1
+                elif y > cubeDisY+320 and y < cubeDisY+385:
+                    CubeClick[0][1] = CubeClick[0][1] + 1
+                elif y > cubeDisY+395 and y < cubeDisY+460:
+                    CubeClick[0][2] = CubeClick[0][2] + 1
+            elif x > cubeDisX + 85 and x < cubeDisX+150:
+                if y > cubeDisY+245 and y < cubeDisY+310:
+                    CubeClick[0][3] = CubeClick[0][3] + 1
+                elif y > cubeDisY+395 and y < cubeDisY+460:
+                    CubeClick[0][5] = CubeClick[0][5] + 1   
+            elif x > cubeDisX + 160 and x < cubeDisX+225:
+                if y > cubeDisY+245 and y < cubeDisY+310:
+                    CubeClick[0][6] = CubeClick[0][6] + 1
+                elif y > cubeDisY+320 and y < cubeDisY+385:
+                    CubeClick[0][7] = CubeClick[0][7] + 1
+                elif y > cubeDisY+395 and y < cubeDisY+460:
+                    CubeClick[0][8] = CubeClick[0][8] + 1 
+            # White, Orange, Red 
+            elif x > cubeDisX+245 and x < cubeDisX+310:
+                # White
+                if y > cubeDisY+245 and y < cubeDisY+310:
+                    CubeClick[1][0] = CubeClick[1][0] + 1
+                elif y > cubeDisY+320 and y < cubeDisY+385:
+                    CubeClick[1][1] = CubeClick[1][1] + 1
+                elif y > cubeDisY+395 and y < cubeDisY+460:
+                    CubeClick[1][2] = CubeClick[1][2] + 1
+                # Red
+                elif y>cubeDisY+480 and y<cubeDisY+545:
+                    CubeClick[5][0] = CubeClick[5][0] + 1
+                elif y>cubeDisY+555 and y<cubeDisY+620:
+                    CubeClick[5][1] = CubeClick[5][1] + 1
+                elif y>cubeDisY+630 and y<cubeDisY+695:
+                    CubeClick[5][2] = CubeClick[5][2] + 1
+                # Orange
+                elif y>cubeDisY+10 and y<cubeDisY+75:
+                    CubeClick[4][0] = CubeClick[4][0] + 1
+                elif y>cubeDisY+85 and y<cubeDisY+150:
+                    CubeClick[4][1] = CubeClick[4][1] + 1
+                elif y>cubeDisY+160 and y<cubeDisY+225:
+                    CubeClick[4][2] = CubeClick[4][2] + 1
+            # White, Orange, Red 
+            elif x > cubeDisX+320 and x < cubeDisX+385:
+                # White
+                if y > cubeDisY+245 and y < cubeDisY+310:
+                    CubeClick[1][3] = CubeClick[1][3] + 1
+                elif y > cubeDisY+395 and y < cubeDisY+460:
+                    CubeClick[1][5] = CubeClick[1][5] + 1  
+                # Red
+                elif y>cubeDisY+480 and y<cubeDisY+545:
+                    CubeClick[5][3] = CubeClick[5][3] + 1
+                elif y>cubeDisY+630 and y<cubeDisY+695:
+                    CubeClick[5][5] = CubeClick[5][5] + 1
+                # Orange
+                elif y>cubeDisY+10 and y<cubeDisY+75:
+                    CubeClick[4][3] = CubeClick[4][3] + 1
+                elif y>cubeDisY+160 and y<cubeDisY+225:
+                    CubeClick[4][5] = CubeClick[4][5] + 1
+            # White, Orange, Red 
+            elif x > cubeDisX+395 and x < cubeDisX+460:
+                # White
+                if y > cubeDisY+245 and y < cubeDisY+310:
+                    CubeClick[1][6] = CubeClick[1][6] + 1
+                elif y > cubeDisY+320 and y < cubeDisY+385:
+                    CubeClick[1][7] = CubeClick[1][7] + 1
+                elif y > cubeDisY+395 and y < cubeDisY+460:
+                    CubeClick[1][8] = CubeClick[1][8] + 1 
+                # Red
+                elif y>cubeDisY+480 and y<cubeDisY+545:
+                    CubeClick[5][6] = CubeClick[5][6] + 1
+                elif y>cubeDisY+555 and y<cubeDisY+620:
+                    CubeClick[5][7] = CubeClick[5][7] + 1
+                elif y>cubeDisY+630 and y<cubeDisY+695:
+                    CubeClick[5][8] = CubeClick[5][8] + 1 
+                # Orange
+                elif y>cubeDisY+10 and y<cubeDisY+75:
+                    CubeClick[4][6] = CubeClick[4][6] + 1
+                elif y>cubeDisY+85 and y<cubeDisY+150:
+                    CubeClick[4][7] = CubeClick[4][7] + 1
+                elif y>cubeDisY+160 and y<cubeDisY+225:
+                    CubeClick[4][8] = CubeClick[4][8] + 1       
+            # Blue
+            elif x > cubeDisX+480 and x < cubeDisX+545:
+                if y > cubeDisY+245 and y < cubeDisY+310:
+                    CubeClick[2][0] = CubeClick[2][0] + 1
+                elif y > cubeDisY+320 and y < cubeDisY+385:
+                    CubeClick[2][1] = CubeClick[2][1] + 1
+                elif y > cubeDisY+395 and y < cubeDisY+460:
+                    CubeClick[2][2] = CubeClick[2][2] + 1   
+            elif x > cubeDisX+555 and x < cubeDisX+620:
+                if y > cubeDisY+245 and y < cubeDisY+310:
+                    CubeClick[2][3] = CubeClick[2][3] + 1
+                elif y > cubeDisY+395 and y < cubeDisY+460:
+                    CubeClick[2][5] = CubeClick[2][5] + 1  
+            elif x > cubeDisX+630 and x < cubeDisX+695:
+                if y > cubeDisY+245 and y < cubeDisY+310:
+                    CubeClick[2][6] = CubeClick[2][6] + 1
+                elif y > cubeDisY+320 and y < cubeDisY+385:
+                    CubeClick[2][7] = CubeClick[2][7] + 1
+                elif y > cubeDisY+395 and y < cubeDisY+460:
+                    CubeClick[2][8] = CubeClick[2][8] + 1
+            # Yellow
+            elif x > cubeDisX+715 and x < cubeDisX+780:
+                if y > cubeDisY+245 and y < cubeDisY+310:
+                    CubeClick[3][0] = CubeClick[3][0] + 1
+                elif y > cubeDisY+320 and y < cubeDisY+385:
+                    CubeClick[3][1] = CubeClick[3][1] + 1
+                elif y > cubeDisY+395 and y < cubeDisY+460:
+                    CubeClick[3][2] = CubeClick[3][2] + 1  
+            elif x > cubeDisX+790 and x < cubeDisX+855:
+                if y > cubeDisY+245 and y < cubeDisY+310:
+                    CubeClick[3][3] = CubeClick[3][3] + 1
+                elif y > cubeDisY+395 and y < cubeDisY+460:
+                    CubeClick[3][5] = CubeClick[3][5] + 1 
+            elif x > cubeDisX+865 and x < cubeDisX+930:
+                if y > cubeDisY+245 and y < cubeDisY+310:
+                    CubeClick[3][6] = CubeClick[3][6] + 1
+                elif y > cubeDisY+320 and y < cubeDisY+385:
+                    CubeClick[3][7] = CubeClick[3][7] + 1
+                elif y > cubeDisY+395 and y < cubeDisY+460:
+                    CubeClick[3][8] = CubeClick[3][8] + 1
+
+    # Draw Stickers 
+    for i in range(len(CubeClick)):
+        for j in range(len(CubeClick[i])):
+            # Cube 1
+            if i == 0:
+                if j == 0:
+                    DrawStick(i,j,cubeDisX,cubeDisY,10,245)
+                elif j == 1:
+                    DrawStick(i,j,cubeDisX,cubeDisY,10,320)
+                elif j == 2:
+                    DrawStick(i,j,cubeDisX,cubeDisY,10,395)
+                elif j == 3:
+                    DrawStick(i,j,cubeDisX,cubeDisY,85,245)
+                elif j == 4:
+                    DrawStick(i,j,cubeDisX,cubeDisY,85,320)
+                elif j == 5:
+                    DrawStick(i,j,cubeDisX,cubeDisY,85,395)
+                elif j == 6:
+                    DrawStick(i,j,cubeDisX,cubeDisY,160,245)
+                elif j == 7:
+                    DrawStick(i,j,cubeDisX,cubeDisY,160,320)
+                elif j == 8:
+                    DrawStick(i,j,cubeDisX,cubeDisY,160,395) 
+            elif i == 1:
+                if j == 0:
+                    DrawStick(i,j,cubeDisX,cubeDisY,245,245)
+                elif j == 1:
+                    DrawStick(i,j,cubeDisX,cubeDisY,245,320)
+                elif j == 2:
+                    DrawStick(i,j,cubeDisX,cubeDisY,245,395)
+                elif j == 3:
+                    DrawStick(i,j,cubeDisX,cubeDisY,320,245)
+                elif j == 4:
+                    DrawStick(i,j,cubeDisX,cubeDisY,320,320)
+                elif j == 5:
+                    DrawStick(i,j,cubeDisX,cubeDisY,320,395)
+                elif j == 6:
+                    DrawStick(i,j,cubeDisX,cubeDisY,395,245)
+                elif j == 7:
+                    DrawStick(i,j,cubeDisX,cubeDisY,395,320)
+                elif j == 8:
+                    DrawStick(i,j,cubeDisX,cubeDisY,395,395)
+            elif i == 2:
+                if j == 0:
+                    DrawStick(i,j,cubeDisX,cubeDisY,480,245)
+                elif j == 1:
+                    DrawStick(i,j,cubeDisX,cubeDisY,480,320)
+                elif j == 2:
+                    DrawStick(i,j,cubeDisX,cubeDisY,480,395)
+                elif j == 3:
+                    DrawStick(i,j,cubeDisX,cubeDisY,555,245)
+                elif j == 4:
+                    DrawStick(i,j,cubeDisX,cubeDisY,555,320)
+                elif j == 5:
+                    DrawStick(i,j,cubeDisX,cubeDisY,555,395)
+                elif j == 6:
+                    DrawStick(i,j,cubeDisX,cubeDisY,630,245)
+                elif j == 7:
+                    DrawStick(i,j,cubeDisX,cubeDisY,630,320)
+                elif j == 8:
+                    DrawStick(i,j,cubeDisX,cubeDisY,630,395)
+            elif i == 3:
+                if j == 0:
+                    DrawStick(i,j,cubeDisX,cubeDisY,715,245)
+                elif j == 1:
+                    DrawStick(i,j,cubeDisX,cubeDisY,715,320)
+                elif j == 2:
+                    DrawStick(i,j,cubeDisX,cubeDisY,715,395)
+                elif j == 3:
+                    DrawStick(i,j,cubeDisX,cubeDisY,790,245)
+                elif j == 4:
+                    DrawStick(i,j,cubeDisX,cubeDisY,790,320)
+                elif j == 5:
+                    DrawStick(i,j,cubeDisX,cubeDisY,790,395)
+                elif j == 6:
+                    DrawStick(i,j,cubeDisX,cubeDisY,865,245)
+                elif j == 7:
+                    DrawStick(i,j,cubeDisX,cubeDisY,865,320)
+                elif j == 8:
+                    DrawStick(i,j,cubeDisX,cubeDisY,865,395)
+            elif i == 4:
+                if j == 0:
+                    DrawStick(i,j,cubeDisX,cubeDisY,245,10)
+                elif j == 1:
+                    DrawStick(i,j,cubeDisX,cubeDisY,245,85)
+                elif j == 2:
+                    DrawStick(i,j,cubeDisX,cubeDisY,245,160)
+                elif j == 3:
+                    DrawStick(i,j,cubeDisX,cubeDisY,320,10)
+                elif j == 4:
+                    DrawStick(i,j,cubeDisX,cubeDisY,320,85)
+                elif j == 5:
+                    DrawStick(i,j,cubeDisX,cubeDisY,320,160)
+                elif j == 6:
+                    DrawStick(i,j,cubeDisX,cubeDisY,395,10)
+                elif j == 7:
+                    DrawStick(i,j,cubeDisX,cubeDisY,395,85)
+                elif j == 8:
+                    DrawStick(i,j,cubeDisX,cubeDisY,395,160)
+            elif i == 5:
+                if j == 0:
+                    DrawStick(i,j,cubeDisX,cubeDisY,245,480)
+                elif j == 1:
+                    DrawStick(i,j,cubeDisX,cubeDisY,245,555)
+                elif j == 2:
+                    DrawStick(i,j,cubeDisX,cubeDisY,245,630)
+                elif j == 3:
+                    DrawStick(i,j,cubeDisX,cubeDisY,320,480)
+                elif j == 4:
+                    DrawStick(i,j,cubeDisX,cubeDisY,320,555)
+                elif j == 5:
+                    DrawStick(i,j,cubeDisX,cubeDisY,320,630)
+                elif j == 6:
+                    DrawStick(i,j,cubeDisX,cubeDisY,395,480)
+                elif j == 7:
+                    DrawStick(i,j,cubeDisX,cubeDisY,395,555)
+                elif j == 8:
+                    DrawStick(i,j,cubeDisX,cubeDisY,395,630)
+
+    # Draw Stickers Selection
+    if x > cubeDisX + 10 and x < cubeDisX+75:
+        StickerSel(y, cubeDisX, cubeDisY, 10, 245) 
+    elif x > cubeDisX + 85 and x < cubeDisX+150:
+        StickerSel(y, cubeDisX, cubeDisY, 85, 245)  
+    elif x > cubeDisX + 160 and x < cubeDisX+225:
+        StickerSel(y, cubeDisX, cubeDisY, 160, 245)
+    elif x > cubeDisX+245 and x < cubeDisX+310:
+        StickerSel(y, cubeDisX, cubeDisY, 245, 245)   
+        StickerSel(y, cubeDisX, cubeDisY, 245, 480)
+        StickerSel(y, cubeDisX, cubeDisY, 245, 10)
+    elif x > cubeDisX+320 and x < cubeDisX+385:
+        StickerSel(y, cubeDisX, cubeDisY, 320, 245)
+        StickerSel(y, cubeDisX, cubeDisY, 320, 480)
+        StickerSel(y, cubeDisX, cubeDisY, 320, 10)
+    elif x > cubeDisX+395 and x < cubeDisX+460:
+        StickerSel(y, cubeDisX, cubeDisY, 395, 245)
+        StickerSel(y, cubeDisX, cubeDisY, 395, 480)
+        StickerSel(y, cubeDisX, cubeDisY, 395, 10)       
+    elif x > cubeDisX+480 and x < cubeDisX+545:
+        StickerSel(y, cubeDisX, cubeDisY, 480, 245) 
+    elif x > cubeDisX+555 and x < cubeDisX+620:
+        StickerSel(y, cubeDisX, cubeDisY, 555, 245) 
+    elif x > cubeDisX+630 and x < cubeDisX+695:
+        StickerSel(y, cubeDisX, cubeDisY, 630, 245) 
+    elif x > cubeDisX+715 and x < cubeDisX+780:
+        StickerSel(y, cubeDisX, cubeDisY, 715, 245)  
+    elif x > cubeDisX+790 and x < cubeDisX+855:
+        StickerSel(y, cubeDisX, cubeDisY, 790, 245)
+    elif x > cubeDisX+865 and x < cubeDisX+930:
+        StickerSel(y, cubeDisX, cubeDisY, 865, 245) 
 
     if GameMenuCount%2 != 0:
         pygame.mixer.music.unpause()
