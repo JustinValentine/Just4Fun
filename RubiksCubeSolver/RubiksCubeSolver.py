@@ -549,18 +549,220 @@ def CubeCheck():
         print('12')
 
     if edge == 12:
-        print('nice')
+        print('Edge - nice')
     else:
-        print(edge)
-    # Check Corners
-    # 1: G,Y,O | 0,6,0 
-    # 2: G,Y,R | 2,8,2
-    # 3: G,W,O | 6,0,2
-    # 4: G,W,R | 8,2,0
-    # 5: B,W,O | 0,6,8
-    # 6: B,W,R | 2,8,6
-    # 7: B,Y,O | 6,0,6
-    # 8: B,Y,R | 8,2,8
+        print('Edge - ' + str(edge))
+
+    Corner = 0
+    if ((CubeClick[0][0]%6==0 and CubeClick[3][6]%6==3 and CubeClick[4][0]%6==4) or 
+       (CubeClick[0][0]%6==0 and CubeClick[3][6]%6==1 and CubeClick[4][0]%6==5) or 
+       (CubeClick[0][0]%6==0 and CubeClick[3][6]%6==4 and CubeClick[4][0]%6==1) or 
+       (CubeClick[0][0]%6==0 and CubeClick[3][6]%6==5 and CubeClick[4][0]%6==3) or 
+       (CubeClick[0][0]%6==1 and CubeClick[3][6]%6==0 and CubeClick[4][0]%6==4) or 
+       (CubeClick[0][0]%6==1 and CubeClick[3][6]%6==5 and CubeClick[4][0]%6==0) or 
+       (CubeClick[0][0]%6==1 and CubeClick[3][6]%6==4 and CubeClick[4][0]%6==2) or 
+       (CubeClick[0][0]%6==1 and CubeClick[3][6]%6==2 and CubeClick[4][0]%6==5) or 
+       (CubeClick[0][0]%6==2 and CubeClick[3][6]%6==1 and CubeClick[4][0]%6==4) or 
+       (CubeClick[0][0]%6==2 and CubeClick[3][6]%6==3 and CubeClick[4][0]%6==5) or 
+       (CubeClick[0][0]%6==2 and CubeClick[3][6]%6==4 and CubeClick[4][0]%6==3) or 
+       (CubeClick[0][0]%6==2 and CubeClick[3][6]%6==5 and CubeClick[4][0]%6==1) or 
+       (CubeClick[0][0]%6==3 and CubeClick[3][6]%6==0 and CubeClick[4][0]%6==5) or 
+       (CubeClick[0][0]%6==3 and CubeClick[3][6]%6==4 and CubeClick[4][0]%6==0) or 
+       (CubeClick[0][0]%6==3 and CubeClick[3][6]%6==5 and CubeClick[4][0]%6==2) or 
+       (CubeClick[0][0]%6==3 and CubeClick[3][6]%6==2 and CubeClick[4][0]%6==4) or 
+       (CubeClick[0][0]%6==4 and CubeClick[3][6]%6==0 and CubeClick[4][0]%6==3) or 
+       (CubeClick[0][0]%6==4 and CubeClick[3][6]%6==3 and CubeClick[4][0]%6==2) or 
+       (CubeClick[0][0]%6==4 and CubeClick[3][6]%6==2 and CubeClick[4][0]%6==1) or 
+       (CubeClick[0][0]%6==4 and CubeClick[3][6]%6==1 and CubeClick[4][0]%6==0) or 
+       (CubeClick[0][0]%6==5 and CubeClick[3][6]%6==1 and CubeClick[4][0]%6==2) or 
+       (CubeClick[0][0]%6==5 and CubeClick[3][6]%6==3 and CubeClick[4][0]%6==0) or 
+       (CubeClick[0][0]%6==5 and CubeClick[3][6]%6==0 and CubeClick[4][0]%6==1) or 
+       (CubeClick[0][0]%6==5 and CubeClick[3][6]%6==2 and CubeClick[4][0]%6==3)):
+        Corner += 1
+
+    if ((CubeClick[0][6]%6==0 and CubeClick[1][0]%6==4 and CubeClick[4][2]%6==3) or 
+       (CubeClick[0][6]%6==0 and CubeClick[1][0]%6==3 and CubeClick[4][2]%6==5) or 
+       (CubeClick[0][6]%6==0 and CubeClick[1][0]%6==5 and CubeClick[4][2]%6==1) or 
+       (CubeClick[0][6]%6==0 and CubeClick[1][0]%6==1 and CubeClick[4][2]%6==4) or 
+       (CubeClick[0][6]%6==1 and CubeClick[1][0]%6==0 and CubeClick[4][2]%6==5) or 
+       (CubeClick[0][6]%6==1 and CubeClick[1][0]%6==5 and CubeClick[4][2]%6==2) or 
+       (CubeClick[0][6]%6==1 and CubeClick[1][0]%6==4 and CubeClick[4][2]%6==0) or 
+       (CubeClick[0][6]%6==1 and CubeClick[1][0]%6==2 and CubeClick[4][2]%6==4) or 
+       (CubeClick[0][6]%6==2 and CubeClick[1][0]%6==1 and CubeClick[4][2]%6==5) or 
+       (CubeClick[0][6]%6==2 and CubeClick[1][0]%6==3 and CubeClick[4][2]%6==4) or 
+       (CubeClick[0][6]%6==2 and CubeClick[1][0]%6==4 and CubeClick[4][2]%6==1) or 
+       (CubeClick[0][6]%6==2 and CubeClick[1][0]%6==5 and CubeClick[4][2]%6==3) or 
+       (CubeClick[0][6]%6==3 and CubeClick[1][0]%6==2 and CubeClick[4][2]%6==5) or 
+       (CubeClick[0][6]%6==3 and CubeClick[1][0]%6==4 and CubeClick[4][2]%6==2) or 
+       (CubeClick[0][6]%6==3 and CubeClick[1][0]%6==0 and CubeClick[4][2]%6==4) or 
+       (CubeClick[0][6]%6==3 and CubeClick[1][0]%6==5 and CubeClick[4][2]%6==0) or 
+       (CubeClick[0][6]%6==4 and CubeClick[1][0]%6==2 and CubeClick[4][2]%6==3) or 
+       (CubeClick[0][6]%6==4 and CubeClick[1][0]%6==1 and CubeClick[4][2]%6==2) or 
+       (CubeClick[0][6]%6==4 and CubeClick[1][0]%6==0 and CubeClick[4][2]%6==1) or 
+       (CubeClick[0][6]%6==4 and CubeClick[1][0]%6==3 and CubeClick[4][2]%6==0) or 
+       (CubeClick[0][6]%6==5 and CubeClick[1][0]%6==0 and CubeClick[4][2]%6==3) or 
+       (CubeClick[0][6]%6==5 and CubeClick[1][0]%6==1 and CubeClick[4][2]%6==0) or 
+       (CubeClick[0][6]%6==5 and CubeClick[1][0]%6==3 and CubeClick[4][2]%6==2) or 
+       (CubeClick[0][6]%6==5 and CubeClick[1][0]%6==2 and CubeClick[4][2]%6==1)):
+        Corner += 1
+
+    if ((CubeClick[0][2]%6==0 and CubeClick[5][2]%6==3 and CubeClick[3][8]%6==4) or 
+       (CubeClick[0][2]%6==0 and CubeClick[5][2]%6==1 and CubeClick[3][8]%6==5) or 
+       (CubeClick[0][2]%6==0 and CubeClick[5][2]%6==4 and CubeClick[3][8]%6==1) or 
+       (CubeClick[0][2]%6==0 and CubeClick[5][2]%6==5 and CubeClick[3][8]%6==3) or 
+       (CubeClick[0][2]%6==1 and CubeClick[5][2]%6==0 and CubeClick[3][8]%6==4) or 
+       (CubeClick[0][2]%6==1 and CubeClick[5][2]%6==5 and CubeClick[3][8]%6==0) or 
+       (CubeClick[0][2]%6==1 and CubeClick[5][2]%6==4 and CubeClick[3][8]%6==2) or 
+       (CubeClick[0][2]%6==1 and CubeClick[5][2]%6==2 and CubeClick[3][8]%6==5) or 
+       (CubeClick[0][2]%6==2 and CubeClick[5][2]%6==1 and CubeClick[3][8]%6==4) or 
+       (CubeClick[0][2]%6==2 and CubeClick[5][2]%6==3 and CubeClick[3][8]%6==5) or 
+       (CubeClick[0][2]%6==2 and CubeClick[5][2]%6==4 and CubeClick[3][8]%6==3) or 
+       (CubeClick[0][2]%6==2 and CubeClick[5][2]%6==5 and CubeClick[3][8]%6==1) or 
+       (CubeClick[0][2]%6==3 and CubeClick[5][2]%6==0 and CubeClick[3][8]%6==5) or 
+       (CubeClick[0][2]%6==3 and CubeClick[5][2]%6==4 and CubeClick[3][8]%6==0) or 
+       (CubeClick[0][2]%6==3 and CubeClick[5][2]%6==5 and CubeClick[3][8]%6==2) or 
+       (CubeClick[0][2]%6==3 and CubeClick[5][2]%6==2 and CubeClick[3][8]%6==4) or 
+       (CubeClick[0][2]%6==4 and CubeClick[5][2]%6==0 and CubeClick[3][8]%6==3) or 
+       (CubeClick[0][2]%6==4 and CubeClick[5][2]%6==3 and CubeClick[3][8]%6==2) or 
+       (CubeClick[0][2]%6==4 and CubeClick[5][2]%6==2 and CubeClick[3][8]%6==1) or 
+       (CubeClick[0][2]%6==4 and CubeClick[5][2]%6==1 and CubeClick[3][8]%6==0) or 
+       (CubeClick[0][2]%6==5 and CubeClick[5][2]%6==1 and CubeClick[3][8]%6==2) or 
+       (CubeClick[0][2]%6==5 and CubeClick[5][2]%6==3 and CubeClick[3][8]%6==0) or 
+       (CubeClick[0][2]%6==5 and CubeClick[5][2]%6==0 and CubeClick[3][8]%6==1) or 
+       (CubeClick[0][2]%6==5 and CubeClick[5][2]%6==2 and CubeClick[3][8]%6==3)):
+        Corner += 1
+
+    if ((CubeClick[0][8]%6==0 and CubeClick[5][0]%6==4 and CubeClick[1][2]%6==3) or 
+       (CubeClick[0][8]%6==0 and CubeClick[5][0]%6==3 and CubeClick[1][2]%6==5) or 
+       (CubeClick[0][8]%6==0 and CubeClick[5][0]%6==5 and CubeClick[1][2]%6==1) or 
+       (CubeClick[0][8]%6==0 and CubeClick[5][0]%6==1 and CubeClick[1][2]%6==4) or 
+       (CubeClick[0][8]%6==1 and CubeClick[5][0]%6==0 and CubeClick[1][2]%6==5) or 
+       (CubeClick[0][8]%6==1 and CubeClick[5][0]%6==5 and CubeClick[1][2]%6==2) or 
+       (CubeClick[0][8]%6==1 and CubeClick[5][0]%6==4 and CubeClick[1][2]%6==0) or 
+       (CubeClick[0][8]%6==1 and CubeClick[5][0]%6==2 and CubeClick[1][2]%6==4) or 
+       (CubeClick[0][8]%6==2 and CubeClick[5][0]%6==1 and CubeClick[1][2]%6==5) or 
+       (CubeClick[0][8]%6==2 and CubeClick[5][0]%6==3 and CubeClick[1][2]%6==4) or 
+       (CubeClick[0][8]%6==2 and CubeClick[5][0]%6==4 and CubeClick[1][2]%6==1) or 
+       (CubeClick[0][8]%6==2 and CubeClick[5][0]%6==5 and CubeClick[1][2]%6==3) or 
+       (CubeClick[0][8]%6==3 and CubeClick[5][0]%6==2 and CubeClick[1][2]%6==5) or 
+       (CubeClick[0][8]%6==3 and CubeClick[5][0]%6==4 and CubeClick[1][2]%6==2) or 
+       (CubeClick[0][8]%6==3 and CubeClick[5][0]%6==0 and CubeClick[1][2]%6==4) or 
+       (CubeClick[0][8]%6==3 and CubeClick[5][0]%6==5 and CubeClick[1][2]%6==0) or 
+       (CubeClick[0][8]%6==4 and CubeClick[5][0]%6==2 and CubeClick[1][2]%6==3) or 
+       (CubeClick[0][8]%6==4 and CubeClick[5][0]%6==1 and CubeClick[1][2]%6==2) or 
+       (CubeClick[0][8]%6==4 and CubeClick[5][0]%6==0 and CubeClick[1][2]%6==1) or 
+       (CubeClick[0][8]%6==4 and CubeClick[5][0]%6==3 and CubeClick[1][2]%6==0) or 
+       (CubeClick[0][8]%6==5 and CubeClick[5][0]%6==0 and CubeClick[1][2]%6==3) or 
+       (CubeClick[0][8]%6==5 and CubeClick[5][0]%6==1 and CubeClick[1][2]%6==0) or 
+       (CubeClick[0][8]%6==5 and CubeClick[5][0]%6==3 and CubeClick[1][2]%6==2) or 
+       (CubeClick[0][8]%6==5 and CubeClick[5][0]%6==2 and CubeClick[1][2]%6==1)):
+        Corner += 1
+
+    if ((CubeClick[2][0]%6==0 and CubeClick[1][6]%6==3 and CubeClick[4][8]%6==4) or 
+       (CubeClick[2][0]%6==0 and CubeClick[1][6]%6==1 and CubeClick[4][8]%6==5) or 
+       (CubeClick[2][0]%6==0 and CubeClick[1][6]%6==4 and CubeClick[4][8]%6==1) or 
+       (CubeClick[2][0]%6==0 and CubeClick[1][6]%6==5 and CubeClick[4][8]%6==3) or 
+       (CubeClick[2][0]%6==1 and CubeClick[1][6]%6==0 and CubeClick[4][8]%6==4) or 
+       (CubeClick[2][0]%6==1 and CubeClick[1][6]%6==5 and CubeClick[4][8]%6==0) or 
+       (CubeClick[2][0]%6==1 and CubeClick[1][6]%6==4 and CubeClick[4][8]%6==2) or 
+       (CubeClick[2][0]%6==1 and CubeClick[1][6]%6==2 and CubeClick[4][8]%6==5) or 
+       (CubeClick[2][0]%6==2 and CubeClick[1][6]%6==1 and CubeClick[4][8]%6==4) or 
+       (CubeClick[2][0]%6==2 and CubeClick[1][6]%6==3 and CubeClick[4][8]%6==5) or 
+       (CubeClick[2][0]%6==2 and CubeClick[1][6]%6==4 and CubeClick[4][8]%6==3) or 
+       (CubeClick[2][0]%6==2 and CubeClick[1][6]%6==5 and CubeClick[4][8]%6==1) or 
+       (CubeClick[2][0]%6==3 and CubeClick[1][6]%6==0 and CubeClick[4][8]%6==5) or 
+       (CubeClick[2][0]%6==3 and CubeClick[1][6]%6==4 and CubeClick[4][8]%6==0) or 
+       (CubeClick[2][0]%6==3 and CubeClick[1][6]%6==5 and CubeClick[4][8]%6==2) or 
+       (CubeClick[2][0]%6==3 and CubeClick[1][6]%6==2 and CubeClick[4][8]%6==4) or 
+       (CubeClick[2][0]%6==4 and CubeClick[1][6]%6==0 and CubeClick[4][8]%6==3) or 
+       (CubeClick[2][0]%6==4 and CubeClick[1][6]%6==3 and CubeClick[4][8]%6==2) or 
+       (CubeClick[2][0]%6==4 and CubeClick[1][6]%6==2 and CubeClick[4][8]%6==1) or 
+       (CubeClick[2][0]%6==4 and CubeClick[1][6]%6==1 and CubeClick[4][8]%6==0) or 
+       (CubeClick[2][0]%6==5 and CubeClick[1][6]%6==1 and CubeClick[4][8]%6==2) or 
+       (CubeClick[2][0]%6==5 and CubeClick[1][6]%6==3 and CubeClick[4][8]%6==0) or 
+       (CubeClick[2][0]%6==5 and CubeClick[1][6]%6==0 and CubeClick[4][8]%6==1) or 
+       (CubeClick[2][0]%6==5 and CubeClick[1][6]%6==2 and CubeClick[4][8]%6==3)):
+        Corner += 1
+
+    if ((CubeClick[2][2]%6==0 and CubeClick[5][6]%6==3 and CubeClick[1][8]%6==4) or 
+       (CubeClick[2][2]%6==0 and CubeClick[5][6]%6==1 and CubeClick[1][8]%6==5) or 
+       (CubeClick[2][2]%6==0 and CubeClick[5][6]%6==4 and CubeClick[1][8]%6==1) or 
+       (CubeClick[2][2]%6==0 and CubeClick[5][6]%6==5 and CubeClick[1][8]%6==3) or 
+       (CubeClick[2][2]%6==1 and CubeClick[5][6]%6==0 and CubeClick[1][8]%6==4) or 
+       (CubeClick[2][2]%6==1 and CubeClick[5][6]%6==5 and CubeClick[1][8]%6==0) or 
+       (CubeClick[2][2]%6==1 and CubeClick[5][6]%6==4 and CubeClick[1][8]%6==2) or 
+       (CubeClick[2][2]%6==1 and CubeClick[5][6]%6==2 and CubeClick[1][8]%6==5) or 
+       (CubeClick[2][2]%6==2 and CubeClick[5][6]%6==1 and CubeClick[1][8]%6==4) or 
+       (CubeClick[2][2]%6==2 and CubeClick[5][6]%6==3 and CubeClick[1][8]%6==5) or 
+       (CubeClick[2][2]%6==2 and CubeClick[5][6]%6==4 and CubeClick[1][8]%6==3) or 
+       (CubeClick[2][2]%6==2 and CubeClick[5][6]%6==5 and CubeClick[1][8]%6==1) or 
+       (CubeClick[2][2]%6==3 and CubeClick[5][6]%6==0 and CubeClick[1][8]%6==5) or 
+       (CubeClick[2][2]%6==3 and CubeClick[5][6]%6==4 and CubeClick[1][8]%6==0) or 
+       (CubeClick[2][2]%6==3 and CubeClick[5][6]%6==5 and CubeClick[1][8]%6==2) or 
+       (CubeClick[2][2]%6==3 and CubeClick[5][6]%6==2 and CubeClick[1][8]%6==4) or 
+       (CubeClick[2][2]%6==4 and CubeClick[5][6]%6==0 and CubeClick[1][8]%6==3) or 
+       (CubeClick[2][2]%6==4 and CubeClick[5][6]%6==3 and CubeClick[1][8]%6==2) or 
+       (CubeClick[2][2]%6==4 and CubeClick[5][6]%6==2 and CubeClick[1][8]%6==1) or 
+       (CubeClick[2][2]%6==4 and CubeClick[5][6]%6==1 and CubeClick[1][8]%6==0) or 
+       (CubeClick[2][2]%6==5 and CubeClick[5][6]%6==1 and CubeClick[1][8]%6==2) or 
+       (CubeClick[2][2]%6==5 and CubeClick[5][6]%6==3 and CubeClick[1][8]%6==0) or 
+       (CubeClick[2][2]%6==5 and CubeClick[5][6]%6==0 and CubeClick[1][8]%6==1) or 
+       (CubeClick[2][2]%6==5 and CubeClick[5][6]%6==2 and CubeClick[1][8]%6==3)):
+        Corner += 1
+
+    if ((CubeClick[2][6]%6==0 and CubeClick[4][6]%6==3 and CubeClick[3][0]%6==4) or 
+       (CubeClick[2][6]%6==0 and CubeClick[4][6]%6==1 and CubeClick[3][0]%6==5) or 
+       (CubeClick[2][6]%6==0 and CubeClick[4][6]%6==4 and CubeClick[3][0]%6==1) or 
+       (CubeClick[2][6]%6==0 and CubeClick[4][6]%6==5 and CubeClick[3][0]%6==3) or 
+       (CubeClick[2][6]%6==1 and CubeClick[4][6]%6==0 and CubeClick[3][0]%6==4) or 
+       (CubeClick[2][6]%6==1 and CubeClick[4][6]%6==5 and CubeClick[3][0]%6==0) or 
+       (CubeClick[2][6]%6==1 and CubeClick[4][6]%6==4 and CubeClick[3][0]%6==2) or 
+       (CubeClick[2][6]%6==1 and CubeClick[4][6]%6==2 and CubeClick[3][0]%6==5) or 
+       (CubeClick[2][6]%6==2 and CubeClick[4][6]%6==1 and CubeClick[3][0]%6==4) or 
+       (CubeClick[2][6]%6==2 and CubeClick[4][6]%6==3 and CubeClick[3][0]%6==5) or 
+       (CubeClick[2][6]%6==2 and CubeClick[4][6]%6==4 and CubeClick[3][0]%6==3) or 
+       (CubeClick[2][6]%6==2 and CubeClick[4][6]%6==5 and CubeClick[3][0]%6==1) or 
+       (CubeClick[2][6]%6==3 and CubeClick[4][6]%6==0 and CubeClick[3][0]%6==5) or 
+       (CubeClick[2][6]%6==3 and CubeClick[4][6]%6==4 and CubeClick[3][0]%6==0) or 
+       (CubeClick[2][6]%6==3 and CubeClick[4][6]%6==5 and CubeClick[3][0]%6==2) or 
+       (CubeClick[2][6]%6==3 and CubeClick[4][6]%6==2 and CubeClick[3][0]%6==4) or 
+       (CubeClick[2][6]%6==4 and CubeClick[4][6]%6==0 and CubeClick[3][0]%6==3) or 
+       (CubeClick[2][6]%6==4 and CubeClick[4][6]%6==3 and CubeClick[3][0]%6==2) or 
+       (CubeClick[2][6]%6==4 and CubeClick[4][6]%6==2 and CubeClick[3][0]%6==1) or 
+       (CubeClick[2][6]%6==4 and CubeClick[4][6]%6==1 and CubeClick[3][0]%6==0) or 
+       (CubeClick[2][6]%6==5 and CubeClick[4][6]%6==1 and CubeClick[3][0]%6==2) or 
+       (CubeClick[2][6]%6==5 and CubeClick[4][6]%6==3 and CubeClick[3][0]%6==0) or 
+       (CubeClick[2][6]%6==5 and CubeClick[4][6]%6==0 and CubeClick[3][0]%6==1) or 
+       (CubeClick[2][6]%6==5 and CubeClick[4][6]%6==2 and CubeClick[3][0]%6==3)):
+        Corner += 1
+    if ((CubeClick[2][8]%6==0 and CubeClick[3][2]%6==3 and CubeClick[5][8]%6==4) or 
+       (CubeClick[2][8]%6==0 and CubeClick[3][2]%6==1 and CubeClick[5][8]%6==5) or 
+       (CubeClick[2][8]%6==0 and CubeClick[3][2]%6==4 and CubeClick[5][8]%6==1) or 
+       (CubeClick[2][8]%6==0 and CubeClick[3][2]%6==5 and CubeClick[5][8]%6==3) or 
+       (CubeClick[2][8]%6==1 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==4) or 
+       (CubeClick[2][8]%6==1 and CubeClick[3][2]%6==5 and CubeClick[5][8]%6==0) or 
+       (CubeClick[2][8]%6==1 and CubeClick[3][2]%6==4 and CubeClick[5][8]%6==2) or 
+       (CubeClick[2][8]%6==1 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==5) or 
+       (CubeClick[2][8]%6==2 and CubeClick[3][2]%6==1 and CubeClick[5][8]%6==4) or 
+       (CubeClick[2][8]%6==2 and CubeClick[3][2]%6==3 and CubeClick[5][8]%6==5) or 
+       (CubeClick[2][8]%6==2 and CubeClick[3][2]%6==4 and CubeClick[5][8]%6==3) or 
+       (CubeClick[2][8]%6==2 and CubeClick[3][2]%6==5 and CubeClick[5][8]%6==1) or 
+       (CubeClick[2][8]%6==3 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==5) or 
+       (CubeClick[2][8]%6==3 and CubeClick[3][2]%6==4 and CubeClick[5][8]%6==0) or 
+       (CubeClick[2][8]%6==3 and CubeClick[3][2]%6==5 and CubeClick[5][8]%6==2) or 
+       (CubeClick[2][8]%6==3 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==4) or 
+       (CubeClick[2][8]%6==4 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==3) or 
+       (CubeClick[2][8]%6==4 and CubeClick[3][2]%6==3 and CubeClick[5][8]%6==2) or 
+       (CubeClick[2][8]%6==4 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==1) or 
+       (CubeClick[2][8]%6==4 and CubeClick[3][2]%6==1 and CubeClick[5][8]%6==0) or 
+       (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==1 and CubeClick[5][8]%6==2) or 
+       (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==3 and CubeClick[5][8]%6==0) or 
+       (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==1) or 
+       (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==3)):
+        Corner += 1
+
+    print(Corner)
+    
 
 def GameMenu():
     global InGame, InMenu, GameMenuCount, StickerLst, CubeClick
