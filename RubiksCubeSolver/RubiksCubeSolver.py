@@ -1,4 +1,4 @@
-import pygame, sys, math, time, os
+import pygame, sys, math, time, os, copy 
 from random import randint
 from pygame import mixer
   
@@ -763,6 +763,244 @@ def CubeCheck():
 
     print(Corner)
     
+def Front():
+    Cube = copy.deepcopy(CubeClick)
+    # Front face (face 0)
+    Cube[0][0] = CubeClick[0][2]
+    Cube[0][1] = CubeClick[0][5]
+    Cube[0][2] = CubeClick[0][8]
+    Cube[0][3] = CubeClick[0][1]
+    Cube[0][4] = CubeClick[0][4]
+    Cube[0][5] = CubeClick[0][7]
+    Cube[0][6] = CubeClick[0][0]
+    Cube[0][7] = CubeClick[0][3]
+    Cube[0][8] = CubeClick[0][6]
+    # Right face (face 1)
+    Cube[1][0] = CubeClick[4][0]
+    Cube[1][1] = CubeClick[4][1]
+    Cube[1][2] = CubeClick[4][2]
+    # Left face (face 3)
+    Cube[3][6] = CubeClick[5][2]
+    Cube[3][7] = CubeClick[5][1]
+    Cube[3][8] = CubeClick[5][0]
+    # Top face (face 4)
+    Cube[4][0] = CubeClick[3][8]
+    Cube[4][1] = CubeClick[3][7]
+    Cube[4][2] = CubeClick[3][6]
+    # Bottom face (face 5)
+    Cube[5][2] = CubeClick[1][2]
+    Cube[5][1] = CubeClick[1][1]
+    Cube[5][0] = CubeClick[1][0]
+
+    return Cube
+
+def FrontI():
+    Cube = copy.deepcopy(CubeClick)
+    # Front face (face 0)
+    Cube[0][0] = CubeClick[0][6]
+    Cube[0][1] = CubeClick[0][3]
+    Cube[0][2] = CubeClick[0][0]
+    Cube[0][3] = CubeClick[0][7]
+    Cube[0][4] = CubeClick[0][4]
+    Cube[0][5] = CubeClick[0][1]
+    Cube[0][6] = CubeClick[0][8]
+    Cube[0][7] = CubeClick[0][5]
+    Cube[0][8] = CubeClick[0][2]
+    # Right face (face 1)
+    Cube[1][0] = CubeClick[5][0]
+    Cube[1][1] = CubeClick[5][1]
+    Cube[1][2] = CubeClick[5][2]
+    # Left face (face 3)
+    Cube[3][6] = CubeClick[4][2]
+    Cube[3][7] = CubeClick[4][1]
+    Cube[3][8] = CubeClick[4][0]
+    # Top face (face 4)
+    Cube[4][0] = CubeClick[1][0]
+    Cube[4][1] = CubeClick[1][1]
+    Cube[4][2] = CubeClick[1][2]
+    # Bottom face (face 5)
+    Cube[5][2] = CubeClick[3][6]
+    Cube[5][1] = CubeClick[3][7]
+    Cube[5][0] = CubeClick[3][8]
+
+    return Cube
+
+def Left():
+    Cube = copy.deepcopy(CubeClick)
+    # Front face (face 0)
+    Cube[3][0] = CubeClick[3][2]
+    Cube[3][1] = CubeClick[3][5]
+    Cube[3][2] = CubeClick[3][8]
+    Cube[3][3] = CubeClick[3][1]
+    Cube[3][4] = CubeClick[3][4]
+    Cube[3][5] = CubeClick[3][7]
+    Cube[3][6] = CubeClick[3][0]
+    Cube[3][7] = CubeClick[3][3]
+    Cube[3][8] = CubeClick[3][6]
+    # Right face (face 1)
+    Cube[0][0] = CubeClick[4][6]
+    Cube[0][1] = CubeClick[4][3]
+    Cube[0][2] = CubeClick[4][0]
+    # Left face (face 3)
+    Cube[4][0] = CubeClick[2][6]
+    Cube[4][3] = CubeClick[2][7]
+    Cube[4][6] = CubeClick[2][8]
+    # Top face (face 4)
+    Cube[2][6] = CubeClick[5][8]
+    Cube[2][7] = CubeClick[5][5]
+    Cube[2][8] = CubeClick[5][2]
+    # Bottom face (face 5)
+    Cube[5][2] = CubeClick[2][8]
+    Cube[5][5] = CubeClick[2][7]
+    Cube[5][8] = CubeClick[2][6]
+
+    return Cube
+
+def LeftI():
+    Cube = copy.deepcopy(CubeClick)
+    # Front face (face 0)
+    Cube[3][0] = CubeClick[3][6]
+    Cube[3][1] = CubeClick[3][3]
+    Cube[3][2] = CubeClick[3][0]
+    Cube[3][3] = CubeClick[3][7]
+    Cube[3][4] = CubeClick[3][4]
+    Cube[3][5] = CubeClick[3][1]
+    Cube[3][6] = CubeClick[3][8]
+    Cube[3][7] = CubeClick[3][5]
+    Cube[3][8] = CubeClick[3][2]
+    # Right face (face 1)
+    Cube[0][0] = CubeClick[5][2]
+    Cube[0][1] = CubeClick[5][5]
+    Cube[0][2] = CubeClick[5][8]
+    # Left face (face 3)
+    Cube[4][0] = CubeClick[0][2]
+    Cube[4][3] = CubeClick[0][1]
+    Cube[4][6] = CubeClick[0][0]
+    # Top face (face 4)
+    Cube[2][6] = CubeClick[4][0]
+    Cube[2][7] = CubeClick[4][3]
+    Cube[2][8] = CubeClick[4][6]
+    # Bottom face (face 5)
+    Cube[5][2] = CubeClick[2][8]
+    Cube[5][5] = CubeClick[2][7]
+    Cube[5][8] = CubeClick[2][6]
+
+    return Cube
+
+def Right():
+    Cube = copy.deepcopy(CubeClick)
+    # Front face (face 0)
+    Cube[1][0] = CubeClick[1][2]
+    Cube[1][1] = CubeClick[1][5]
+    Cube[1][2] = CubeClick[1][8]
+    Cube[1][3] = CubeClick[1][1]
+    Cube[1][4] = CubeClick[1][4]
+    Cube[1][5] = CubeClick[1][7]
+    Cube[1][6] = CubeClick[1][0]
+    Cube[1][7] = CubeClick[1][3]
+    Cube[1][8] = CubeClick[1][6]
+    # Right face (face 1)
+    Cube[0][6] = CubeClick[5][0]
+    Cube[0][7] = CubeClick[5][3]
+    Cube[0][8] = CubeClick[5][6]
+    # Left face (face 3)
+    Cube[4][2] = CubeClick[0][8]
+    Cube[4][5] = CubeClick[0][7]
+    Cube[4][8] = CubeClick[0][6]
+    # Top face (face 4)
+    Cube[2][0] = CubeClick[4][2]
+    Cube[2][1] = CubeClick[4][5]
+    Cube[2][2] = CubeClick[4][8]
+    # Bottom face (face 5)
+    Cube[5][0] = CubeClick[2][2]
+    Cube[5][3] = CubeClick[2][1]
+    Cube[5][6] = CubeClick[2][0]
+
+    return Cube
+
+def RightI():
+    Cube = copy.deepcopy(CubeClick)
+    # Front face (face 0)
+    Cube[1][0] = CubeClick[1][6]
+    Cube[1][1] = CubeClick[1][3]
+    Cube[1][2] = CubeClick[1][0]
+    Cube[1][3] = CubeClick[1][7]
+    Cube[1][4] = CubeClick[1][4]
+    Cube[1][5] = CubeClick[1][1]
+    Cube[1][6] = CubeClick[1][8]
+    Cube[1][7] = CubeClick[1][5]
+    Cube[1][8] = CubeClick[1][2]
+    # Right face (face 1)
+    Cube[0][6] = CubeClick[4][8]
+    Cube[0][7] = CubeClick[4][5]
+    Cube[0][8] = CubeClick[4][2]
+    # Left face (face 3)
+    Cube[4][2] = CubeClick[2][0]
+    Cube[4][5] = CubeClick[2][1]
+    Cube[4][8] = CubeClick[2][2]
+    # Top face (face 4)
+    Cube[2][0] = CubeClick[5][6]
+    Cube[2][1] = CubeClick[5][3]
+    Cube[2][2] = CubeClick[5][0]
+    # Bottom face (face 5)
+    Cube[5][0] = CubeClick[0][6]
+    Cube[5][3] = CubeClick[0][7]
+    Cube[5][6] = CubeClick[0][8]
+
+    return Cube
+
+def Up():
+    Cube = copy.deepcopy(CubeClick)
+    # Front face (face 0)
+    Cube[1][0] = CubeClick[1][6]
+    Cube[1][1] = CubeClick[1][3]
+    Cube[1][2] = CubeClick[1][0]
+    Cube[1][3] = CubeClick[1][7]
+    Cube[1][4] = CubeClick[1][4]
+    Cube[1][5] = CubeClick[1][1]
+    Cube[1][6] = CubeClick[1][8]
+    Cube[1][7] = CubeClick[1][5]
+    Cube[1][8] = CubeClick[1][2]
+    # Right face (face 1)
+    Cube[0][6] = CubeClick[4][8]
+    Cube[0][7] = CubeClick[4][5]
+    Cube[0][8] = CubeClick[4][2]
+    # Left face (face 3)
+    Cube[4][2] = CubeClick[2][0]
+    Cube[4][5] = CubeClick[2][1]
+    Cube[4][8] = CubeClick[2][2]
+    # Top face (face 4)
+    Cube[2][0] = CubeClick[5][6]
+    Cube[2][1] = CubeClick[5][3]
+    Cube[2][2] = CubeClick[5][0]
+    # Bottom face (face 5)
+    Cube[5][0] = CubeClick[0][6]
+    Cube[5][3] = CubeClick[0][7]
+    Cube[5][6] = CubeClick[0][8]
+
+    return Cube  
+
+def Solve():
+    global CubeClick
+
+    # Front - F 
+    Front()
+    # Front Invers - F'
+    FrontI()
+    # Left - L 
+    Left()
+    # Left Invers - L'
+    LeftI()
+    # Right - R
+    Right()
+    # Right Invers - R'
+    RightI()
+    # Up - U
+    Up()
+    # Up Invers - U'
+    # Down - D
+    # Down Invers - D'
+    
 
 def GameMenu():
     global InGame, InMenu, GameMenuCount, StickerLst, CubeClick
@@ -825,6 +1063,9 @@ def GameMenu():
             # Check if Scrambel is possible 
             elif SolveBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight)).collidepoint(x, y):
                 CubeCheck()
+                #CubeClick = Front()
+                #CubeClick = FrontI()
+                CubeClick = RightI()
 
             # Green 
             elif x > cubeDisX + 10 and x < cubeDisX+75: 
@@ -1105,8 +1346,6 @@ def GameMenu():
     if GameMenuCount%2 == 0:
         pygame.mixer.music.pause()
 
-
-
 clock = pygame.time.Clock()
 done = False
 while not done: 
@@ -1118,7 +1357,6 @@ while not done:
 
     elif InGame == True:
         GameMenu()
-        
         
     # updates the frames of the game 
     pygame.display.update() 
