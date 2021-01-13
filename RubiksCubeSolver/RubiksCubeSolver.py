@@ -763,244 +763,374 @@ def CubeCheck():
 
     print(Corner)
     
-def Front():
-    Cube = copy.deepcopy(CubeClick)
+def Front(CubeClicki):
+    Cube = copy.deepcopy(CubeClicki)
     # Front face (face 0)
-    Cube[0][0] = CubeClick[0][2]
-    Cube[0][1] = CubeClick[0][5]
-    Cube[0][2] = CubeClick[0][8]
-    Cube[0][3] = CubeClick[0][1]
-    Cube[0][4] = CubeClick[0][4]
-    Cube[0][5] = CubeClick[0][7]
-    Cube[0][6] = CubeClick[0][0]
-    Cube[0][7] = CubeClick[0][3]
-    Cube[0][8] = CubeClick[0][6]
+    Cube[0][0] = CubeClicki[0][2]
+    Cube[0][1] = CubeClicki[0][5]
+    Cube[0][2] = CubeClicki[0][8]
+    Cube[0][3] = CubeClicki[0][1]
+    Cube[0][4] = CubeClicki[0][4]
+    Cube[0][5] = CubeClicki[0][7]
+    Cube[0][6] = CubeClicki[0][0]
+    Cube[0][7] = CubeClicki[0][3]
+    Cube[0][8] = CubeClicki[0][6]
     # Right face (face 1)
-    Cube[1][0] = CubeClick[4][0]
-    Cube[1][1] = CubeClick[4][1]
-    Cube[1][2] = CubeClick[4][2]
+    Cube[1][0] = CubeClicki[4][0]
+    Cube[1][1] = CubeClicki[4][1]
+    Cube[1][2] = CubeClicki[4][2]
     # Left face (face 3)
-    Cube[3][6] = CubeClick[5][2]
-    Cube[3][7] = CubeClick[5][1]
-    Cube[3][8] = CubeClick[5][0]
+    Cube[3][6] = CubeClicki[5][2]
+    Cube[3][7] = CubeClicki[5][1]
+    Cube[3][8] = CubeClicki[5][0]
     # Top face (face 4)
-    Cube[4][0] = CubeClick[3][8]
-    Cube[4][1] = CubeClick[3][7]
-    Cube[4][2] = CubeClick[3][6]
+    Cube[4][0] = CubeClicki[3][8]
+    Cube[4][1] = CubeClicki[3][7]
+    Cube[4][2] = CubeClicki[3][6]
     # Bottom face (face 5)
-    Cube[5][2] = CubeClick[1][2]
-    Cube[5][1] = CubeClick[1][1]
-    Cube[5][0] = CubeClick[1][0]
+    Cube[5][2] = CubeClicki[1][2]
+    Cube[5][1] = CubeClicki[1][1]
+    Cube[5][0] = CubeClicki[1][0]
 
     return Cube
 
-def FrontI():
-    Cube = copy.deepcopy(CubeClick)
+def FrontI(CubeClicki):
+    Cube = copy.deepcopy(CubeClicki)
     # Front face (face 0)
-    Cube[0][0] = CubeClick[0][6]
-    Cube[0][1] = CubeClick[0][3]
-    Cube[0][2] = CubeClick[0][0]
-    Cube[0][3] = CubeClick[0][7]
-    Cube[0][4] = CubeClick[0][4]
-    Cube[0][5] = CubeClick[0][1]
-    Cube[0][6] = CubeClick[0][8]
-    Cube[0][7] = CubeClick[0][5]
-    Cube[0][8] = CubeClick[0][2]
+    Cube[0][0] = CubeClicki[0][6]
+    Cube[0][1] = CubeClicki[0][3]
+    Cube[0][2] = CubeClicki[0][0]
+    Cube[0][3] = CubeClicki[0][7]
+    Cube[0][4] = CubeClicki[0][4]
+    Cube[0][5] = CubeClicki[0][1]
+    Cube[0][6] = CubeClicki[0][8]
+    Cube[0][7] = CubeClicki[0][5]
+    Cube[0][8] = CubeClicki[0][2]
     # Right face (face 1)
-    Cube[1][0] = CubeClick[5][0]
-    Cube[1][1] = CubeClick[5][1]
-    Cube[1][2] = CubeClick[5][2]
+    Cube[1][0] = CubeClicki[5][0]
+    Cube[1][1] = CubeClicki[5][1]
+    Cube[1][2] = CubeClicki[5][2]
     # Left face (face 3)
-    Cube[3][6] = CubeClick[4][2]
-    Cube[3][7] = CubeClick[4][1]
-    Cube[3][8] = CubeClick[4][0]
+    Cube[3][6] = CubeClicki[4][2]
+    Cube[3][7] = CubeClicki[4][1]
+    Cube[3][8] = CubeClicki[4][0]
     # Top face (face 4)
-    Cube[4][0] = CubeClick[1][0]
-    Cube[4][1] = CubeClick[1][1]
-    Cube[4][2] = CubeClick[1][2]
+    Cube[4][0] = CubeClicki[1][0]
+    Cube[4][1] = CubeClicki[1][1]
+    Cube[4][2] = CubeClicki[1][2]
     # Bottom face (face 5)
-    Cube[5][2] = CubeClick[3][6]
-    Cube[5][1] = CubeClick[3][7]
-    Cube[5][0] = CubeClick[3][8]
+    Cube[5][2] = CubeClicki[3][6]
+    Cube[5][1] = CubeClicki[3][7]
+    Cube[5][0] = CubeClicki[3][8]
 
     return Cube
 
-def Left():
-    Cube = copy.deepcopy(CubeClick)
+def Left(CubeClicki):
+    Cube = copy.deepcopy(CubeClicki)
     # Front face (face 0)
-    Cube[3][0] = CubeClick[3][2]
-    Cube[3][1] = CubeClick[3][5]
-    Cube[3][2] = CubeClick[3][8]
-    Cube[3][3] = CubeClick[3][1]
-    Cube[3][4] = CubeClick[3][4]
-    Cube[3][5] = CubeClick[3][7]
-    Cube[3][6] = CubeClick[3][0]
-    Cube[3][7] = CubeClick[3][3]
-    Cube[3][8] = CubeClick[3][6]
+    Cube[3][0] = CubeClicki[3][2]
+    Cube[3][1] = CubeClicki[3][5]
+    Cube[3][2] = CubeClicki[3][8]
+    Cube[3][3] = CubeClicki[3][1]
+    Cube[3][4] = CubeClicki[3][4]
+    Cube[3][5] = CubeClicki[3][7]
+    Cube[3][6] = CubeClicki[3][0]
+    Cube[3][7] = CubeClicki[3][3]
+    Cube[3][8] = CubeClicki[3][6]
     # Right face (face 1)
-    Cube[0][0] = CubeClick[4][6]
-    Cube[0][1] = CubeClick[4][3]
-    Cube[0][2] = CubeClick[4][0]
+    Cube[0][0] = CubeClicki[4][6]
+    Cube[0][1] = CubeClicki[4][3]
+    Cube[0][2] = CubeClicki[4][0]
     # Left face (face 3)
-    Cube[4][0] = CubeClick[2][6]
-    Cube[4][3] = CubeClick[2][7]
-    Cube[4][6] = CubeClick[2][8]
+    Cube[4][0] = CubeClicki[2][6]
+    Cube[4][3] = CubeClicki[2][7]
+    Cube[4][6] = CubeClicki[2][8]
     # Top face (face 4)
-    Cube[2][6] = CubeClick[5][8]
-    Cube[2][7] = CubeClick[5][5]
-    Cube[2][8] = CubeClick[5][2]
+    Cube[2][6] = CubeClicki[5][8]
+    Cube[2][7] = CubeClicki[5][5]
+    Cube[2][8] = CubeClicki[5][2]
     # Bottom face (face 5)
-    Cube[5][2] = CubeClick[2][8]
-    Cube[5][5] = CubeClick[2][7]
-    Cube[5][8] = CubeClick[2][6]
+    Cube[5][2] = CubeClicki[2][8]
+    Cube[5][5] = CubeClicki[2][7]
+    Cube[5][8] = CubeClicki[2][6]
 
     return Cube
 
-def LeftI():
-    Cube = copy.deepcopy(CubeClick)
+def LeftI(CubeClicki):
+    Cube = copy.deepcopy(CubeClicki)
     # Front face (face 0)
-    Cube[3][0] = CubeClick[3][6]
-    Cube[3][1] = CubeClick[3][3]
-    Cube[3][2] = CubeClick[3][0]
-    Cube[3][3] = CubeClick[3][7]
-    Cube[3][4] = CubeClick[3][4]
-    Cube[3][5] = CubeClick[3][1]
-    Cube[3][6] = CubeClick[3][8]
-    Cube[3][7] = CubeClick[3][5]
-    Cube[3][8] = CubeClick[3][2]
+    Cube[3][0] = CubeClicki[3][6]
+    Cube[3][1] = CubeClicki[3][3]
+    Cube[3][2] = CubeClicki[3][0]
+    Cube[3][3] = CubeClicki[3][7]
+    Cube[3][4] = CubeClicki[3][4]
+    Cube[3][5] = CubeClicki[3][1]
+    Cube[3][6] = CubeClicki[3][8]
+    Cube[3][7] = CubeClicki[3][5]
+    Cube[3][8] = CubeClicki[3][2]
     # Right face (face 1)
-    Cube[0][0] = CubeClick[5][2]
-    Cube[0][1] = CubeClick[5][5]
-    Cube[0][2] = CubeClick[5][8]
+    Cube[0][0] = CubeClicki[5][2]
+    Cube[0][1] = CubeClicki[5][5]
+    Cube[0][2] = CubeClicki[5][8]
     # Left face (face 3)
-    Cube[4][0] = CubeClick[0][2]
-    Cube[4][3] = CubeClick[0][1]
-    Cube[4][6] = CubeClick[0][0]
+    Cube[4][0] = CubeClicki[0][2]
+    Cube[4][3] = CubeClicki[0][1]
+    Cube[4][6] = CubeClicki[0][0]
     # Top face (face 4)
-    Cube[2][6] = CubeClick[4][0]
-    Cube[2][7] = CubeClick[4][3]
-    Cube[2][8] = CubeClick[4][6]
+    Cube[2][6] = CubeClicki[4][0]
+    Cube[2][7] = CubeClicki[4][3]
+    Cube[2][8] = CubeClicki[4][6]
     # Bottom face (face 5)
-    Cube[5][2] = CubeClick[2][8]
-    Cube[5][5] = CubeClick[2][7]
-    Cube[5][8] = CubeClick[2][6]
+    Cube[5][2] = CubeClicki[2][8]
+    Cube[5][5] = CubeClicki[2][7]
+    Cube[5][8] = CubeClicki[2][6]
 
     return Cube
 
-def Right():
-    Cube = copy.deepcopy(CubeClick)
+def Right(CubeClicki):
+    Cube = copy.deepcopy(CubeClicki)
     # Front face (face 0)
-    Cube[1][0] = CubeClick[1][2]
-    Cube[1][1] = CubeClick[1][5]
-    Cube[1][2] = CubeClick[1][8]
-    Cube[1][3] = CubeClick[1][1]
-    Cube[1][4] = CubeClick[1][4]
-    Cube[1][5] = CubeClick[1][7]
-    Cube[1][6] = CubeClick[1][0]
-    Cube[1][7] = CubeClick[1][3]
-    Cube[1][8] = CubeClick[1][6]
+    Cube[1][0] = CubeClicki[1][2]
+    Cube[1][1] = CubeClicki[1][5]
+    Cube[1][2] = CubeClicki[1][8]
+    Cube[1][3] = CubeClicki[1][1]
+    Cube[1][4] = CubeClicki[1][4]
+    Cube[1][5] = CubeClicki[1][7]
+    Cube[1][6] = CubeClicki[1][0]
+    Cube[1][7] = CubeClicki[1][3]
+    Cube[1][8] = CubeClicki[1][6]
     # Right face (face 1)
-    Cube[0][6] = CubeClick[5][0]
-    Cube[0][7] = CubeClick[5][3]
-    Cube[0][8] = CubeClick[5][6]
+    Cube[0][6] = CubeClicki[5][0]
+    Cube[0][7] = CubeClicki[5][3]
+    Cube[0][8] = CubeClicki[5][6]
     # Left face (face 3)
-    Cube[4][2] = CubeClick[0][8]
-    Cube[4][5] = CubeClick[0][7]
-    Cube[4][8] = CubeClick[0][6]
+    Cube[4][2] = CubeClicki[0][8]
+    Cube[4][5] = CubeClicki[0][7]
+    Cube[4][8] = CubeClicki[0][6]
     # Top face (face 4)
-    Cube[2][0] = CubeClick[4][2]
-    Cube[2][1] = CubeClick[4][5]
-    Cube[2][2] = CubeClick[4][8]
+    Cube[2][0] = CubeClicki[4][2]
+    Cube[2][1] = CubeClicki[4][5]
+    Cube[2][2] = CubeClicki[4][8]
     # Bottom face (face 5)
-    Cube[5][0] = CubeClick[2][2]
-    Cube[5][3] = CubeClick[2][1]
-    Cube[5][6] = CubeClick[2][0]
+    Cube[5][0] = CubeClicki[2][2]
+    Cube[5][3] = CubeClicki[2][1]
+    Cube[5][6] = CubeClicki[2][0]
 
     return Cube
 
-def RightI():
-    Cube = copy.deepcopy(CubeClick)
+def RightI(CubeClicki):
+    Cube = copy.deepcopy(CubeClicki)
     # Front face (face 0)
-    Cube[1][0] = CubeClick[1][6]
-    Cube[1][1] = CubeClick[1][3]
-    Cube[1][2] = CubeClick[1][0]
-    Cube[1][3] = CubeClick[1][7]
-    Cube[1][4] = CubeClick[1][4]
-    Cube[1][5] = CubeClick[1][1]
-    Cube[1][6] = CubeClick[1][8]
-    Cube[1][7] = CubeClick[1][5]
-    Cube[1][8] = CubeClick[1][2]
+    Cube[1][0] = CubeClicki[1][6]
+    Cube[1][1] = CubeClicki[1][3]
+    Cube[1][2] = CubeClicki[1][0]
+    Cube[1][3] = CubeClicki[1][7]
+    Cube[1][4] = CubeClicki[1][4]
+    Cube[1][5] = CubeClicki[1][1]
+    Cube[1][6] = CubeClicki[1][8]
+    Cube[1][7] = CubeClicki[1][5]
+    Cube[1][8] = CubeClicki[1][2]
     # Right face (face 1)
-    Cube[0][6] = CubeClick[4][8]
-    Cube[0][7] = CubeClick[4][5]
-    Cube[0][8] = CubeClick[4][2]
+    Cube[0][6] = CubeClicki[4][8]
+    Cube[0][7] = CubeClicki[4][5]
+    Cube[0][8] = CubeClicki[4][2]
     # Left face (face 3)
-    Cube[4][2] = CubeClick[2][0]
-    Cube[4][5] = CubeClick[2][1]
-    Cube[4][8] = CubeClick[2][2]
+    Cube[4][2] = CubeClicki[2][0]
+    Cube[4][5] = CubeClicki[2][1]
+    Cube[4][8] = CubeClicki[2][2]
     # Top face (face 4)
-    Cube[2][0] = CubeClick[5][6]
-    Cube[2][1] = CubeClick[5][3]
-    Cube[2][2] = CubeClick[5][0]
+    Cube[2][0] = CubeClicki[5][6]
+    Cube[2][1] = CubeClicki[5][3]
+    Cube[2][2] = CubeClicki[5][0]
     # Bottom face (face 5)
-    Cube[5][0] = CubeClick[0][6]
-    Cube[5][3] = CubeClick[0][7]
-    Cube[5][6] = CubeClick[0][8]
+    Cube[5][0] = CubeClicki[0][6]
+    Cube[5][3] = CubeClicki[0][7]
+    Cube[5][6] = CubeClicki[0][8]
 
     return Cube
 
-def Up():
-    Cube = copy.deepcopy(CubeClick)
+def Up(CubeClicki):
+    Cube = copy.deepcopy(CubeClicki)
     # Front face (face 0)
-    Cube[1][0] = CubeClick[1][6]
-    Cube[1][1] = CubeClick[1][3]
-    Cube[1][2] = CubeClick[1][0]
-    Cube[1][3] = CubeClick[1][7]
-    Cube[1][4] = CubeClick[1][4]
-    Cube[1][5] = CubeClick[1][1]
-    Cube[1][6] = CubeClick[1][8]
-    Cube[1][7] = CubeClick[1][5]
-    Cube[1][8] = CubeClick[1][2]
+    Cube[4][0] = CubeClicki[4][2]
+    Cube[4][1] = CubeClicki[4][5]
+    Cube[4][2] = CubeClicki[4][8]
+    Cube[4][3] = CubeClicki[4][1]
+    Cube[4][4] = CubeClicki[4][4]
+    Cube[4][5] = CubeClicki[4][7]
+    Cube[4][6] = CubeClicki[4][0]
+    Cube[4][7] = CubeClicki[4][3]
+    Cube[4][8] = CubeClicki[4][6]
     # Right face (face 1)
-    Cube[0][6] = CubeClick[4][8]
-    Cube[0][7] = CubeClick[4][5]
-    Cube[0][8] = CubeClick[4][2]
+    Cube[0][0] = CubeClicki[1][0]
+    Cube[0][3] = CubeClicki[1][3]
+    Cube[0][6] = CubeClicki[1][6]
     # Left face (face 3)
-    Cube[4][2] = CubeClick[2][0]
-    Cube[4][5] = CubeClick[2][1]
-    Cube[4][8] = CubeClick[2][2]
+    Cube[3][0] = CubeClicki[0][0]
+    Cube[3][3] = CubeClicki[0][3]
+    Cube[3][6] = CubeClicki[0][6]
     # Top face (face 4)
-    Cube[2][0] = CubeClick[5][6]
-    Cube[2][1] = CubeClick[5][3]
-    Cube[2][2] = CubeClick[5][0]
+    Cube[2][0] = CubeClicki[3][0]
+    Cube[2][3] = CubeClicki[3][3]
+    Cube[2][6] = CubeClicki[3][6]
     # Bottom face (face 5)
-    Cube[5][0] = CubeClick[0][6]
-    Cube[5][3] = CubeClick[0][7]
-    Cube[5][6] = CubeClick[0][8]
+    Cube[1][0] = CubeClicki[2][0]
+    Cube[1][3] = CubeClicki[2][3]
+    Cube[1][6] = CubeClicki[2][6]
 
     return Cube  
 
+def UpI(CubeClicki):
+    Cube = copy.deepcopy(CubeClicki)
+    # Front face (face 0)
+    Cube[4][0] = CubeClicki[4][6]
+    Cube[4][1] = CubeClicki[4][3]
+    Cube[4][2] = CubeClicki[4][0]
+    Cube[4][3] = CubeClicki[4][7]
+    Cube[4][4] = CubeClicki[4][4]
+    Cube[4][5] = CubeClicki[4][1]
+    Cube[4][6] = CubeClicki[4][8]
+    Cube[4][7] = CubeClicki[4][5]
+    Cube[4][8] = CubeClicki[4][2]
+    # Right face (face 1)
+    Cube[0][0] = CubeClicki[3][0]
+    Cube[0][3] = CubeClicki[3][3]
+    Cube[0][6] = CubeClicki[3][6]
+    # Left face (face 3)
+    Cube[3][0] = CubeClicki[2][0]
+    Cube[3][3] = CubeClicki[2][3]
+    Cube[3][6] = CubeClicki[2][6]
+    # Top face (face 4)
+    Cube[2][0] = CubeClicki[1][0]
+    Cube[2][3] = CubeClicki[1][3]
+    Cube[2][6] = CubeClicki[1][6]
+    # Bottom face (face 5)
+    Cube[1][0] = CubeClicki[0][0]
+    Cube[1][3] = CubeClicki[0][3]
+    Cube[1][6] = CubeClicki[0][6]
+
+    return Cube  
+
+def Down(CubeClicki):
+    Cube = copy.deepcopy(CubeClicki)
+    # Front face (face 0)
+    Cube[5][0] = CubeClicki[5][2]
+    Cube[5][1] = CubeClicki[5][5]
+    Cube[5][2] = CubeClicki[5][8]
+    Cube[5][3] = CubeClicki[5][1]
+    Cube[5][4] = CubeClicki[5][4]
+    Cube[5][5] = CubeClicki[5][7]
+    Cube[5][6] = CubeClicki[5][0]
+    Cube[5][7] = CubeClicki[5][3]
+    Cube[5][8] = CubeClicki[5][6]
+    # Right face (face 1)
+    Cube[0][2] = CubeClicki[3][2]
+    Cube[0][5] = CubeClicki[3][5]
+    Cube[0][8] = CubeClicki[3][8]
+    # Left face (face 3)
+    Cube[3][2] = CubeClicki[2][2]
+    Cube[3][5] = CubeClicki[2][5]
+    Cube[3][8] = CubeClicki[2][8]
+    # Top face (face 4)
+    Cube[2][2] = CubeClicki[1][2]
+    Cube[2][5] = CubeClicki[1][5]
+    Cube[2][8] = CubeClicki[1][8]
+    # Bottom face (face 5)
+    Cube[1][2] = CubeClicki[0][2]
+    Cube[1][5] = CubeClicki[0][5]
+    Cube[1][8] = CubeClicki[0][8]
+
+    return Cube 
+
+def DownI(CubeClicki):
+    Cube = copy.deepcopy(CubeClicki)
+    # Front face (face 0)
+    Cube[5][0] = CubeClicki[5][6]
+    Cube[5][1] = CubeClicki[5][3]
+    Cube[5][2] = CubeClicki[5][0]
+    Cube[5][3] = CubeClicki[5][7]
+    Cube[5][4] = CubeClicki[5][4]
+    Cube[5][5] = CubeClicki[5][1]
+    Cube[5][6] = CubeClicki[5][8]
+    Cube[5][7] = CubeClicki[5][5]
+    Cube[5][8] = CubeClicki[5][2]
+    # Right face (face 1)
+    Cube[0][2] = CubeClicki[1][2]
+    Cube[0][5] = CubeClicki[1][5]
+    Cube[0][8] = CubeClicki[1][8]
+    # Left face (face 3)
+    Cube[3][2] = CubeClicki[0][2]
+    Cube[3][5] = CubeClicki[0][5]
+    Cube[3][8] = CubeClicki[0][8]
+    # Top face (face 4)
+    Cube[2][2] = CubeClicki[3][2]
+    Cube[2][5] = CubeClicki[3][5]
+    Cube[2][8] = CubeClicki[3][8]
+    # Bottom face (face 5)
+    Cube[1][2] = CubeClicki[2][2]
+    Cube[1][5] = CubeClicki[2][5]
+    Cube[1][8] = CubeClicki[2][8]
+
+    return Cube 
+
 def Solve():
     global CubeClick
-
     # Front - F 
-    Front()
+    #Front()
     # Front Invers - F'
-    FrontI()
+    #FrontI()
     # Left - L 
-    Left()
+    #Left()
     # Left Invers - L'
-    LeftI()
+    #LeftI()
     # Right - R
-    Right()
+    #Right()
     # Right Invers - R'
-    RightI()
+    #RightI()
     # Up - U
-    Up()
+    #Up()
     # Up Invers - U'
+    #UpI()
     # Down - D
+    #Down()
     # Down Invers - D'
-    
+    #DownI()
+
+def Scrambel():
+    global CubeClick
+    randnum = [randint(0,9) for i in range(3)]
+
+    for i in range(len(randnum)):
+        if randnum[i] == 0:
+            CubeClick = Left(CubeClick)
+            print('left')
+        elif randnum[i] == 1:
+            CubeClick = LeftI(CubeClick)
+            print('leftI')
+        elif randnum[i] == 2:
+            CubeClick = Right(CubeClick)
+            print('right')
+        elif randnum[i] == 3:
+            CubeClick = RightI(CubeClick)
+            print('rightI')
+        elif randnum[i] == 4:
+            CubeClick = Up(CubeClick)
+            print('up')
+        elif randnum[i] == 5:
+            CubeClick = UpI(CubeClick)
+            print('upI')
+        elif randnum[i] == 6:
+            CubeClick = Down(CubeClick)
+            print('Down')
+        elif randnum[i] == 7:
+            CubeClick = DownI(CubeClick)
+            print('DownI')
+        elif randnum[i] == 8:
+            CubeClick = Front(CubeClick)
+            print('Front')
+        elif randnum[i] == 9:
+            CubeClick = FrontI(CubeClick)
+            print('FrontI')
 
 def GameMenu():
     global InGame, InMenu, GameMenuCount, StickerLst, CubeClick
@@ -1063,9 +1193,7 @@ def GameMenu():
             # Check if Scrambel is possible 
             elif SolveBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight)).collidepoint(x, y):
                 CubeCheck()
-                #CubeClick = Front()
-                #CubeClick = FrontI()
-                CubeClick = RightI()
+                Scrambel()
 
             # Green 
             elif x > cubeDisX + 10 and x < cubeDisX+75: 
