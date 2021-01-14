@@ -145,6 +145,14 @@ SolveButtonHeight = math.floor(146*scaleSBut)
 SolveButt = pygame.image.load('assets/Solve.png')
 SolveBut = pygame.transform.scale(SolveButt, (SolveButtonWidth, SolveButtonHeight))
 
+# Scramble Button 
+ScrambleBut = 1
+ScrambleButtonWidth = math.floor(400*scaleSBut)
+ScrambleButtonHeight = math.floor(146*scaleSBut)
+ScrambleButt = pygame.image.load('assets/Scramble.png')
+ScrambleBut = pygame.transform.scale(ScrambleButt, (ScrambleButtonWidth, ScrambleButtonHeight))
+
+
 # Home Button 
 scalerHome = 6
 HomeButWidth = math.floor(11*scalerHome)
@@ -1140,6 +1148,8 @@ def GameMenu():
 
     # Draw Solve Button
     screen.blit(SolveBut, (width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight))
+    # draw Scramble
+    screen.blit(ScrambleBut, (width-SolveButtonWidth - 20, height - 2*SolveButtonHeight - 100 + TitleBarHeight))
 
     # Draw Title Bar 
     for x in range(0, width, TitleBarWidth):
@@ -1193,6 +1203,8 @@ def GameMenu():
             # Check if Scrambel is possible 
             elif SolveBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight)).collidepoint(x, y):
                 CubeCheck()
+            # Scrambel
+            elif ScrambleBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - 2*SolveButtonHeight - 100 + TitleBarHeight)).collidepoint(x, y):
                 Scrambel()
 
             # Green 
