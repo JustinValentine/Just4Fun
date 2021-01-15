@@ -139,14 +139,14 @@ CubeFoldt = pygame.image.load('assets/CubeFold.png')
 CubeFold = pygame.transform.scale(CubeFoldt,(CubeFoldWidth, CubeFoldHeight))
 
 # Solve Button 
-scaleSBut = 1
+scaleSBut = 0.75
 SolveButtonWidth = math.floor(400*scaleSBut)
 SolveButtonHeight = math.floor(146*scaleSBut)
 SolveButt = pygame.image.load('assets/Solve.png')
 SolveBut = pygame.transform.scale(SolveButt, (SolveButtonWidth, SolveButtonHeight))
 
 # Scramble Button 
-ScrambleBut = 1
+ScrambleBut = 0.75
 ScrambleButtonWidth = math.floor(400*scaleSBut)
 ScrambleButtonHeight = math.floor(146*scaleSBut)
 ScrambleButt = pygame.image.load('assets/Scramble.png')
@@ -1081,64 +1081,33 @@ def DownI(CubeClicki):
 
     return Cube 
 
-def Solve():
-    global CubeClick
-    # Front - F 
-    #Front()
-    # Front Invers - F'
-    #FrontI()
-    # Left - L 
-    #Left()
-    # Left Invers - L'
-    #LeftI()
-    # Right - R
-    #Right()
-    # Right Invers - R'
-    #RightI()
-    # Up - U
-    #Up()
-    # Up Invers - U'
-    #UpI()
-    # Down - D
-    #Down()
-    # Down Invers - D'
-    #DownI()
-
 def Scrambel():
     global CubeClick
-    randnum = [randint(0,9) for i in range(3)]
+    randnum = [randint(0,9) for i in range(20)]
 
     for i in range(len(randnum)):
         if randnum[i] == 0:
             CubeClick = Left(CubeClick)
-            print('left')
         elif randnum[i] == 1:
             CubeClick = LeftI(CubeClick)
-            print('leftI')
         elif randnum[i] == 2:
             CubeClick = Right(CubeClick)
-            print('right')
         elif randnum[i] == 3:
             CubeClick = RightI(CubeClick)
-            print('rightI')
         elif randnum[i] == 4:
             CubeClick = Up(CubeClick)
-            print('up')
         elif randnum[i] == 5:
             CubeClick = UpI(CubeClick)
-            print('upI')
         elif randnum[i] == 6:
             CubeClick = Down(CubeClick)
-            print('Down')
         elif randnum[i] == 7:
             CubeClick = DownI(CubeClick)
-            print('DownI')
         elif randnum[i] == 8:
             CubeClick = Front(CubeClick)
-            print('Front')
         elif randnum[i] == 9:
             CubeClick = FrontI(CubeClick)
-            print('FrontI')
+def solve():
+    pass
 
 def GameMenu():
     global InGame, InMenu, GameMenuCount, StickerLst, CubeClick
