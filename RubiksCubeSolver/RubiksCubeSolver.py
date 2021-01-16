@@ -858,9 +858,9 @@ def Left(CubeClicki):
     Cube[2][7] = CubeClicki[5][5]
     Cube[2][8] = CubeClicki[5][2]
     # Bottom face (face 5)
-    Cube[5][2] = CubeClicki[2][8]
-    Cube[5][5] = CubeClicki[2][7]
-    Cube[5][8] = CubeClicki[2][6]
+    Cube[5][2] = CubeClicki[0][0]
+    Cube[5][5] = CubeClicki[0][1]
+    Cube[5][8] = CubeClicki[0][2]
 
     return Cube
 
@@ -1084,7 +1084,6 @@ def DownI(CubeClicki):
 def Scrambel():
     global CubeClick
     randnum = [randint(0,9) for i in range(20)]
-
     for i in range(len(randnum)):
         if randnum[i] == 0:
             CubeClick = Left(CubeClick)
