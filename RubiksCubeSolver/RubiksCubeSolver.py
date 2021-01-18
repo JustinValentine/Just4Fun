@@ -1105,6 +1105,98 @@ def Scrambel():
             CubeClick = Front(CubeClick)
         elif randnum[i] == 9:
             CubeClick = FrontI(CubeClick)
+def FindWhite():
+    facelst = [0,1,2,4,5]
+    piecelst = [1,3,5,7]
+    for i in facelst:
+        for j in piecelst:
+            if CubeClick[i][j]%6 == 1:
+                retlist = [i,j]
+                return retlist
+    
+def WhiteToYellow(loc):
+    global CubeClick
+    i = loc[0]
+    j = loc[1]
+    if loc[0] == 0:
+        if loc[1] == 1:
+            move = [3, i, j, Front, Up]
+            return move
+        elif loc[1] == 3: 
+            move = [3, i, j, Up]
+            return move
+        elif loc[1] == 5:
+            move = [5, i, j, DownI]
+            return move
+        elif loc[1] == 7:
+            move = [3, i, j, FrontI, Up]
+            return move 
+
+    elif loc[0] == 4:
+        if loc[1] == 1:
+            move = [7, i, j, FrontI]
+            return move
+        elif loc[1] == 3:
+            move = [7, i, j, UpI, FrontI] 
+            return move
+        elif loc[1] == 5:
+            move = [7, i, j, Up, FrontI]
+            return move
+        elif loc[1] == 7:  
+            move = [7, i, j, Up, Up, FrontI]
+            return move 
+
+    elif loc[0] == 2:
+        if loc[1] == 1:
+            move = [7, i, j, RightI, Up, FrontI]
+            return move
+        elif loc[1] == 3: 
+            move = [3, i, j, UpI]
+            return move
+        elif loc[1] == 5:
+            move = [5, i, j, Down]
+            return move
+        elif loc[1] == 7:  
+            move = [7, i, j, Left, UpI, FrontI]
+            return move
+
+    elif loc[0] == 5:
+        if loc[1] == 1:
+            move = [7, i, j, Front]
+            return move
+        elif loc[1] == 3: 
+            move = [7, i, j, DownI, Front]
+            return move
+        elif loc[1] == 5:
+            move = [7, i, j, Down, Front]
+            return move
+        elif loc[1] == 7: 
+            move = [7, i, j, Down, Down, Front] 
+            return move
+
+    elif loc[0] == 1:
+        if loc[1] == 1:
+            move = [7, i, j, Front, Front]
+            return move
+        elif loc[1] == 3: 
+            move = [3, i, j, Up, Up]
+            return move
+        elif loc[1] == 5:
+            move = [5, i, j, DownI, DownI]
+            return move
+        elif loc[1] == 7:  
+            move = [5, i, j, Right, DownI, DownI]
+
+def CheckTop():
+
+# Step 1
+def TopDaisy():
+    location = FindWhite()
+    print(location)
+    MoveSet = WhiteToYellow(location)
+    CheckTop(MoveSet)
+    
+
 def solve():
     pass
 
@@ -1171,6 +1263,7 @@ def GameMenu():
             # Check if Scrambel is possible 
             elif SolveBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight)).collidepoint(x, y):
                 CubeCheck()
+                print(TopDaisy())
             # Scrambel
             elif ScrambleBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - 2*SolveButtonHeight - 100 + TitleBarHeight)).collidepoint(x, y):
                 Scrambel()
