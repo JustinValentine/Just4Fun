@@ -204,1360 +204,1368 @@ Orange = pygame.transform.scale(Oranget, (StickerWidth, StickerHeight))
 
 
 def SkyTiles(w, h, skyW, skyH):
-    SkyHorzTile = math.ceil(w / skyW)
-    SkyVerTile = math.ceil(h / skyH) 
-    rand = [randint(1,3) for i in range(SkyHorzTile*SkyVerTile)]
-    return rand
+	SkyHorzTile = math.ceil(w / skyW)
+	SkyVerTile = math.ceil(h / skyH) 
+	rand = [randint(1,3) for i in range(SkyHorzTile*SkyVerTile)]
+	return rand
 
 def GrassTiles(w, GrassW):
-    GrassHorzTile = math.ceil(w / GrassW)
-    rand = [randint(1,3) for i in range(GrassHorzTile)]
-    return rand
+	GrassHorzTile = math.ceil(w / GrassW)
+	rand = [randint(1,3) for i in range(GrassHorzTile)]
+	return rand
 
 RandSky = SkyTiles(width, height, SkyWidth, SkyHeight)
 RandGrass = GrassTiles(width, GrassWidth)
 
 def DrawSky():
-    count = 0
-    for y in range(0, height, SkyHeight):
-        for x in range(0, width, SkyWidth):
-            rand = RandSky[count]
-            if rand == 1:
-                screen.blit( sky1, (x,y))
-            elif rand == 2:
-                screen.blit( sky2, (x,y))
-            elif rand == 3:
-                screen.blit( sky3, (x,y))
-            count = count + 1
+	count = 0
+	for y in range(0, height, SkyHeight):
+		for x in range(0, width, SkyWidth):
+			rand = RandSky[count]
+			if rand == 1:
+				screen.blit( sky1, (x,y))
+			elif rand == 2:
+				screen.blit( sky2, (x,y))
+			elif rand == 3:
+				screen.blit( sky3, (x,y))
+			count = count + 1
 
 TitleCount = 0
 
 def title():
-    global TitleCount, InMenu, GameMenu
+	global TitleCount, InMenu, GameMenu
 
-    if Title.get_rect().collidepoint(pygame.mouse.get_pos()):
-        TitleCount = TitleCount + 1
-        screen.blit(Title1, (50, 50))
+	if Title.get_rect().collidepoint(pygame.mouse.get_pos()):
+		TitleCount = TitleCount + 1
+		screen.blit(Title1, (50, 50))
 
-        if TitleCount == 1:
-            pygame.mixer.Channel(0).play(pygame.mixer.Sound('assets/Heaven.wav'), maxtime=-1)
-            pygame.mixer.Channel(0).set_volume(1)
-        pygame.mixer.music.set_volume(0)
+		if TitleCount == 1:
+			pygame.mixer.Channel(0).play(pygame.mixer.Sound('assets/Heaven.wav'), maxtime=-1)
+			pygame.mixer.Channel(0).set_volume(1)
+		pygame.mixer.music.set_volume(0)
 
-    else:
-        screen.blit(Title, (50, 50))
-        screen.blit(light, (0,0))
-        TitleCount = 0
-        pygame.mixer.Channel(0).set_volume(0)
-        pygame.mixer.music.set_volume(0.5)
+	else:
+		screen.blit(Title, (50, 50))
+		screen.blit(light, (0,0))
+		TitleCount = 0
+		pygame.mixer.Channel(0).set_volume(0)
+		pygame.mixer.music.set_volume(0.5)
 
 def MainMenu():
-    global FireFrame, CubeFrame, InGame, InMenu, done
+	global FireFrame, CubeFrame, InGame, InMenu, done
 
-    # Draw Sky
-    DrawSky()
+	# Draw Sky
+	DrawSky()
 
-    # Draw Grass 
-    count = 0
-    for x in range(0, width, GrassWidth):
-        rand = RandGrass[count]
-        if rand == 1:
-            screen.blit( grass2, (x, height-GrassHeight))
-        elif rand == 2:
-            screen.blit( grass2, (x, height-GrassHeight))
-        elif rand == 3:
-            screen.blit( grass3, (x, height-GrassHeight))
-        count = count + 1
+	# Draw Grass 
+	count = 0
+	for x in range(0, width, GrassWidth):
+		rand = RandGrass[count]
+		if rand == 1:
+			screen.blit( grass2, (x, height-GrassHeight))
+		elif rand == 2:
+			screen.blit( grass2, (x, height-GrassHeight))
+		elif rand == 3:
+			screen.blit( grass3, (x, height-GrassHeight))
+		count = count + 1
 
-    # Draw Cube
-    screen.blit(CubeLst[math.ceil((CubeFrame%12)/3)], (width-CubeWidth, height-GrassHeight-CubeHeight+40))
-    screen.blit(CubeLsts[math.ceil((CubeFrame%12)/3)], (width-CubeWidth-FireWidth-CubeWidths+80, height-GrassHeight-CubeHeights+40))
-    CubeFrame = CubeFrame + 1
+	# Draw Cube
+	screen.blit(CubeLst[math.ceil((CubeFrame%12)/3)], (width-CubeWidth, height-GrassHeight-CubeHeight+40))
+	screen.blit(CubeLsts[math.ceil((CubeFrame%12)/3)], (width-CubeWidth-FireWidth-CubeWidths+80, height-GrassHeight-CubeHeights+40))
+	CubeFrame = CubeFrame + 1
 
-    # Draw Fire 
-    screen.blit(FireLst[FireFrame%12], (width-CubeWidth-FireWidth+45, height-GrassHeight-FireHeight+95))
-    FireFrame = FireFrame + 1
+	# Draw Fire 
+	screen.blit(FireLst[FireFrame%12], (width-CubeWidth-FireWidth+45, height-GrassHeight-FireHeight+95))
+	FireFrame = FireFrame + 1
 
-    # Draw Exit 
-    screen.blit(ExitButton, (width-ExitWidth, 0))
+	# Draw Exit 
+	screen.blit(ExitButton, (width-ExitWidth, 0))
 
-    # Draw Title
-    title()
+	# Draw Title
+	title()
 
-    for ev in pygame.event.get(): 
-        if ev.type == pygame.MOUSEBUTTONDOWN:
-            x, y = ev.pos
-            if Title1.get_rect(topleft=(50, 50)).collidepoint(x, y):
-                InMenu = False
-                InGame = True
-            elif ExitButton.get_rect(topleft=(width-ExitWidth, 0)).collidepoint(x, y):
-                done = True
+	for ev in pygame.event.get(): 
+		if ev.type == pygame.MOUSEBUTTONDOWN:
+			x, y = ev.pos
+			if Title1.get_rect(topleft=(50, 50)).collidepoint(x, y):
+				InMenu = False
+				InGame = True
+			elif ExitButton.get_rect(topleft=(width-ExitWidth, 0)).collidepoint(x, y):
+				done = True
 
 def StickerSel(y, cubeDisX, cubeDisY, xdis1, ydis1): 
-    if y > cubeDisY+ydis1 and y < cubeDisY+ydis1+65:
-        screen.blit(Sticker, (cubeDisX + xdis1, cubeDisY+ydis1))
-    elif y > cubeDisY+ydis1+65+10 and y < cubeDisY+ydis1+65+10+65:
-        screen.blit(Sticker, (cubeDisX + xdis1, cubeDisY+ydis1+65+10))
-    elif y > cubeDisY+ydis1+65+10+65+10 and y < cubeDisY+ydis1+65+10+65+10+65:
-        screen.blit(Sticker, (cubeDisX + xdis1, cubeDisY+ydis1+65+10+65+10)) 
+	if y > cubeDisY+ydis1 and y < cubeDisY+ydis1+65:
+		screen.blit(Sticker, (cubeDisX + xdis1, cubeDisY+ydis1))
+	elif y > cubeDisY+ydis1+65+10 and y < cubeDisY+ydis1+65+10+65:
+		screen.blit(Sticker, (cubeDisX + xdis1, cubeDisY+ydis1+65+10))
+	elif y > cubeDisY+ydis1+65+10+65+10 and y < cubeDisY+ydis1+65+10+65+10+65:
+		screen.blit(Sticker, (cubeDisX + xdis1, cubeDisY+ydis1+65+10+65+10)) 
 
 
 def DrawStick(i, j, cubeDisX, cubeDisY, DisX, DisY):
-    if CubeClick[i][j]%6 == 0:
-        screen.blit(Green, (cubeDisX + DisX, cubeDisY+DisY))
-    elif CubeClick[i][j]%6 == 1:
-        screen.blit(White, (cubeDisX + DisX, cubeDisY+DisY))
-    elif CubeClick[i][j]%6 == 2:
-        screen.blit(Blue, (cubeDisX + DisX, cubeDisY+DisY))
-    elif CubeClick[i][j]%6 == 3:
-        screen.blit(Yellow, (cubeDisX + DisX, cubeDisY+DisY))
-    elif CubeClick[i][j]%6 == 4:
-        screen.blit(Orange, (cubeDisX + DisX, cubeDisY+DisY))
-    elif CubeClick[i][j]%6 == 5:
-        screen.blit(Red, (cubeDisX + DisX, cubeDisY+DisY))
+	if CubeClick[i][j]%6 == 0:
+		screen.blit(Green, (cubeDisX + DisX, cubeDisY+DisY))
+	elif CubeClick[i][j]%6 == 1:
+		screen.blit(White, (cubeDisX + DisX, cubeDisY+DisY))
+	elif CubeClick[i][j]%6 == 2:
+		screen.blit(Blue, (cubeDisX + DisX, cubeDisY+DisY))
+	elif CubeClick[i][j]%6 == 3:
+		screen.blit(Yellow, (cubeDisX + DisX, cubeDisY+DisY))
+	elif CubeClick[i][j]%6 == 4:
+		screen.blit(Orange, (cubeDisX + DisX, cubeDisY+DisY))
+	elif CubeClick[i][j]%6 == 5:
+		screen.blit(Red, (cubeDisX + DisX, cubeDisY+DisY))
 
 GameMenuCount = 1
-              
+			  
 CubeClick = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [2, 2, 2, 2, 2, 2, 2, 2, 2],
-             [3, 3, 3, 3, 3, 3, 3, 3, 3],
-             [4, 4, 4, 4, 4, 4, 4, 4, 4],
-             [5, 5, 5, 5, 5, 5, 5, 5, 5]]
+			 [1, 1, 1, 1, 1, 1, 1, 1, 1],
+			 [2, 2, 2, 2, 2, 2, 2, 2, 2],
+			 [3, 3, 3, 3, 3, 3, 3, 3, 3],
+			 [4, 4, 4, 4, 4, 4, 4, 4, 4],
+			 [5, 5, 5, 5, 5, 5, 5, 5, 5]]
 
 def CubeCheck():
-    edge = 0
-    # Check Edges 
-    if CubeClick[0][1]%6==0 and (CubeClick[3][7]%6==3 or CubeClick[3][7]%6==4 or CubeClick[3][7]%6==1 or CubeClick[3][7]%6==5):
-        edge += 1
-        print('1')
-    elif CubeClick[0][1]%6==3 and (CubeClick[3][7]%6==5 or CubeClick[3][7]%6==4 or CubeClick[3][7]%6==2 or CubeClick[3][7]%6==0):
-        edge += 1
-        print('1')
-    elif CubeClick[0][1]%6==1 and (CubeClick[3][7]%6==5 or CubeClick[3][7]%6==4 or CubeClick[3][7]%6==2 or CubeClick[3][7]%6==0):
-        edge += 1
-        print('1')
-    elif CubeClick[0][1]%6==2 and (CubeClick[3][7]%6==3 or CubeClick[3][7]%6==4 or CubeClick[3][7]%6==1 or CubeClick[3][7]%6==5):
-        edge += 1
-        print('1')
-    elif CubeClick[0][1]%6==4 and (CubeClick[3][7]%6==0 or CubeClick[3][7]%6==1 or CubeClick[3][7]%6==2 or CubeClick[3][7]%6==3):
-        edge += 1
-        print('1')
-    elif CubeClick[0][1]%6==5 and (CubeClick[3][7]%6==0 or CubeClick[3][7]%6==1 or CubeClick[3][7]%6==2 or CubeClick[3][7]%6==3):
-        edge += 1
-        print('1')
+	edge = 0
+	# Check Edges 
+	if CubeClick[0][1]%6==0 and (CubeClick[3][7]%6==3 or CubeClick[3][7]%6==4 or CubeClick[3][7]%6==1 or CubeClick[3][7]%6==5):
+		edge += 1
+		print('1')
+	elif CubeClick[0][1]%6==3 and (CubeClick[3][7]%6==5 or CubeClick[3][7]%6==4 or CubeClick[3][7]%6==2 or CubeClick[3][7]%6==0):
+		edge += 1
+		print('1')
+	elif CubeClick[0][1]%6==1 and (CubeClick[3][7]%6==5 or CubeClick[3][7]%6==4 or CubeClick[3][7]%6==2 or CubeClick[3][7]%6==0):
+		edge += 1
+		print('1')
+	elif CubeClick[0][1]%6==2 and (CubeClick[3][7]%6==3 or CubeClick[3][7]%6==4 or CubeClick[3][7]%6==1 or CubeClick[3][7]%6==5):
+		edge += 1
+		print('1')
+	elif CubeClick[0][1]%6==4 and (CubeClick[3][7]%6==0 or CubeClick[3][7]%6==1 or CubeClick[3][7]%6==2 or CubeClick[3][7]%6==3):
+		edge += 1
+		print('1')
+	elif CubeClick[0][1]%6==5 and (CubeClick[3][7]%6==0 or CubeClick[3][7]%6==1 or CubeClick[3][7]%6==2 or CubeClick[3][7]%6==3):
+		edge += 1
+		print('1')
 
-    if CubeClick[0][3]%6==0 and (CubeClick[4][1]%6==3 or CubeClick[4][1]%6==4 or CubeClick[4][1]%6==1 or CubeClick[4][1]%6==5):
-        edge += 1
-        print('2')
-    elif CubeClick[0][3]%6==3 and (CubeClick[4][1]%6==5 or CubeClick[4][1]%6==4 or CubeClick[4][1]%6==2 or CubeClick[4][1]%6==0):
-        edge += 1
-        print('2')
-    elif CubeClick[0][3]%6==1 and (CubeClick[4][1]%6==5 or CubeClick[4][1]%6==4 or CubeClick[4][1]%6==2 or CubeClick[4][1]%6==0):
-        edge += 1
-        print('2')
-    elif CubeClick[0][3]%6==2 and (CubeClick[4][1]%6==3 or CubeClick[4][1]%6==4 or CubeClick[4][1]%6==1 or CubeClick[4][1]%6==5):
-        edge += 1
-        print('2')
-    elif CubeClick[0][3]%6==4 and (CubeClick[4][1]%6==0 or CubeClick[4][1]%6==1 or CubeClick[4][1]%6==2 or CubeClick[4][1]%6==3):
-        edge += 1
-        print('2')
-    elif CubeClick[0][3]%6==5 and (CubeClick[4][1]%6==0 or CubeClick[4][1]%6==1 or CubeClick[4][1]%6==2 or CubeClick[4][1]%6==3):
-        edge += 1
-        print('2')
+	if CubeClick[0][3]%6==0 and (CubeClick[4][1]%6==3 or CubeClick[4][1]%6==4 or CubeClick[4][1]%6==1 or CubeClick[4][1]%6==5):
+		edge += 1
+		print('2')
+	elif CubeClick[0][3]%6==3 and (CubeClick[4][1]%6==5 or CubeClick[4][1]%6==4 or CubeClick[4][1]%6==2 or CubeClick[4][1]%6==0):
+		edge += 1
+		print('2')
+	elif CubeClick[0][3]%6==1 and (CubeClick[4][1]%6==5 or CubeClick[4][1]%6==4 or CubeClick[4][1]%6==2 or CubeClick[4][1]%6==0):
+		edge += 1
+		print('2')
+	elif CubeClick[0][3]%6==2 and (CubeClick[4][1]%6==3 or CubeClick[4][1]%6==4 or CubeClick[4][1]%6==1 or CubeClick[4][1]%6==5):
+		edge += 1
+		print('2')
+	elif CubeClick[0][3]%6==4 and (CubeClick[4][1]%6==0 or CubeClick[4][1]%6==1 or CubeClick[4][1]%6==2 or CubeClick[4][1]%6==3):
+		edge += 1
+		print('2')
+	elif CubeClick[0][3]%6==5 and (CubeClick[4][1]%6==0 or CubeClick[4][1]%6==1 or CubeClick[4][1]%6==2 or CubeClick[4][1]%6==3):
+		edge += 1
+		print('2')
 
-    if CubeClick[0][7]%6==0 and (CubeClick[1][1]%6==3 or CubeClick[1][1]%6==4 or CubeClick[1][1]%6==1 or CubeClick[1][1]%6==5):
-        edge += 1
-        print('3')
-    elif CubeClick[0][7]%6==3 and (CubeClick[1][1]%6==5 or CubeClick[1][1]%6==4 or CubeClick[1][1]%6==2 or CubeClick[1][1]%6==0):
-        edge += 1
-        print('3')
-    elif CubeClick[0][7]%6==1 and (CubeClick[1][1]%6==5 or CubeClick[1][1]%6==4 or CubeClick[1][1]%6==2 or CubeClick[1][1]%6==0):
-        edge += 1
-        print('3')
-    elif CubeClick[0][7]%6==2 and (CubeClick[1][1]%6==3 or CubeClick[1][1]%6==4 or CubeClick[1][1]%6==1 or CubeClick[1][1]%6==5):
-        edge += 1
-        print('3')
-    elif CubeClick[0][7]%6==4 and (CubeClick[1][1]%6==0 or CubeClick[1][1]%6==1 or CubeClick[1][1]%6==2 or CubeClick[1][1]%6==3):
-        edge += 1
-        print('3')
-    elif CubeClick[0][7]%6==5 and (CubeClick[1][1]%6==0 or CubeClick[1][1]%6==1 or CubeClick[1][1]%6==2 or CubeClick[1][1]%6==3):
-        edge += 1
-        print('3')
+	if CubeClick[0][7]%6==0 and (CubeClick[1][1]%6==3 or CubeClick[1][1]%6==4 or CubeClick[1][1]%6==1 or CubeClick[1][1]%6==5):
+		edge += 1
+		print('3')
+	elif CubeClick[0][7]%6==3 and (CubeClick[1][1]%6==5 or CubeClick[1][1]%6==4 or CubeClick[1][1]%6==2 or CubeClick[1][1]%6==0):
+		edge += 1
+		print('3')
+	elif CubeClick[0][7]%6==1 and (CubeClick[1][1]%6==5 or CubeClick[1][1]%6==4 or CubeClick[1][1]%6==2 or CubeClick[1][1]%6==0):
+		edge += 1
+		print('3')
+	elif CubeClick[0][7]%6==2 and (CubeClick[1][1]%6==3 or CubeClick[1][1]%6==4 or CubeClick[1][1]%6==1 or CubeClick[1][1]%6==5):
+		edge += 1
+		print('3')
+	elif CubeClick[0][7]%6==4 and (CubeClick[1][1]%6==0 or CubeClick[1][1]%6==1 or CubeClick[1][1]%6==2 or CubeClick[1][1]%6==3):
+		edge += 1
+		print('3')
+	elif CubeClick[0][7]%6==5 and (CubeClick[1][1]%6==0 or CubeClick[1][1]%6==1 or CubeClick[1][1]%6==2 or CubeClick[1][1]%6==3):
+		edge += 1
+		print('3')
 
-    if CubeClick[0][5]%6==0 and (CubeClick[5][1]%6==3 or CubeClick[5][1]%6==4 or CubeClick[5][1]%6==1 or CubeClick[5][1]%6==5):
-        edge += 1
-        print('4')
-    elif CubeClick[0][5]%6==3 and (CubeClick[5][1]%6==5 or CubeClick[5][1]%6==4 or CubeClick[5][1]%6==2 or CubeClick[5][1]%6==0):
-        edge += 1
-        print('4')
-    elif CubeClick[0][5]%6==1 and (CubeClick[5][1]%6==5 or CubeClick[5][1]%6==4 or CubeClick[5][1]%6==2 or CubeClick[5][1]%6==0):
-        edge += 1
-        print('4') 
-    elif CubeClick[0][5]%6==2 and (CubeClick[5][1]%6==3 or CubeClick[5][1]%6==4 or CubeClick[5][1]%6==1 or CubeClick[5][1]%6==5):
-        edge += 1
-        print('4')
-    elif CubeClick[0][5]%6==4 and (CubeClick[5][1]%6==0 or CubeClick[5][1]%6==1 or CubeClick[5][1]%6==2 or CubeClick[5][1]%6==3):
-        edge += 1
-        print('4')
-    elif CubeClick[0][5]%6==5 and (CubeClick[5][1]%6==0 or CubeClick[5][1]%6==1 or CubeClick[5][1]%6==2 or CubeClick[5][1]%6==3):
-        edge += 1
-        print('4')
+	if CubeClick[0][5]%6==0 and (CubeClick[5][1]%6==3 or CubeClick[5][1]%6==4 or CubeClick[5][1]%6==1 or CubeClick[5][1]%6==5):
+		edge += 1
+		print('4')
+	elif CubeClick[0][5]%6==3 and (CubeClick[5][1]%6==5 or CubeClick[5][1]%6==4 or CubeClick[5][1]%6==2 or CubeClick[5][1]%6==0):
+		edge += 1
+		print('4')
+	elif CubeClick[0][5]%6==1 and (CubeClick[5][1]%6==5 or CubeClick[5][1]%6==4 or CubeClick[5][1]%6==2 or CubeClick[5][1]%6==0):
+		edge += 1
+		print('4') 
+	elif CubeClick[0][5]%6==2 and (CubeClick[5][1]%6==3 or CubeClick[5][1]%6==4 or CubeClick[5][1]%6==1 or CubeClick[5][1]%6==5):
+		edge += 1
+		print('4')
+	elif CubeClick[0][5]%6==4 and (CubeClick[5][1]%6==0 or CubeClick[5][1]%6==1 or CubeClick[5][1]%6==2 or CubeClick[5][1]%6==3):
+		edge += 1
+		print('4')
+	elif CubeClick[0][5]%6==5 and (CubeClick[5][1]%6==0 or CubeClick[5][1]%6==1 or CubeClick[5][1]%6==2 or CubeClick[5][1]%6==3):
+		edge += 1
+		print('4')
 
-    if CubeClick[3][1]%6==0 and (CubeClick[2][7]%6==3 or CubeClick[2][7]%6==4 or CubeClick[2][7]%6==1 or CubeClick[2][7]%6==5):
-        edge += 1
-        print('5')
-    elif CubeClick[3][1]%6==3 and (CubeClick[2][7]%6==5 or CubeClick[2][7]%6==4 or CubeClick[2][7]%6==2 or CubeClick[2][7]%6==0):
-        edge += 1
-        print('5')
-    elif CubeClick[3][1]%6==1 and (CubeClick[2][7]%6==5 or CubeClick[2][7]%6==4 or CubeClick[2][7]%6==2 or CubeClick[2][7]%6==0):
-        edge += 1
-        print('5')
-    elif CubeClick[3][1]%6==2 and (CubeClick[2][7]%6==3 or CubeClick[2][7]%6==4 or CubeClick[2][7]%6==1 or CubeClick[2][7]%6==5):
-        edge += 1
-        print('5')
-    elif CubeClick[3][1]%6==4 and (CubeClick[2][7]%6==0 or CubeClick[2][7]%6==1 or CubeClick[2][7]%6==2 or CubeClick[2][7]%6==3):
-        edge += 1
-        print('5')
-    elif CubeClick[3][1]%6==5 and (CubeClick[2][7]%6==0 or CubeClick[2][7]%6==1 or CubeClick[2][7]%6==2 or CubeClick[2][7]%6==3):
-        edge += 1
-        print('5')
+	if CubeClick[3][1]%6==0 and (CubeClick[2][7]%6==3 or CubeClick[2][7]%6==4 or CubeClick[2][7]%6==1 or CubeClick[2][7]%6==5):
+		edge += 1
+		print('5')
+	elif CubeClick[3][1]%6==3 and (CubeClick[2][7]%6==5 or CubeClick[2][7]%6==4 or CubeClick[2][7]%6==2 or CubeClick[2][7]%6==0):
+		edge += 1
+		print('5')
+	elif CubeClick[3][1]%6==1 and (CubeClick[2][7]%6==5 or CubeClick[2][7]%6==4 or CubeClick[2][7]%6==2 or CubeClick[2][7]%6==0):
+		edge += 1
+		print('5')
+	elif CubeClick[3][1]%6==2 and (CubeClick[2][7]%6==3 or CubeClick[2][7]%6==4 or CubeClick[2][7]%6==1 or CubeClick[2][7]%6==5):
+		edge += 1
+		print('5')
+	elif CubeClick[3][1]%6==4 and (CubeClick[2][7]%6==0 or CubeClick[2][7]%6==1 or CubeClick[2][7]%6==2 or CubeClick[2][7]%6==3):
+		edge += 1
+		print('5')
+	elif CubeClick[3][1]%6==5 and (CubeClick[2][7]%6==0 or CubeClick[2][7]%6==1 or CubeClick[2][7]%6==2 or CubeClick[2][7]%6==3):
+		edge += 1
+		print('5')
 
-    if CubeClick[3][3]%6==0 and (CubeClick[4][3]%6==3 or CubeClick[4][3]%6==4 or CubeClick[4][3]%6==1 or CubeClick[4][3]%6==5):
-        edge += 1
-        print('6')
-    elif CubeClick[3][3]%6==3 and (CubeClick[4][3]%6==5 or CubeClick[4][3]%6==4 or CubeClick[4][3]%6==2 or CubeClick[4][3]%6==0):
-        edge += 1
-        print('6')
-    elif CubeClick[3][3]%6==1 and (CubeClick[4][3]%6==5 or CubeClick[4][3]%6==4 or CubeClick[4][3]%6==2 or CubeClick[4][3]%6==0):
-        edge += 1
-        print('6')
-    elif CubeClick[3][3]%6==2 and (CubeClick[4][3]%6==3 or CubeClick[4][3]%6==4 or CubeClick[4][3]%6==1 or CubeClick[4][3]%6==5):
-        edge += 1
-        print('6')
-    elif CubeClick[3][3]%6==4 and (CubeClick[4][3]%6==0 or CubeClick[4][3]%6==1 or CubeClick[4][3]%6==2 or CubeClick[4][3]%6==3):
-        edge += 1
-        print('6')
-    elif CubeClick[3][3]%6==5 and (CubeClick[4][3]%6==0 or CubeClick[4][3]%6==1 or CubeClick[4][3]%6==2 or CubeClick[4][3]%6==3):
-        edge += 1
-        print('6')
+	if CubeClick[3][3]%6==0 and (CubeClick[4][3]%6==3 or CubeClick[4][3]%6==4 or CubeClick[4][3]%6==1 or CubeClick[4][3]%6==5):
+		edge += 1
+		print('6')
+	elif CubeClick[3][3]%6==3 and (CubeClick[4][3]%6==5 or CubeClick[4][3]%6==4 or CubeClick[4][3]%6==2 or CubeClick[4][3]%6==0):
+		edge += 1
+		print('6')
+	elif CubeClick[3][3]%6==1 and (CubeClick[4][3]%6==5 or CubeClick[4][3]%6==4 or CubeClick[4][3]%6==2 or CubeClick[4][3]%6==0):
+		edge += 1
+		print('6')
+	elif CubeClick[3][3]%6==2 and (CubeClick[4][3]%6==3 or CubeClick[4][3]%6==4 or CubeClick[4][3]%6==1 or CubeClick[4][3]%6==5):
+		edge += 1
+		print('6')
+	elif CubeClick[3][3]%6==4 and (CubeClick[4][3]%6==0 or CubeClick[4][3]%6==1 or CubeClick[4][3]%6==2 or CubeClick[4][3]%6==3):
+		edge += 1
+		print('6')
+	elif CubeClick[3][3]%6==5 and (CubeClick[4][3]%6==0 or CubeClick[4][3]%6==1 or CubeClick[4][3]%6==2 or CubeClick[4][3]%6==3):
+		edge += 1
+		print('6')
 
-    if CubeClick[3][5]%6==0 and (CubeClick[5][5]%6==3 or CubeClick[5][5]%6==4 or CubeClick[5][5]%6==1 or CubeClick[5][5]%6==5):
-        edge += 1
-        print('7')
-    elif CubeClick[3][5]%6==3 and (CubeClick[5][5]%6==5 or CubeClick[5][5]%6==4 or CubeClick[5][5]%6==2 or CubeClick[5][5]%6==0):
-        edge += 1
-        print('7')
-    elif CubeClick[3][5]%6==1 and (CubeClick[5][5]%6==5 or CubeClick[5][5]%6==4 or CubeClick[5][5]%6==2 or CubeClick[5][5]%6==0):
-        edge += 1
-        print('7')
-    elif CubeClick[3][5]%6==2 and (CubeClick[5][5]%6==3 or CubeClick[5][5]%6==4 or CubeClick[5][5]%6==1 or CubeClick[5][5]%6==5):
-        edge += 1
-        print('7')
-    elif CubeClick[3][5]%6==4 and (CubeClick[5][5]%6==0 or CubeClick[5][5]%6==1 or CubeClick[5][5]%6==2 or CubeClick[5][5]%6==3):
-        edge += 1
-        print('7')
-    elif CubeClick[3][5]%6==5 and (CubeClick[5][5]%6==0 or CubeClick[5][5]%6==1 or CubeClick[5][5]%6==2 or CubeClick[5][5]%6==3):
-        edge += 1
-        print('7')
+	if CubeClick[3][5]%6==0 and (CubeClick[5][5]%6==3 or CubeClick[5][5]%6==4 or CubeClick[5][5]%6==1 or CubeClick[5][5]%6==5):
+		edge += 1
+		print('7')
+	elif CubeClick[3][5]%6==3 and (CubeClick[5][5]%6==5 or CubeClick[5][5]%6==4 or CubeClick[5][5]%6==2 or CubeClick[5][5]%6==0):
+		edge += 1
+		print('7')
+	elif CubeClick[3][5]%6==1 and (CubeClick[5][5]%6==5 or CubeClick[5][5]%6==4 or CubeClick[5][5]%6==2 or CubeClick[5][5]%6==0):
+		edge += 1
+		print('7')
+	elif CubeClick[3][5]%6==2 and (CubeClick[5][5]%6==3 or CubeClick[5][5]%6==4 or CubeClick[5][5]%6==1 or CubeClick[5][5]%6==5):
+		edge += 1
+		print('7')
+	elif CubeClick[3][5]%6==4 and (CubeClick[5][5]%6==0 or CubeClick[5][5]%6==1 or CubeClick[5][5]%6==2 or CubeClick[5][5]%6==3):
+		edge += 1
+		print('7')
+	elif CubeClick[3][5]%6==5 and (CubeClick[5][5]%6==0 or CubeClick[5][5]%6==1 or CubeClick[5][5]%6==2 or CubeClick[5][5]%6==3):
+		edge += 1
+		print('7')
 
-    if CubeClick[1][7]%6==0 and (CubeClick[2][1]%6==3 or CubeClick[2][1]%6==4 or CubeClick[2][1]%6==1 or CubeClick[2][1]%6==5):
-        edge += 1
-        print('8')
-    elif CubeClick[1][7]%6==3 and (CubeClick[2][1]%6==5 or CubeClick[2][1]%6==4 or CubeClick[2][1]%6==2 or CubeClick[2][1]%6==0):
-        edge += 1
-        print('8')
-    elif CubeClick[1][7]%6==1 and (CubeClick[2][1]%6==5 or CubeClick[2][1]%6==4 or CubeClick[2][1]%6==2 or CubeClick[2][1]%6==0):
-        edge += 1
-        print('8')
-    elif CubeClick[1][7]%6==2 and (CubeClick[2][1]%6==3 or CubeClick[2][1]%6==4 or CubeClick[2][1]%6==1 or CubeClick[2][1]%6==5):
-        edge += 1
-        print('8')
-    elif CubeClick[1][7]%6==4 and (CubeClick[2][1]%6==0 or CubeClick[2][1]%6==1 or CubeClick[2][1]%6==2 or CubeClick[2][1]%6==3):
-        edge += 1
-        print('8')
-    elif CubeClick[1][7]%6==5 and (CubeClick[2][1]%6==0 or CubeClick[2][1]%6==1 or CubeClick[2][1]%6==2 or CubeClick[2][1]%6==3):
-        edge += 1
-        print('8')
+	if CubeClick[1][7]%6==0 and (CubeClick[2][1]%6==3 or CubeClick[2][1]%6==4 or CubeClick[2][1]%6==1 or CubeClick[2][1]%6==5):
+		edge += 1
+		print('8')
+	elif CubeClick[1][7]%6==3 and (CubeClick[2][1]%6==5 or CubeClick[2][1]%6==4 or CubeClick[2][1]%6==2 or CubeClick[2][1]%6==0):
+		edge += 1
+		print('8')
+	elif CubeClick[1][7]%6==1 and (CubeClick[2][1]%6==5 or CubeClick[2][1]%6==4 or CubeClick[2][1]%6==2 or CubeClick[2][1]%6==0):
+		edge += 1
+		print('8')
+	elif CubeClick[1][7]%6==2 and (CubeClick[2][1]%6==3 or CubeClick[2][1]%6==4 or CubeClick[2][1]%6==1 or CubeClick[2][1]%6==5):
+		edge += 1
+		print('8')
+	elif CubeClick[1][7]%6==4 and (CubeClick[2][1]%6==0 or CubeClick[2][1]%6==1 or CubeClick[2][1]%6==2 or CubeClick[2][1]%6==3):
+		edge += 1
+		print('8')
+	elif CubeClick[1][7]%6==5 and (CubeClick[2][1]%6==0 or CubeClick[2][1]%6==1 or CubeClick[2][1]%6==2 or CubeClick[2][1]%6==3):
+		edge += 1
+		print('8')
 
-    if CubeClick[1][3]%6==0 and (CubeClick[4][5]%6==3 or CubeClick[4][5]%6==4 or CubeClick[4][5]%6==1 or CubeClick[4][5]%6==5):
-        edge += 1
-        print('9')
-    elif CubeClick[1][3]%6==3 and (CubeClick[4][5]%6==5 or CubeClick[4][5]%6==4 or CubeClick[4][5]%6==2 or CubeClick[4][5]%6==0):
-        edge += 1
-        print('9')
-    elif CubeClick[1][3]%6==1 and (CubeClick[4][5]%6==5 or CubeClick[4][5]%6==4 or CubeClick[4][5]%6==2 or CubeClick[4][5]%6==0):
-        edge += 1
-        print('9')
-    elif CubeClick[1][3]%6==2 and (CubeClick[4][5]%6==3 or CubeClick[4][5]%6==4 or CubeClick[4][5]%6==1 or CubeClick[4][5]%6==5):
-        edge += 1
-        print('9')
-    elif CubeClick[1][3]%6==4 and (CubeClick[4][5]%6==0 or CubeClick[4][5]%6==1 or CubeClick[4][5]%6==2 or CubeClick[4][5]%6==3):
-        edge += 1
-        print('9')
-    elif CubeClick[1][3]%6==5 and (CubeClick[4][5]%6==0 or CubeClick[4][5]%6==1 or CubeClick[4][5]%6==2 or CubeClick[4][5]%6==3):
-        edge += 1
-        print('9')
+	if CubeClick[1][3]%6==0 and (CubeClick[4][5]%6==3 or CubeClick[4][5]%6==4 or CubeClick[4][5]%6==1 or CubeClick[4][5]%6==5):
+		edge += 1
+		print('9')
+	elif CubeClick[1][3]%6==3 and (CubeClick[4][5]%6==5 or CubeClick[4][5]%6==4 or CubeClick[4][5]%6==2 or CubeClick[4][5]%6==0):
+		edge += 1
+		print('9')
+	elif CubeClick[1][3]%6==1 and (CubeClick[4][5]%6==5 or CubeClick[4][5]%6==4 or CubeClick[4][5]%6==2 or CubeClick[4][5]%6==0):
+		edge += 1
+		print('9')
+	elif CubeClick[1][3]%6==2 and (CubeClick[4][5]%6==3 or CubeClick[4][5]%6==4 or CubeClick[4][5]%6==1 or CubeClick[4][5]%6==5):
+		edge += 1
+		print('9')
+	elif CubeClick[1][3]%6==4 and (CubeClick[4][5]%6==0 or CubeClick[4][5]%6==1 or CubeClick[4][5]%6==2 or CubeClick[4][5]%6==3):
+		edge += 1
+		print('9')
+	elif CubeClick[1][3]%6==5 and (CubeClick[4][5]%6==0 or CubeClick[4][5]%6==1 or CubeClick[4][5]%6==2 or CubeClick[4][5]%6==3):
+		edge += 1
+		print('9')
 
-    if CubeClick[1][5]%6==0 and (CubeClick[5][3]%6==3 or CubeClick[5][3]%6==4 or CubeClick[5][3]%6==1 or CubeClick[5][3]%6==5):
-        edge += 1
-        print('10')
-    elif CubeClick[1][5]%6==3 and (CubeClick[5][3]%6==5 or CubeClick[5][3]%6==4 or CubeClick[5][3]%6==2 or CubeClick[5][3]%6==0):
-        edge += 1
-        print('10')
-    elif CubeClick[1][5]%6==1 and (CubeClick[5][3]%6==5 or CubeClick[5][3]%6==4 or CubeClick[5][3]%6==2 or CubeClick[5][3]%6==0):
-        edge += 1
-        print('10')
-    elif CubeClick[1][5]%6==2 and (CubeClick[5][3]%6==3 or CubeClick[5][3]%6==4 or CubeClick[5][3]%6==1 or CubeClick[5][3]%6==5):
-        edge += 1
-        print('10')
-    elif CubeClick[1][5]%6==4 and (CubeClick[5][3]%6==0 or CubeClick[5][3]%6==1 or CubeClick[5][3]%6==2 or CubeClick[5][3]%6==3):
-        edge += 1
-        print('10')
-    elif CubeClick[1][5]%6==5 and (CubeClick[3][5]%6==0 or CubeClick[3][5]%6==1 or CubeClick[3][5]%6==2 or CubeClick[5][3]%6==3):
-        edge += 1
-        print('10')
+	if CubeClick[1][5]%6==0 and (CubeClick[5][3]%6==3 or CubeClick[5][3]%6==4 or CubeClick[5][3]%6==1 or CubeClick[5][3]%6==5):
+		edge += 1
+		print('10')
+	elif CubeClick[1][5]%6==3 and (CubeClick[5][3]%6==5 or CubeClick[5][3]%6==4 or CubeClick[5][3]%6==2 or CubeClick[5][3]%6==0):
+		edge += 1
+		print('10')
+	elif CubeClick[1][5]%6==1 and (CubeClick[5][3]%6==5 or CubeClick[5][3]%6==4 or CubeClick[5][3]%6==2 or CubeClick[5][3]%6==0):
+		edge += 1
+		print('10')
+	elif CubeClick[1][5]%6==2 and (CubeClick[5][3]%6==3 or CubeClick[5][3]%6==4 or CubeClick[5][3]%6==1 or CubeClick[5][3]%6==5):
+		edge += 1
+		print('10')
+	elif CubeClick[1][5]%6==4 and (CubeClick[5][3]%6==0 or CubeClick[5][3]%6==1 or CubeClick[5][3]%6==2 or CubeClick[5][3]%6==3):
+		edge += 1
+		print('10')
+	elif CubeClick[1][5]%6==5 and (CubeClick[3][5]%6==0 or CubeClick[3][5]%6==1 or CubeClick[3][5]%6==2 or CubeClick[5][3]%6==3):
+		edge += 1
+		print('10')
 
-    if CubeClick[2][3]%6==0 and (CubeClick[4][7]%6==3 or CubeClick[4][7]%6==4 or CubeClick[4][7]%6==1 or CubeClick[4][7]%6==5):
-        edge += 1
-        print('11')
-    elif CubeClick[2][3]%6==3 and (CubeClick[4][7]%6==5 or CubeClick[4][7]%6==4 or CubeClick[4][7]%6==2 or CubeClick[4][7]%6==0):
-        edge += 1
-        print('11')
-    elif CubeClick[2][3]%6==1 and (CubeClick[4][7]%6==5 or CubeClick[4][7]%6==4 or CubeClick[4][7]%6==2 or CubeClick[4][7]%6==0):
-        edge += 1
-        print('11')
-    elif CubeClick[2][3]%6==2 and (CubeClick[4][7]%6==3 or CubeClick[4][7]%6==4 or CubeClick[4][7]%6==1 or CubeClick[4][7]%6==5):
-        edge += 1
-        print('11')
-    elif CubeClick[2][3]%6==4 and (CubeClick[4][7]%6==0 or CubeClick[4][7]%6==1 or CubeClick[4][7]%6==2 or CubeClick[4][7]%6==3):
-        edge += 1
-        print('11')
-    elif CubeClick[2][3]%6==5 and (CubeClick[4][7]%6==0 or CubeClick[4][7]%6==1 or CubeClick[4][7]%6==2 or CubeClick[4][7]%6==3):
-        edge += 1
-        print('11')
+	if CubeClick[2][3]%6==0 and (CubeClick[4][7]%6==3 or CubeClick[4][7]%6==4 or CubeClick[4][7]%6==1 or CubeClick[4][7]%6==5):
+		edge += 1
+		print('11')
+	elif CubeClick[2][3]%6==3 and (CubeClick[4][7]%6==5 or CubeClick[4][7]%6==4 or CubeClick[4][7]%6==2 or CubeClick[4][7]%6==0):
+		edge += 1
+		print('11')
+	elif CubeClick[2][3]%6==1 and (CubeClick[4][7]%6==5 or CubeClick[4][7]%6==4 or CubeClick[4][7]%6==2 or CubeClick[4][7]%6==0):
+		edge += 1
+		print('11')
+	elif CubeClick[2][3]%6==2 and (CubeClick[4][7]%6==3 or CubeClick[4][7]%6==4 or CubeClick[4][7]%6==1 or CubeClick[4][7]%6==5):
+		edge += 1
+		print('11')
+	elif CubeClick[2][3]%6==4 and (CubeClick[4][7]%6==0 or CubeClick[4][7]%6==1 or CubeClick[4][7]%6==2 or CubeClick[4][7]%6==3):
+		edge += 1
+		print('11')
+	elif CubeClick[2][3]%6==5 and (CubeClick[4][7]%6==0 or CubeClick[4][7]%6==1 or CubeClick[4][7]%6==2 or CubeClick[4][7]%6==3):
+		edge += 1
+		print('11')
 
-    if CubeClick[2][5]%6==0 and (CubeClick[5][7]%6==3 or CubeClick[5][7]%6==4 or CubeClick[5][7]%6==1 or CubeClick[5][7]%6==5):
-        edge += 1
-        print('12')
-    elif CubeClick[2][5]%6==3 and (CubeClick[5][7]%6==5 or CubeClick[5][7]%6==4 or CubeClick[5][7]%6==2 or CubeClick[5][7]%6==0):
-        edge += 1
-        print('12')
-    elif CubeClick[2][5]%6==1 and (CubeClick[5][7]%6==5 or CubeClick[5][7]%6==4 or CubeClick[5][7]%6==2 or CubeClick[5][7]%6==0):
-        edge += 1
-        print('12')
-    elif CubeClick[2][5]%6==2 and (CubeClick[5][7]%6==3 or CubeClick[5][7]%6==4 or CubeClick[5][7]%6==1 or CubeClick[5][7]%6==5):
-        edge += 1
-        print('12')
-    elif CubeClick[2][5]%6==4 and (CubeClick[5][7]%6==0 or CubeClick[5][7]%6==1 or CubeClick[5][7]%6==2 or CubeClick[5][7]%6==3):
-        edge += 1
-        print('12')
-    elif CubeClick[2][5]%6==5 and (CubeClick[5][7]%6==0 or CubeClick[5][7]%6==1 or CubeClick[5][7]%6==2 or CubeClick[5][7]%6==3):
-        edge += 1
-        print('12')
+	if CubeClick[2][5]%6==0 and (CubeClick[5][7]%6==3 or CubeClick[5][7]%6==4 or CubeClick[5][7]%6==1 or CubeClick[5][7]%6==5):
+		edge += 1
+		print('12')
+	elif CubeClick[2][5]%6==3 and (CubeClick[5][7]%6==5 or CubeClick[5][7]%6==4 or CubeClick[5][7]%6==2 or CubeClick[5][7]%6==0):
+		edge += 1
+		print('12')
+	elif CubeClick[2][5]%6==1 and (CubeClick[5][7]%6==5 or CubeClick[5][7]%6==4 or CubeClick[5][7]%6==2 or CubeClick[5][7]%6==0):
+		edge += 1
+		print('12')
+	elif CubeClick[2][5]%6==2 and (CubeClick[5][7]%6==3 or CubeClick[5][7]%6==4 or CubeClick[5][7]%6==1 or CubeClick[5][7]%6==5):
+		edge += 1
+		print('12')
+	elif CubeClick[2][5]%6==4 and (CubeClick[5][7]%6==0 or CubeClick[5][7]%6==1 or CubeClick[5][7]%6==2 or CubeClick[5][7]%6==3):
+		edge += 1
+		print('12')
+	elif CubeClick[2][5]%6==5 and (CubeClick[5][7]%6==0 or CubeClick[5][7]%6==1 or CubeClick[5][7]%6==2 or CubeClick[5][7]%6==3):
+		edge += 1
+		print('12')
 
-    if edge == 12:
-        print('Edge - nice')
-    else:
-        print('Edge - ' + str(edge))
+	if edge == 12:
+		print('Edge - nice')
+	else:
+		print('Edge - ' + str(edge))
 
-    Corner = 0
-    if ((CubeClick[0][0]%6==0 and CubeClick[3][6]%6==3 and CubeClick[4][0]%6==4) or 
-       (CubeClick[0][0]%6==0 and CubeClick[3][6]%6==1 and CubeClick[4][0]%6==5) or 
-       (CubeClick[0][0]%6==0 and CubeClick[3][6]%6==4 and CubeClick[4][0]%6==1) or 
-       (CubeClick[0][0]%6==0 and CubeClick[3][6]%6==5 and CubeClick[4][0]%6==3) or 
-       (CubeClick[0][0]%6==1 and CubeClick[3][6]%6==0 and CubeClick[4][0]%6==4) or 
-       (CubeClick[0][0]%6==1 and CubeClick[3][6]%6==5 and CubeClick[4][0]%6==0) or 
-       (CubeClick[0][0]%6==1 and CubeClick[3][6]%6==4 and CubeClick[4][0]%6==2) or 
-       (CubeClick[0][0]%6==1 and CubeClick[3][6]%6==2 and CubeClick[4][0]%6==5) or 
-       (CubeClick[0][0]%6==2 and CubeClick[3][6]%6==1 and CubeClick[4][0]%6==4) or 
-       (CubeClick[0][0]%6==2 and CubeClick[3][6]%6==3 and CubeClick[4][0]%6==5) or 
-       (CubeClick[0][0]%6==2 and CubeClick[3][6]%6==4 and CubeClick[4][0]%6==3) or 
-       (CubeClick[0][0]%6==2 and CubeClick[3][6]%6==5 and CubeClick[4][0]%6==1) or 
-       (CubeClick[0][0]%6==3 and CubeClick[3][6]%6==0 and CubeClick[4][0]%6==5) or 
-       (CubeClick[0][0]%6==3 and CubeClick[3][6]%6==4 and CubeClick[4][0]%6==0) or 
-       (CubeClick[0][0]%6==3 and CubeClick[3][6]%6==5 and CubeClick[4][0]%6==2) or 
-       (CubeClick[0][0]%6==3 and CubeClick[3][6]%6==2 and CubeClick[4][0]%6==4) or 
-       (CubeClick[0][0]%6==4 and CubeClick[3][6]%6==0 and CubeClick[4][0]%6==3) or 
-       (CubeClick[0][0]%6==4 and CubeClick[3][6]%6==3 and CubeClick[4][0]%6==2) or 
-       (CubeClick[0][0]%6==4 and CubeClick[3][6]%6==2 and CubeClick[4][0]%6==1) or 
-       (CubeClick[0][0]%6==4 and CubeClick[3][6]%6==1 and CubeClick[4][0]%6==0) or 
-       (CubeClick[0][0]%6==5 and CubeClick[3][6]%6==1 and CubeClick[4][0]%6==2) or 
-       (CubeClick[0][0]%6==5 and CubeClick[3][6]%6==3 and CubeClick[4][0]%6==0) or 
-       (CubeClick[0][0]%6==5 and CubeClick[3][6]%6==0 and CubeClick[4][0]%6==1) or 
-       (CubeClick[0][0]%6==5 and CubeClick[3][6]%6==2 and CubeClick[4][0]%6==3)):
-        Corner += 1
+	Corner = 0
+	if ((CubeClick[0][0]%6==0 and CubeClick[3][6]%6==3 and CubeClick[4][0]%6==4) or 
+	   (CubeClick[0][0]%6==0 and CubeClick[3][6]%6==1 and CubeClick[4][0]%6==5) or 
+	   (CubeClick[0][0]%6==0 and CubeClick[3][6]%6==4 and CubeClick[4][0]%6==1) or 
+	   (CubeClick[0][0]%6==0 and CubeClick[3][6]%6==5 and CubeClick[4][0]%6==3) or 
+	   (CubeClick[0][0]%6==1 and CubeClick[3][6]%6==0 and CubeClick[4][0]%6==4) or 
+	   (CubeClick[0][0]%6==1 and CubeClick[3][6]%6==5 and CubeClick[4][0]%6==0) or 
+	   (CubeClick[0][0]%6==1 and CubeClick[3][6]%6==4 and CubeClick[4][0]%6==2) or 
+	   (CubeClick[0][0]%6==1 and CubeClick[3][6]%6==2 and CubeClick[4][0]%6==5) or 
+	   (CubeClick[0][0]%6==2 and CubeClick[3][6]%6==1 and CubeClick[4][0]%6==4) or 
+	   (CubeClick[0][0]%6==2 and CubeClick[3][6]%6==3 and CubeClick[4][0]%6==5) or 
+	   (CubeClick[0][0]%6==2 and CubeClick[3][6]%6==4 and CubeClick[4][0]%6==3) or 
+	   (CubeClick[0][0]%6==2 and CubeClick[3][6]%6==5 and CubeClick[4][0]%6==1) or 
+	   (CubeClick[0][0]%6==3 and CubeClick[3][6]%6==0 and CubeClick[4][0]%6==5) or 
+	   (CubeClick[0][0]%6==3 and CubeClick[3][6]%6==4 and CubeClick[4][0]%6==0) or 
+	   (CubeClick[0][0]%6==3 and CubeClick[3][6]%6==5 and CubeClick[4][0]%6==2) or 
+	   (CubeClick[0][0]%6==3 and CubeClick[3][6]%6==2 and CubeClick[4][0]%6==4) or 
+	   (CubeClick[0][0]%6==4 and CubeClick[3][6]%6==0 and CubeClick[4][0]%6==3) or 
+	   (CubeClick[0][0]%6==4 and CubeClick[3][6]%6==3 and CubeClick[4][0]%6==2) or 
+	   (CubeClick[0][0]%6==4 and CubeClick[3][6]%6==2 and CubeClick[4][0]%6==1) or 
+	   (CubeClick[0][0]%6==4 and CubeClick[3][6]%6==1 and CubeClick[4][0]%6==0) or 
+	   (CubeClick[0][0]%6==5 and CubeClick[3][6]%6==1 and CubeClick[4][0]%6==2) or 
+	   (CubeClick[0][0]%6==5 and CubeClick[3][6]%6==3 and CubeClick[4][0]%6==0) or 
+	   (CubeClick[0][0]%6==5 and CubeClick[3][6]%6==0 and CubeClick[4][0]%6==1) or 
+	   (CubeClick[0][0]%6==5 and CubeClick[3][6]%6==2 and CubeClick[4][0]%6==3)):
+		Corner += 1
 
-    if ((CubeClick[0][6]%6==0 and CubeClick[1][0]%6==4 and CubeClick[4][2]%6==3) or 
-       (CubeClick[0][6]%6==0 and CubeClick[1][0]%6==3 and CubeClick[4][2]%6==5) or 
-       (CubeClick[0][6]%6==0 and CubeClick[1][0]%6==5 and CubeClick[4][2]%6==1) or 
-       (CubeClick[0][6]%6==0 and CubeClick[1][0]%6==1 and CubeClick[4][2]%6==4) or 
-       (CubeClick[0][6]%6==1 and CubeClick[1][0]%6==0 and CubeClick[4][2]%6==5) or 
-       (CubeClick[0][6]%6==1 and CubeClick[1][0]%6==5 and CubeClick[4][2]%6==2) or 
-       (CubeClick[0][6]%6==1 and CubeClick[1][0]%6==4 and CubeClick[4][2]%6==0) or 
-       (CubeClick[0][6]%6==1 and CubeClick[1][0]%6==2 and CubeClick[4][2]%6==4) or 
-       (CubeClick[0][6]%6==2 and CubeClick[1][0]%6==1 and CubeClick[4][2]%6==5) or 
-       (CubeClick[0][6]%6==2 and CubeClick[1][0]%6==3 and CubeClick[4][2]%6==4) or 
-       (CubeClick[0][6]%6==2 and CubeClick[1][0]%6==4 and CubeClick[4][2]%6==1) or 
-       (CubeClick[0][6]%6==2 and CubeClick[1][0]%6==5 and CubeClick[4][2]%6==3) or 
-       (CubeClick[0][6]%6==3 and CubeClick[1][0]%6==2 and CubeClick[4][2]%6==5) or 
-       (CubeClick[0][6]%6==3 and CubeClick[1][0]%6==4 and CubeClick[4][2]%6==2) or 
-       (CubeClick[0][6]%6==3 and CubeClick[1][0]%6==0 and CubeClick[4][2]%6==4) or 
-       (CubeClick[0][6]%6==3 and CubeClick[1][0]%6==5 and CubeClick[4][2]%6==0) or 
-       (CubeClick[0][6]%6==4 and CubeClick[1][0]%6==2 and CubeClick[4][2]%6==3) or 
-       (CubeClick[0][6]%6==4 and CubeClick[1][0]%6==1 and CubeClick[4][2]%6==2) or 
-       (CubeClick[0][6]%6==4 and CubeClick[1][0]%6==0 and CubeClick[4][2]%6==1) or 
-       (CubeClick[0][6]%6==4 and CubeClick[1][0]%6==3 and CubeClick[4][2]%6==0) or 
-       (CubeClick[0][6]%6==5 and CubeClick[1][0]%6==0 and CubeClick[4][2]%6==3) or 
-       (CubeClick[0][6]%6==5 and CubeClick[1][0]%6==1 and CubeClick[4][2]%6==0) or 
-       (CubeClick[0][6]%6==5 and CubeClick[1][0]%6==3 and CubeClick[4][2]%6==2) or 
-       (CubeClick[0][6]%6==5 and CubeClick[1][0]%6==2 and CubeClick[4][2]%6==1)):
-        Corner += 1
+	if ((CubeClick[0][6]%6==0 and CubeClick[1][0]%6==4 and CubeClick[4][2]%6==3) or 
+	   (CubeClick[0][6]%6==0 and CubeClick[1][0]%6==3 and CubeClick[4][2]%6==5) or 
+	   (CubeClick[0][6]%6==0 and CubeClick[1][0]%6==5 and CubeClick[4][2]%6==1) or 
+	   (CubeClick[0][6]%6==0 and CubeClick[1][0]%6==1 and CubeClick[4][2]%6==4) or 
+	   (CubeClick[0][6]%6==1 and CubeClick[1][0]%6==0 and CubeClick[4][2]%6==5) or 
+	   (CubeClick[0][6]%6==1 and CubeClick[1][0]%6==5 and CubeClick[4][2]%6==2) or 
+	   (CubeClick[0][6]%6==1 and CubeClick[1][0]%6==4 and CubeClick[4][2]%6==0) or 
+	   (CubeClick[0][6]%6==1 and CubeClick[1][0]%6==2 and CubeClick[4][2]%6==4) or 
+	   (CubeClick[0][6]%6==2 and CubeClick[1][0]%6==1 and CubeClick[4][2]%6==5) or 
+	   (CubeClick[0][6]%6==2 and CubeClick[1][0]%6==3 and CubeClick[4][2]%6==4) or 
+	   (CubeClick[0][6]%6==2 and CubeClick[1][0]%6==4 and CubeClick[4][2]%6==1) or 
+	   (CubeClick[0][6]%6==2 and CubeClick[1][0]%6==5 and CubeClick[4][2]%6==3) or 
+	   (CubeClick[0][6]%6==3 and CubeClick[1][0]%6==2 and CubeClick[4][2]%6==5) or 
+	   (CubeClick[0][6]%6==3 and CubeClick[1][0]%6==4 and CubeClick[4][2]%6==2) or 
+	   (CubeClick[0][6]%6==3 and CubeClick[1][0]%6==0 and CubeClick[4][2]%6==4) or 
+	   (CubeClick[0][6]%6==3 and CubeClick[1][0]%6==5 and CubeClick[4][2]%6==0) or 
+	   (CubeClick[0][6]%6==4 and CubeClick[1][0]%6==2 and CubeClick[4][2]%6==3) or 
+	   (CubeClick[0][6]%6==4 and CubeClick[1][0]%6==1 and CubeClick[4][2]%6==2) or 
+	   (CubeClick[0][6]%6==4 and CubeClick[1][0]%6==0 and CubeClick[4][2]%6==1) or 
+	   (CubeClick[0][6]%6==4 and CubeClick[1][0]%6==3 and CubeClick[4][2]%6==0) or 
+	   (CubeClick[0][6]%6==5 and CubeClick[1][0]%6==0 and CubeClick[4][2]%6==3) or 
+	   (CubeClick[0][6]%6==5 and CubeClick[1][0]%6==1 and CubeClick[4][2]%6==0) or 
+	   (CubeClick[0][6]%6==5 and CubeClick[1][0]%6==3 and CubeClick[4][2]%6==2) or 
+	   (CubeClick[0][6]%6==5 and CubeClick[1][0]%6==2 and CubeClick[4][2]%6==1)):
+		Corner += 1
 
-    if ((CubeClick[0][2]%6==0 and CubeClick[5][2]%6==3 and CubeClick[3][8]%6==4) or 
-       (CubeClick[0][2]%6==0 and CubeClick[5][2]%6==1 and CubeClick[3][8]%6==5) or 
-       (CubeClick[0][2]%6==0 and CubeClick[5][2]%6==4 and CubeClick[3][8]%6==1) or 
-       (CubeClick[0][2]%6==0 and CubeClick[5][2]%6==5 and CubeClick[3][8]%6==3) or 
-       (CubeClick[0][2]%6==1 and CubeClick[5][2]%6==0 and CubeClick[3][8]%6==4) or 
-       (CubeClick[0][2]%6==1 and CubeClick[5][2]%6==5 and CubeClick[3][8]%6==0) or 
-       (CubeClick[0][2]%6==1 and CubeClick[5][2]%6==4 and CubeClick[3][8]%6==2) or 
-       (CubeClick[0][2]%6==1 and CubeClick[5][2]%6==2 and CubeClick[3][8]%6==5) or 
-       (CubeClick[0][2]%6==2 and CubeClick[5][2]%6==1 and CubeClick[3][8]%6==4) or 
-       (CubeClick[0][2]%6==2 and CubeClick[5][2]%6==3 and CubeClick[3][8]%6==5) or 
-       (CubeClick[0][2]%6==2 and CubeClick[5][2]%6==4 and CubeClick[3][8]%6==3) or 
-       (CubeClick[0][2]%6==2 and CubeClick[5][2]%6==5 and CubeClick[3][8]%6==1) or 
-       (CubeClick[0][2]%6==3 and CubeClick[5][2]%6==0 and CubeClick[3][8]%6==5) or 
-       (CubeClick[0][2]%6==3 and CubeClick[5][2]%6==4 and CubeClick[3][8]%6==0) or 
-       (CubeClick[0][2]%6==3 and CubeClick[5][2]%6==5 and CubeClick[3][8]%6==2) or 
-       (CubeClick[0][2]%6==3 and CubeClick[5][2]%6==2 and CubeClick[3][8]%6==4) or 
-       (CubeClick[0][2]%6==4 and CubeClick[5][2]%6==0 and CubeClick[3][8]%6==3) or 
-       (CubeClick[0][2]%6==4 and CubeClick[5][2]%6==3 and CubeClick[3][8]%6==2) or 
-       (CubeClick[0][2]%6==4 and CubeClick[5][2]%6==2 and CubeClick[3][8]%6==1) or 
-       (CubeClick[0][2]%6==4 and CubeClick[5][2]%6==1 and CubeClick[3][8]%6==0) or 
-       (CubeClick[0][2]%6==5 and CubeClick[5][2]%6==1 and CubeClick[3][8]%6==2) or 
-       (CubeClick[0][2]%6==5 and CubeClick[5][2]%6==3 and CubeClick[3][8]%6==0) or 
-       (CubeClick[0][2]%6==5 and CubeClick[5][2]%6==0 and CubeClick[3][8]%6==1) or 
-       (CubeClick[0][2]%6==5 and CubeClick[5][2]%6==2 and CubeClick[3][8]%6==3)):
-        Corner += 1
+	if ((CubeClick[0][2]%6==0 and CubeClick[5][2]%6==3 and CubeClick[3][8]%6==4) or 
+	   (CubeClick[0][2]%6==0 and CubeClick[5][2]%6==1 and CubeClick[3][8]%6==5) or 
+	   (CubeClick[0][2]%6==0 and CubeClick[5][2]%6==4 and CubeClick[3][8]%6==1) or 
+	   (CubeClick[0][2]%6==0 and CubeClick[5][2]%6==5 and CubeClick[3][8]%6==3) or 
+	   (CubeClick[0][2]%6==1 and CubeClick[5][2]%6==0 and CubeClick[3][8]%6==4) or 
+	   (CubeClick[0][2]%6==1 and CubeClick[5][2]%6==5 and CubeClick[3][8]%6==0) or 
+	   (CubeClick[0][2]%6==1 and CubeClick[5][2]%6==4 and CubeClick[3][8]%6==2) or 
+	   (CubeClick[0][2]%6==1 and CubeClick[5][2]%6==2 and CubeClick[3][8]%6==5) or 
+	   (CubeClick[0][2]%6==2 and CubeClick[5][2]%6==1 and CubeClick[3][8]%6==4) or 
+	   (CubeClick[0][2]%6==2 and CubeClick[5][2]%6==3 and CubeClick[3][8]%6==5) or 
+	   (CubeClick[0][2]%6==2 and CubeClick[5][2]%6==4 and CubeClick[3][8]%6==3) or 
+	   (CubeClick[0][2]%6==2 and CubeClick[5][2]%6==5 and CubeClick[3][8]%6==1) or 
+	   (CubeClick[0][2]%6==3 and CubeClick[5][2]%6==0 and CubeClick[3][8]%6==5) or 
+	   (CubeClick[0][2]%6==3 and CubeClick[5][2]%6==4 and CubeClick[3][8]%6==0) or 
+	   (CubeClick[0][2]%6==3 and CubeClick[5][2]%6==5 and CubeClick[3][8]%6==2) or 
+	   (CubeClick[0][2]%6==3 and CubeClick[5][2]%6==2 and CubeClick[3][8]%6==4) or 
+	   (CubeClick[0][2]%6==4 and CubeClick[5][2]%6==0 and CubeClick[3][8]%6==3) or 
+	   (CubeClick[0][2]%6==4 and CubeClick[5][2]%6==3 and CubeClick[3][8]%6==2) or 
+	   (CubeClick[0][2]%6==4 and CubeClick[5][2]%6==2 and CubeClick[3][8]%6==1) or 
+	   (CubeClick[0][2]%6==4 and CubeClick[5][2]%6==1 and CubeClick[3][8]%6==0) or 
+	   (CubeClick[0][2]%6==5 and CubeClick[5][2]%6==1 and CubeClick[3][8]%6==2) or 
+	   (CubeClick[0][2]%6==5 and CubeClick[5][2]%6==3 and CubeClick[3][8]%6==0) or 
+	   (CubeClick[0][2]%6==5 and CubeClick[5][2]%6==0 and CubeClick[3][8]%6==1) or 
+	   (CubeClick[0][2]%6==5 and CubeClick[5][2]%6==2 and CubeClick[3][8]%6==3)):
+		Corner += 1
 
-    if ((CubeClick[0][8]%6==0 and CubeClick[5][0]%6==4 and CubeClick[1][2]%6==3) or 
-       (CubeClick[0][8]%6==0 and CubeClick[5][0]%6==3 and CubeClick[1][2]%6==5) or 
-       (CubeClick[0][8]%6==0 and CubeClick[5][0]%6==5 and CubeClick[1][2]%6==1) or 
-       (CubeClick[0][8]%6==0 and CubeClick[5][0]%6==1 and CubeClick[1][2]%6==4) or 
-       (CubeClick[0][8]%6==1 and CubeClick[5][0]%6==0 and CubeClick[1][2]%6==5) or 
-       (CubeClick[0][8]%6==1 and CubeClick[5][0]%6==5 and CubeClick[1][2]%6==2) or 
-       (CubeClick[0][8]%6==1 and CubeClick[5][0]%6==4 and CubeClick[1][2]%6==0) or 
-       (CubeClick[0][8]%6==1 and CubeClick[5][0]%6==2 and CubeClick[1][2]%6==4) or 
-       (CubeClick[0][8]%6==2 and CubeClick[5][0]%6==1 and CubeClick[1][2]%6==5) or 
-       (CubeClick[0][8]%6==2 and CubeClick[5][0]%6==3 and CubeClick[1][2]%6==4) or 
-       (CubeClick[0][8]%6==2 and CubeClick[5][0]%6==4 and CubeClick[1][2]%6==1) or 
-       (CubeClick[0][8]%6==2 and CubeClick[5][0]%6==5 and CubeClick[1][2]%6==3) or 
-       (CubeClick[0][8]%6==3 and CubeClick[5][0]%6==2 and CubeClick[1][2]%6==5) or 
-       (CubeClick[0][8]%6==3 and CubeClick[5][0]%6==4 and CubeClick[1][2]%6==2) or 
-       (CubeClick[0][8]%6==3 and CubeClick[5][0]%6==0 and CubeClick[1][2]%6==4) or 
-       (CubeClick[0][8]%6==3 and CubeClick[5][0]%6==5 and CubeClick[1][2]%6==0) or 
-       (CubeClick[0][8]%6==4 and CubeClick[5][0]%6==2 and CubeClick[1][2]%6==3) or 
-       (CubeClick[0][8]%6==4 and CubeClick[5][0]%6==1 and CubeClick[1][2]%6==2) or 
-       (CubeClick[0][8]%6==4 and CubeClick[5][0]%6==0 and CubeClick[1][2]%6==1) or 
-       (CubeClick[0][8]%6==4 and CubeClick[5][0]%6==3 and CubeClick[1][2]%6==0) or 
-       (CubeClick[0][8]%6==5 and CubeClick[5][0]%6==0 and CubeClick[1][2]%6==3) or 
-       (CubeClick[0][8]%6==5 and CubeClick[5][0]%6==1 and CubeClick[1][2]%6==0) or 
-       (CubeClick[0][8]%6==5 and CubeClick[5][0]%6==3 and CubeClick[1][2]%6==2) or 
-       (CubeClick[0][8]%6==5 and CubeClick[5][0]%6==2 and CubeClick[1][2]%6==1)):
-        Corner += 1
+	if ((CubeClick[0][8]%6==0 and CubeClick[5][0]%6==4 and CubeClick[1][2]%6==3) or 
+	   (CubeClick[0][8]%6==0 and CubeClick[5][0]%6==3 and CubeClick[1][2]%6==5) or 
+	   (CubeClick[0][8]%6==0 and CubeClick[5][0]%6==5 and CubeClick[1][2]%6==1) or 
+	   (CubeClick[0][8]%6==0 and CubeClick[5][0]%6==1 and CubeClick[1][2]%6==4) or 
+	   (CubeClick[0][8]%6==1 and CubeClick[5][0]%6==0 and CubeClick[1][2]%6==5) or 
+	   (CubeClick[0][8]%6==1 and CubeClick[5][0]%6==5 and CubeClick[1][2]%6==2) or 
+	   (CubeClick[0][8]%6==1 and CubeClick[5][0]%6==4 and CubeClick[1][2]%6==0) or 
+	   (CubeClick[0][8]%6==1 and CubeClick[5][0]%6==2 and CubeClick[1][2]%6==4) or 
+	   (CubeClick[0][8]%6==2 and CubeClick[5][0]%6==1 and CubeClick[1][2]%6==5) or 
+	   (CubeClick[0][8]%6==2 and CubeClick[5][0]%6==3 and CubeClick[1][2]%6==4) or 
+	   (CubeClick[0][8]%6==2 and CubeClick[5][0]%6==4 and CubeClick[1][2]%6==1) or 
+	   (CubeClick[0][8]%6==2 and CubeClick[5][0]%6==5 and CubeClick[1][2]%6==3) or 
+	   (CubeClick[0][8]%6==3 and CubeClick[5][0]%6==2 and CubeClick[1][2]%6==5) or 
+	   (CubeClick[0][8]%6==3 and CubeClick[5][0]%6==4 and CubeClick[1][2]%6==2) or 
+	   (CubeClick[0][8]%6==3 and CubeClick[5][0]%6==0 and CubeClick[1][2]%6==4) or 
+	   (CubeClick[0][8]%6==3 and CubeClick[5][0]%6==5 and CubeClick[1][2]%6==0) or 
+	   (CubeClick[0][8]%6==4 and CubeClick[5][0]%6==2 and CubeClick[1][2]%6==3) or 
+	   (CubeClick[0][8]%6==4 and CubeClick[5][0]%6==1 and CubeClick[1][2]%6==2) or 
+	   (CubeClick[0][8]%6==4 and CubeClick[5][0]%6==0 and CubeClick[1][2]%6==1) or 
+	   (CubeClick[0][8]%6==4 and CubeClick[5][0]%6==3 and CubeClick[1][2]%6==0) or 
+	   (CubeClick[0][8]%6==5 and CubeClick[5][0]%6==0 and CubeClick[1][2]%6==3) or 
+	   (CubeClick[0][8]%6==5 and CubeClick[5][0]%6==1 and CubeClick[1][2]%6==0) or 
+	   (CubeClick[0][8]%6==5 and CubeClick[5][0]%6==3 and CubeClick[1][2]%6==2) or 
+	   (CubeClick[0][8]%6==5 and CubeClick[5][0]%6==2 and CubeClick[1][2]%6==1)):
+		Corner += 1
 
-    if ((CubeClick[2][0]%6==0 and CubeClick[1][6]%6==3 and CubeClick[4][8]%6==4) or 
-       (CubeClick[2][0]%6==0 and CubeClick[1][6]%6==1 and CubeClick[4][8]%6==5) or 
-       (CubeClick[2][0]%6==0 and CubeClick[1][6]%6==4 and CubeClick[4][8]%6==1) or 
-       (CubeClick[2][0]%6==0 and CubeClick[1][6]%6==5 and CubeClick[4][8]%6==3) or 
-       (CubeClick[2][0]%6==1 and CubeClick[1][6]%6==0 and CubeClick[4][8]%6==4) or 
-       (CubeClick[2][0]%6==1 and CubeClick[1][6]%6==5 and CubeClick[4][8]%6==0) or 
-       (CubeClick[2][0]%6==1 and CubeClick[1][6]%6==4 and CubeClick[4][8]%6==2) or 
-       (CubeClick[2][0]%6==1 and CubeClick[1][6]%6==2 and CubeClick[4][8]%6==5) or 
-       (CubeClick[2][0]%6==2 and CubeClick[1][6]%6==1 and CubeClick[4][8]%6==4) or 
-       (CubeClick[2][0]%6==2 and CubeClick[1][6]%6==3 and CubeClick[4][8]%6==5) or 
-       (CubeClick[2][0]%6==2 and CubeClick[1][6]%6==4 and CubeClick[4][8]%6==3) or 
-       (CubeClick[2][0]%6==2 and CubeClick[1][6]%6==5 and CubeClick[4][8]%6==1) or 
-       (CubeClick[2][0]%6==3 and CubeClick[1][6]%6==0 and CubeClick[4][8]%6==5) or 
-       (CubeClick[2][0]%6==3 and CubeClick[1][6]%6==4 and CubeClick[4][8]%6==0) or 
-       (CubeClick[2][0]%6==3 and CubeClick[1][6]%6==5 and CubeClick[4][8]%6==2) or 
-       (CubeClick[2][0]%6==3 and CubeClick[1][6]%6==2 and CubeClick[4][8]%6==4) or 
-       (CubeClick[2][0]%6==4 and CubeClick[1][6]%6==0 and CubeClick[4][8]%6==3) or 
-       (CubeClick[2][0]%6==4 and CubeClick[1][6]%6==3 and CubeClick[4][8]%6==2) or 
-       (CubeClick[2][0]%6==4 and CubeClick[1][6]%6==2 and CubeClick[4][8]%6==1) or 
-       (CubeClick[2][0]%6==4 and CubeClick[1][6]%6==1 and CubeClick[4][8]%6==0) or 
-       (CubeClick[2][0]%6==5 and CubeClick[1][6]%6==1 and CubeClick[4][8]%6==2) or 
-       (CubeClick[2][0]%6==5 and CubeClick[1][6]%6==3 and CubeClick[4][8]%6==0) or 
-       (CubeClick[2][0]%6==5 and CubeClick[1][6]%6==0 and CubeClick[4][8]%6==1) or 
-       (CubeClick[2][0]%6==5 and CubeClick[1][6]%6==2 and CubeClick[4][8]%6==3)):
-        Corner += 1
+	if ((CubeClick[2][0]%6==0 and CubeClick[1][6]%6==3 and CubeClick[4][8]%6==4) or 
+	   (CubeClick[2][0]%6==0 and CubeClick[1][6]%6==1 and CubeClick[4][8]%6==5) or 
+	   (CubeClick[2][0]%6==0 and CubeClick[1][6]%6==4 and CubeClick[4][8]%6==1) or 
+	   (CubeClick[2][0]%6==0 and CubeClick[1][6]%6==5 and CubeClick[4][8]%6==3) or 
+	   (CubeClick[2][0]%6==1 and CubeClick[1][6]%6==0 and CubeClick[4][8]%6==4) or 
+	   (CubeClick[2][0]%6==1 and CubeClick[1][6]%6==5 and CubeClick[4][8]%6==0) or 
+	   (CubeClick[2][0]%6==1 and CubeClick[1][6]%6==4 and CubeClick[4][8]%6==2) or 
+	   (CubeClick[2][0]%6==1 and CubeClick[1][6]%6==2 and CubeClick[4][8]%6==5) or 
+	   (CubeClick[2][0]%6==2 and CubeClick[1][6]%6==1 and CubeClick[4][8]%6==4) or 
+	   (CubeClick[2][0]%6==2 and CubeClick[1][6]%6==3 and CubeClick[4][8]%6==5) or 
+	   (CubeClick[2][0]%6==2 and CubeClick[1][6]%6==4 and CubeClick[4][8]%6==3) or 
+	   (CubeClick[2][0]%6==2 and CubeClick[1][6]%6==5 and CubeClick[4][8]%6==1) or 
+	   (CubeClick[2][0]%6==3 and CubeClick[1][6]%6==0 and CubeClick[4][8]%6==5) or 
+	   (CubeClick[2][0]%6==3 and CubeClick[1][6]%6==4 and CubeClick[4][8]%6==0) or 
+	   (CubeClick[2][0]%6==3 and CubeClick[1][6]%6==5 and CubeClick[4][8]%6==2) or 
+	   (CubeClick[2][0]%6==3 and CubeClick[1][6]%6==2 and CubeClick[4][8]%6==4) or 
+	   (CubeClick[2][0]%6==4 and CubeClick[1][6]%6==0 and CubeClick[4][8]%6==3) or 
+	   (CubeClick[2][0]%6==4 and CubeClick[1][6]%6==3 and CubeClick[4][8]%6==2) or 
+	   (CubeClick[2][0]%6==4 and CubeClick[1][6]%6==2 and CubeClick[4][8]%6==1) or 
+	   (CubeClick[2][0]%6==4 and CubeClick[1][6]%6==1 and CubeClick[4][8]%6==0) or 
+	   (CubeClick[2][0]%6==5 and CubeClick[1][6]%6==1 and CubeClick[4][8]%6==2) or 
+	   (CubeClick[2][0]%6==5 and CubeClick[1][6]%6==3 and CubeClick[4][8]%6==0) or 
+	   (CubeClick[2][0]%6==5 and CubeClick[1][6]%6==0 and CubeClick[4][8]%6==1) or 
+	   (CubeClick[2][0]%6==5 and CubeClick[1][6]%6==2 and CubeClick[4][8]%6==3)):
+		Corner += 1
 
-    if ((CubeClick[2][2]%6==0 and CubeClick[5][6]%6==3 and CubeClick[1][8]%6==4) or 
-       (CubeClick[2][2]%6==0 and CubeClick[5][6]%6==1 and CubeClick[1][8]%6==5) or 
-       (CubeClick[2][2]%6==0 and CubeClick[5][6]%6==4 and CubeClick[1][8]%6==1) or 
-       (CubeClick[2][2]%6==0 and CubeClick[5][6]%6==5 and CubeClick[1][8]%6==3) or 
-       (CubeClick[2][2]%6==1 and CubeClick[5][6]%6==0 and CubeClick[1][8]%6==4) or 
-       (CubeClick[2][2]%6==1 and CubeClick[5][6]%6==5 and CubeClick[1][8]%6==0) or 
-       (CubeClick[2][2]%6==1 and CubeClick[5][6]%6==4 and CubeClick[1][8]%6==2) or 
-       (CubeClick[2][2]%6==1 and CubeClick[5][6]%6==2 and CubeClick[1][8]%6==5) or 
-       (CubeClick[2][2]%6==2 and CubeClick[5][6]%6==1 and CubeClick[1][8]%6==4) or 
-       (CubeClick[2][2]%6==2 and CubeClick[5][6]%6==3 and CubeClick[1][8]%6==5) or 
-       (CubeClick[2][2]%6==2 and CubeClick[5][6]%6==4 and CubeClick[1][8]%6==3) or 
-       (CubeClick[2][2]%6==2 and CubeClick[5][6]%6==5 and CubeClick[1][8]%6==1) or 
-       (CubeClick[2][2]%6==3 and CubeClick[5][6]%6==0 and CubeClick[1][8]%6==5) or 
-       (CubeClick[2][2]%6==3 and CubeClick[5][6]%6==4 and CubeClick[1][8]%6==0) or 
-       (CubeClick[2][2]%6==3 and CubeClick[5][6]%6==5 and CubeClick[1][8]%6==2) or 
-       (CubeClick[2][2]%6==3 and CubeClick[5][6]%6==2 and CubeClick[1][8]%6==4) or 
-       (CubeClick[2][2]%6==4 and CubeClick[5][6]%6==0 and CubeClick[1][8]%6==3) or 
-       (CubeClick[2][2]%6==4 and CubeClick[5][6]%6==3 and CubeClick[1][8]%6==2) or 
-       (CubeClick[2][2]%6==4 and CubeClick[5][6]%6==2 and CubeClick[1][8]%6==1) or 
-       (CubeClick[2][2]%6==4 and CubeClick[5][6]%6==1 and CubeClick[1][8]%6==0) or 
-       (CubeClick[2][2]%6==5 and CubeClick[5][6]%6==1 and CubeClick[1][8]%6==2) or 
-       (CubeClick[2][2]%6==5 and CubeClick[5][6]%6==3 and CubeClick[1][8]%6==0) or 
-       (CubeClick[2][2]%6==5 and CubeClick[5][6]%6==0 and CubeClick[1][8]%6==1) or 
-       (CubeClick[2][2]%6==5 and CubeClick[5][6]%6==2 and CubeClick[1][8]%6==3)):
-        Corner += 1
+	if ((CubeClick[2][2]%6==0 and CubeClick[5][6]%6==3 and CubeClick[1][8]%6==4) or 
+	   (CubeClick[2][2]%6==0 and CubeClick[5][6]%6==1 and CubeClick[1][8]%6==5) or 
+	   (CubeClick[2][2]%6==0 and CubeClick[5][6]%6==4 and CubeClick[1][8]%6==1) or 
+	   (CubeClick[2][2]%6==0 and CubeClick[5][6]%6==5 and CubeClick[1][8]%6==3) or 
+	   (CubeClick[2][2]%6==1 and CubeClick[5][6]%6==0 and CubeClick[1][8]%6==4) or 
+	   (CubeClick[2][2]%6==1 and CubeClick[5][6]%6==5 and CubeClick[1][8]%6==0) or 
+	   (CubeClick[2][2]%6==1 and CubeClick[5][6]%6==4 and CubeClick[1][8]%6==2) or 
+	   (CubeClick[2][2]%6==1 and CubeClick[5][6]%6==2 and CubeClick[1][8]%6==5) or 
+	   (CubeClick[2][2]%6==2 and CubeClick[5][6]%6==1 and CubeClick[1][8]%6==4) or 
+	   (CubeClick[2][2]%6==2 and CubeClick[5][6]%6==3 and CubeClick[1][8]%6==5) or 
+	   (CubeClick[2][2]%6==2 and CubeClick[5][6]%6==4 and CubeClick[1][8]%6==3) or 
+	   (CubeClick[2][2]%6==2 and CubeClick[5][6]%6==5 and CubeClick[1][8]%6==1) or 
+	   (CubeClick[2][2]%6==3 and CubeClick[5][6]%6==0 and CubeClick[1][8]%6==5) or 
+	   (CubeClick[2][2]%6==3 and CubeClick[5][6]%6==4 and CubeClick[1][8]%6==0) or 
+	   (CubeClick[2][2]%6==3 and CubeClick[5][6]%6==5 and CubeClick[1][8]%6==2) or 
+	   (CubeClick[2][2]%6==3 and CubeClick[5][6]%6==2 and CubeClick[1][8]%6==4) or 
+	   (CubeClick[2][2]%6==4 and CubeClick[5][6]%6==0 and CubeClick[1][8]%6==3) or 
+	   (CubeClick[2][2]%6==4 and CubeClick[5][6]%6==3 and CubeClick[1][8]%6==2) or 
+	   (CubeClick[2][2]%6==4 and CubeClick[5][6]%6==2 and CubeClick[1][8]%6==1) or 
+	   (CubeClick[2][2]%6==4 and CubeClick[5][6]%6==1 and CubeClick[1][8]%6==0) or 
+	   (CubeClick[2][2]%6==5 and CubeClick[5][6]%6==1 and CubeClick[1][8]%6==2) or 
+	   (CubeClick[2][2]%6==5 and CubeClick[5][6]%6==3 and CubeClick[1][8]%6==0) or 
+	   (CubeClick[2][2]%6==5 and CubeClick[5][6]%6==0 and CubeClick[1][8]%6==1) or 
+	   (CubeClick[2][2]%6==5 and CubeClick[5][6]%6==2 and CubeClick[1][8]%6==3)):
+		Corner += 1
 
-    if ((CubeClick[2][6]%6==0 and CubeClick[4][6]%6==3 and CubeClick[3][0]%6==4) or 
-       (CubeClick[2][6]%6==0 and CubeClick[4][6]%6==1 and CubeClick[3][0]%6==5) or 
-       (CubeClick[2][6]%6==0 and CubeClick[4][6]%6==4 and CubeClick[3][0]%6==1) or 
-       (CubeClick[2][6]%6==0 and CubeClick[4][6]%6==5 and CubeClick[3][0]%6==3) or 
-       (CubeClick[2][6]%6==1 and CubeClick[4][6]%6==0 and CubeClick[3][0]%6==4) or 
-       (CubeClick[2][6]%6==1 and CubeClick[4][6]%6==5 and CubeClick[3][0]%6==0) or 
-       (CubeClick[2][6]%6==1 and CubeClick[4][6]%6==4 and CubeClick[3][0]%6==2) or 
-       (CubeClick[2][6]%6==1 and CubeClick[4][6]%6==2 and CubeClick[3][0]%6==5) or 
-       (CubeClick[2][6]%6==2 and CubeClick[4][6]%6==1 and CubeClick[3][0]%6==4) or 
-       (CubeClick[2][6]%6==2 and CubeClick[4][6]%6==3 and CubeClick[3][0]%6==5) or 
-       (CubeClick[2][6]%6==2 and CubeClick[4][6]%6==4 and CubeClick[3][0]%6==3) or 
-       (CubeClick[2][6]%6==2 and CubeClick[4][6]%6==5 and CubeClick[3][0]%6==1) or 
-       (CubeClick[2][6]%6==3 and CubeClick[4][6]%6==0 and CubeClick[3][0]%6==5) or 
-       (CubeClick[2][6]%6==3 and CubeClick[4][6]%6==4 and CubeClick[3][0]%6==0) or 
-       (CubeClick[2][6]%6==3 and CubeClick[4][6]%6==5 and CubeClick[3][0]%6==2) or 
-       (CubeClick[2][6]%6==3 and CubeClick[4][6]%6==2 and CubeClick[3][0]%6==4) or 
-       (CubeClick[2][6]%6==4 and CubeClick[4][6]%6==0 and CubeClick[3][0]%6==3) or 
-       (CubeClick[2][6]%6==4 and CubeClick[4][6]%6==3 and CubeClick[3][0]%6==2) or 
-       (CubeClick[2][6]%6==4 and CubeClick[4][6]%6==2 and CubeClick[3][0]%6==1) or 
-       (CubeClick[2][6]%6==4 and CubeClick[4][6]%6==1 and CubeClick[3][0]%6==0) or 
-       (CubeClick[2][6]%6==5 and CubeClick[4][6]%6==1 and CubeClick[3][0]%6==2) or 
-       (CubeClick[2][6]%6==5 and CubeClick[4][6]%6==3 and CubeClick[3][0]%6==0) or 
-       (CubeClick[2][6]%6==5 and CubeClick[4][6]%6==0 and CubeClick[3][0]%6==1) or 
-       (CubeClick[2][6]%6==5 and CubeClick[4][6]%6==2 and CubeClick[3][0]%6==3)):
-        Corner += 1
-    if ((CubeClick[2][8]%6==0 and CubeClick[3][2]%6==3 and CubeClick[5][8]%6==4) or 
-       (CubeClick[2][8]%6==0 and CubeClick[3][2]%6==1 and CubeClick[5][8]%6==5) or 
-       (CubeClick[2][8]%6==0 and CubeClick[3][2]%6==4 and CubeClick[5][8]%6==1) or 
-       (CubeClick[2][8]%6==0 and CubeClick[3][2]%6==5 and CubeClick[5][8]%6==3) or 
-       (CubeClick[2][8]%6==1 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==4) or 
-       (CubeClick[2][8]%6==1 and CubeClick[3][2]%6==5 and CubeClick[5][8]%6==0) or 
-       (CubeClick[2][8]%6==1 and CubeClick[3][2]%6==4 and CubeClick[5][8]%6==2) or 
-       (CubeClick[2][8]%6==1 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==5) or 
-       (CubeClick[2][8]%6==2 and CubeClick[3][2]%6==1 and CubeClick[5][8]%6==4) or 
-       (CubeClick[2][8]%6==2 and CubeClick[3][2]%6==3 and CubeClick[5][8]%6==5) or 
-       (CubeClick[2][8]%6==2 and CubeClick[3][2]%6==4 and CubeClick[5][8]%6==3) or 
-       (CubeClick[2][8]%6==2 and CubeClick[3][2]%6==5 and CubeClick[5][8]%6==1) or 
-       (CubeClick[2][8]%6==3 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==5) or 
-       (CubeClick[2][8]%6==3 and CubeClick[3][2]%6==4 and CubeClick[5][8]%6==0) or 
-       (CubeClick[2][8]%6==3 and CubeClick[3][2]%6==5 and CubeClick[5][8]%6==2) or 
-       (CubeClick[2][8]%6==3 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==4) or 
-       (CubeClick[2][8]%6==4 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==3) or 
-       (CubeClick[2][8]%6==4 and CubeClick[3][2]%6==3 and CubeClick[5][8]%6==2) or 
-       (CubeClick[2][8]%6==4 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==1) or 
-       (CubeClick[2][8]%6==4 and CubeClick[3][2]%6==1 and CubeClick[5][8]%6==0) or 
-       (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==1 and CubeClick[5][8]%6==2) or 
-       (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==3 and CubeClick[5][8]%6==0) or 
-       (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==1) or 
-       (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==3)):
-        Corner += 1
+	if ((CubeClick[2][6]%6==0 and CubeClick[4][6]%6==3 and CubeClick[3][0]%6==4) or 
+	   (CubeClick[2][6]%6==0 and CubeClick[4][6]%6==1 and CubeClick[3][0]%6==5) or 
+	   (CubeClick[2][6]%6==0 and CubeClick[4][6]%6==4 and CubeClick[3][0]%6==1) or 
+	   (CubeClick[2][6]%6==0 and CubeClick[4][6]%6==5 and CubeClick[3][0]%6==3) or 
+	   (CubeClick[2][6]%6==1 and CubeClick[4][6]%6==0 and CubeClick[3][0]%6==4) or 
+	   (CubeClick[2][6]%6==1 and CubeClick[4][6]%6==5 and CubeClick[3][0]%6==0) or 
+	   (CubeClick[2][6]%6==1 and CubeClick[4][6]%6==4 and CubeClick[3][0]%6==2) or 
+	   (CubeClick[2][6]%6==1 and CubeClick[4][6]%6==2 and CubeClick[3][0]%6==5) or 
+	   (CubeClick[2][6]%6==2 and CubeClick[4][6]%6==1 and CubeClick[3][0]%6==4) or 
+	   (CubeClick[2][6]%6==2 and CubeClick[4][6]%6==3 and CubeClick[3][0]%6==5) or 
+	   (CubeClick[2][6]%6==2 and CubeClick[4][6]%6==4 and CubeClick[3][0]%6==3) or 
+	   (CubeClick[2][6]%6==2 and CubeClick[4][6]%6==5 and CubeClick[3][0]%6==1) or 
+	   (CubeClick[2][6]%6==3 and CubeClick[4][6]%6==0 and CubeClick[3][0]%6==5) or 
+	   (CubeClick[2][6]%6==3 and CubeClick[4][6]%6==4 and CubeClick[3][0]%6==0) or 
+	   (CubeClick[2][6]%6==3 and CubeClick[4][6]%6==5 and CubeClick[3][0]%6==2) or 
+	   (CubeClick[2][6]%6==3 and CubeClick[4][6]%6==2 and CubeClick[3][0]%6==4) or 
+	   (CubeClick[2][6]%6==4 and CubeClick[4][6]%6==0 and CubeClick[3][0]%6==3) or 
+	   (CubeClick[2][6]%6==4 and CubeClick[4][6]%6==3 and CubeClick[3][0]%6==2) or 
+	   (CubeClick[2][6]%6==4 and CubeClick[4][6]%6==2 and CubeClick[3][0]%6==1) or 
+	   (CubeClick[2][6]%6==4 and CubeClick[4][6]%6==1 and CubeClick[3][0]%6==0) or 
+	   (CubeClick[2][6]%6==5 and CubeClick[4][6]%6==1 and CubeClick[3][0]%6==2) or 
+	   (CubeClick[2][6]%6==5 and CubeClick[4][6]%6==3 and CubeClick[3][0]%6==0) or 
+	   (CubeClick[2][6]%6==5 and CubeClick[4][6]%6==0 and CubeClick[3][0]%6==1) or 
+	   (CubeClick[2][6]%6==5 and CubeClick[4][6]%6==2 and CubeClick[3][0]%6==3)):
+		Corner += 1
+	if ((CubeClick[2][8]%6==0 and CubeClick[3][2]%6==3 and CubeClick[5][8]%6==4) or 
+	   (CubeClick[2][8]%6==0 and CubeClick[3][2]%6==1 and CubeClick[5][8]%6==5) or 
+	   (CubeClick[2][8]%6==0 and CubeClick[3][2]%6==4 and CubeClick[5][8]%6==1) or 
+	   (CubeClick[2][8]%6==0 and CubeClick[3][2]%6==5 and CubeClick[5][8]%6==3) or 
+	   (CubeClick[2][8]%6==1 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==4) or 
+	   (CubeClick[2][8]%6==1 and CubeClick[3][2]%6==5 and CubeClick[5][8]%6==0) or 
+	   (CubeClick[2][8]%6==1 and CubeClick[3][2]%6==4 and CubeClick[5][8]%6==2) or 
+	   (CubeClick[2][8]%6==1 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==5) or 
+	   (CubeClick[2][8]%6==2 and CubeClick[3][2]%6==1 and CubeClick[5][8]%6==4) or 
+	   (CubeClick[2][8]%6==2 and CubeClick[3][2]%6==3 and CubeClick[5][8]%6==5) or 
+	   (CubeClick[2][8]%6==2 and CubeClick[3][2]%6==4 and CubeClick[5][8]%6==3) or 
+	   (CubeClick[2][8]%6==2 and CubeClick[3][2]%6==5 and CubeClick[5][8]%6==1) or 
+	   (CubeClick[2][8]%6==3 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==5) or 
+	   (CubeClick[2][8]%6==3 and CubeClick[3][2]%6==4 and CubeClick[5][8]%6==0) or 
+	   (CubeClick[2][8]%6==3 and CubeClick[3][2]%6==5 and CubeClick[5][8]%6==2) or 
+	   (CubeClick[2][8]%6==3 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==4) or 
+	   (CubeClick[2][8]%6==4 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==3) or 
+	   (CubeClick[2][8]%6==4 and CubeClick[3][2]%6==3 and CubeClick[5][8]%6==2) or 
+	   (CubeClick[2][8]%6==4 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==1) or 
+	   (CubeClick[2][8]%6==4 and CubeClick[3][2]%6==1 and CubeClick[5][8]%6==0) or 
+	   (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==1 and CubeClick[5][8]%6==2) or 
+	   (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==3 and CubeClick[5][8]%6==0) or 
+	   (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==1) or 
+	   (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==3)):
+		Corner += 1
 
-    print(Corner)
-    
+	print(Corner)
+	
 def Front(CubeClicki):
-    Cube = copy.deepcopy(CubeClicki)
-    # Front face (face 0)
-    Cube[0][0] = CubeClicki[0][2]
-    Cube[0][1] = CubeClicki[0][5]
-    Cube[0][2] = CubeClicki[0][8]
-    Cube[0][3] = CubeClicki[0][1]
-    Cube[0][4] = CubeClicki[0][4]
-    Cube[0][5] = CubeClicki[0][7]
-    Cube[0][6] = CubeClicki[0][0]
-    Cube[0][7] = CubeClicki[0][3]
-    Cube[0][8] = CubeClicki[0][6]
-    # Right face (face 1)
-    Cube[1][0] = CubeClicki[4][0]
-    Cube[1][1] = CubeClicki[4][1]
-    Cube[1][2] = CubeClicki[4][2]
-    # Left face (face 3)
-    Cube[3][6] = CubeClicki[5][2]
-    Cube[3][7] = CubeClicki[5][1]
-    Cube[3][8] = CubeClicki[5][0]
-    # Top face (face 4)
-    Cube[4][0] = CubeClicki[3][8]
-    Cube[4][1] = CubeClicki[3][7]
-    Cube[4][2] = CubeClicki[3][6]
-    # Bottom face (face 5)
-    Cube[5][2] = CubeClicki[1][2]
-    Cube[5][1] = CubeClicki[1][1]
-    Cube[5][0] = CubeClicki[1][0]
+	Cube = copy.deepcopy(CubeClicki)
+	# Front face (face 0)
+	Cube[0][0] = CubeClicki[0][2]
+	Cube[0][1] = CubeClicki[0][5]
+	Cube[0][2] = CubeClicki[0][8]
+	Cube[0][3] = CubeClicki[0][1]
+	Cube[0][4] = CubeClicki[0][4]
+	Cube[0][5] = CubeClicki[0][7]
+	Cube[0][6] = CubeClicki[0][0]
+	Cube[0][7] = CubeClicki[0][3]
+	Cube[0][8] = CubeClicki[0][6]
+	# Right face (face 1)
+	Cube[1][0] = CubeClicki[4][0]
+	Cube[1][1] = CubeClicki[4][1]
+	Cube[1][2] = CubeClicki[4][2]
+	# Left face (face 3)
+	Cube[3][6] = CubeClicki[5][2]
+	Cube[3][7] = CubeClicki[5][1]
+	Cube[3][8] = CubeClicki[5][0]
+	# Top face (face 4)
+	Cube[4][0] = CubeClicki[3][8]
+	Cube[4][1] = CubeClicki[3][7]
+	Cube[4][2] = CubeClicki[3][6]
+	# Bottom face (face 5)
+	Cube[5][2] = CubeClicki[1][2]
+	Cube[5][1] = CubeClicki[1][1]
+	Cube[5][0] = CubeClicki[1][0]
 
-    return Cube
+	return Cube
 
 def FrontI(CubeClicki):
-    Cube = copy.deepcopy(CubeClicki)
-    # Front face (face 0)
-    Cube[0][0] = CubeClicki[0][6]
-    Cube[0][1] = CubeClicki[0][3]
-    Cube[0][2] = CubeClicki[0][0]
-    Cube[0][3] = CubeClicki[0][7]
-    Cube[0][4] = CubeClicki[0][4]
-    Cube[0][5] = CubeClicki[0][1]
-    Cube[0][6] = CubeClicki[0][8]
-    Cube[0][7] = CubeClicki[0][5]
-    Cube[0][8] = CubeClicki[0][2]
-    # Right face (face 1)
-    Cube[1][0] = CubeClicki[5][0]
-    Cube[1][1] = CubeClicki[5][1]
-    Cube[1][2] = CubeClicki[5][2]
-    # Left face (face 3)
-    Cube[3][6] = CubeClicki[4][2]
-    Cube[3][7] = CubeClicki[4][1]
-    Cube[3][8] = CubeClicki[4][0]
-    # Top face (face 4)
-    Cube[4][0] = CubeClicki[1][0]
-    Cube[4][1] = CubeClicki[1][1]
-    Cube[4][2] = CubeClicki[1][2]
-    # Bottom face (face 5)
-    Cube[5][2] = CubeClicki[3][6]
-    Cube[5][1] = CubeClicki[3][7]
-    Cube[5][0] = CubeClicki[3][8]
+	Cube = copy.deepcopy(CubeClicki)
+	# Front face (face 0)
+	Cube[0][0] = CubeClicki[0][6]
+	Cube[0][1] = CubeClicki[0][3]
+	Cube[0][2] = CubeClicki[0][0]
+	Cube[0][3] = CubeClicki[0][7]
+	Cube[0][4] = CubeClicki[0][4]
+	Cube[0][5] = CubeClicki[0][1]
+	Cube[0][6] = CubeClicki[0][8]
+	Cube[0][7] = CubeClicki[0][5]
+	Cube[0][8] = CubeClicki[0][2]
+	# Right face (face 1)
+	Cube[1][0] = CubeClicki[5][0]
+	Cube[1][1] = CubeClicki[5][1]
+	Cube[1][2] = CubeClicki[5][2]
+	# Left face (face 3)
+	Cube[3][6] = CubeClicki[4][2]
+	Cube[3][7] = CubeClicki[4][1]
+	Cube[3][8] = CubeClicki[4][0]
+	# Top face (face 4)
+	Cube[4][0] = CubeClicki[1][0]
+	Cube[4][1] = CubeClicki[1][1]
+	Cube[4][2] = CubeClicki[1][2]
+	# Bottom face (face 5)
+	Cube[5][2] = CubeClicki[3][6]
+	Cube[5][1] = CubeClicki[3][7]
+	Cube[5][0] = CubeClicki[3][8]
 
-    return Cube
+	return Cube
 
 def Left(CubeClicki):
-    Cube = copy.deepcopy(CubeClicki)
-    # Front face (face 0)
-    Cube[3][0] = CubeClicki[3][2]
-    Cube[3][1] = CubeClicki[3][5]
-    Cube[3][2] = CubeClicki[3][8]
-    Cube[3][3] = CubeClicki[3][1]
-    Cube[3][4] = CubeClicki[3][4]
-    Cube[3][5] = CubeClicki[3][7]
-    Cube[3][6] = CubeClicki[3][0]
-    Cube[3][7] = CubeClicki[3][3]
-    Cube[3][8] = CubeClicki[3][6]
-    # Right face (face 1)
-    Cube[0][0] = CubeClicki[4][6]
-    Cube[0][1] = CubeClicki[4][3]
-    Cube[0][2] = CubeClicki[4][0]
-    # Left face (face 3)
-    Cube[4][0] = CubeClicki[2][6]
-    Cube[4][3] = CubeClicki[2][7]
-    Cube[4][6] = CubeClicki[2][8]
-    # Top face (face 4)
-    Cube[2][6] = CubeClicki[5][8]
-    Cube[2][7] = CubeClicki[5][5]
-    Cube[2][8] = CubeClicki[5][2]
-    # Bottom face (face 5)
-    Cube[5][2] = CubeClicki[0][0]
-    Cube[5][5] = CubeClicki[0][1]
-    Cube[5][8] = CubeClicki[0][2]
+	Cube = copy.deepcopy(CubeClicki)
+	# Front face (face 0)
+	Cube[3][0] = CubeClicki[3][2]
+	Cube[3][1] = CubeClicki[3][5]
+	Cube[3][2] = CubeClicki[3][8]
+	Cube[3][3] = CubeClicki[3][1]
+	Cube[3][4] = CubeClicki[3][4]
+	Cube[3][5] = CubeClicki[3][7]
+	Cube[3][6] = CubeClicki[3][0]
+	Cube[3][7] = CubeClicki[3][3]
+	Cube[3][8] = CubeClicki[3][6]
+	# Right face (face 1)
+	Cube[0][0] = CubeClicki[4][6]
+	Cube[0][1] = CubeClicki[4][3]
+	Cube[0][2] = CubeClicki[4][0]
+	# Left face (face 3)
+	Cube[4][0] = CubeClicki[2][6]
+	Cube[4][3] = CubeClicki[2][7]
+	Cube[4][6] = CubeClicki[2][8]
+	# Top face (face 4)
+	Cube[2][6] = CubeClicki[5][8]
+	Cube[2][7] = CubeClicki[5][5]
+	Cube[2][8] = CubeClicki[5][2]
+	# Bottom face (face 5)
+	Cube[5][2] = CubeClicki[0][0]
+	Cube[5][5] = CubeClicki[0][1]
+	Cube[5][8] = CubeClicki[0][2]
 
-    return Cube
+	return Cube
 
 def LeftI(CubeClicki):
-    Cube = copy.deepcopy(CubeClicki)
-    # Front face (face 0)
-    Cube[3][0] = CubeClicki[3][6]
-    Cube[3][1] = CubeClicki[3][3]
-    Cube[3][2] = CubeClicki[3][0]
-    Cube[3][3] = CubeClicki[3][7]
-    Cube[3][4] = CubeClicki[3][4]
-    Cube[3][5] = CubeClicki[3][1]
-    Cube[3][6] = CubeClicki[3][8]
-    Cube[3][7] = CubeClicki[3][5]
-    Cube[3][8] = CubeClicki[3][2]
-    # Right face (face 1)
-    Cube[0][0] = CubeClicki[5][2]
-    Cube[0][1] = CubeClicki[5][5]
-    Cube[0][2] = CubeClicki[5][8]
-    # Left face (face 3)
-    Cube[4][0] = CubeClicki[0][2]
-    Cube[4][3] = CubeClicki[0][1]
-    Cube[4][6] = CubeClicki[0][0]
-    # Top face (face 4)
-    Cube[2][6] = CubeClicki[4][0]
-    Cube[2][7] = CubeClicki[4][3]
-    Cube[2][8] = CubeClicki[4][6]
-    # Bottom face (face 5)
-    Cube[5][2] = CubeClicki[2][8]
-    Cube[5][5] = CubeClicki[2][7]
-    Cube[5][8] = CubeClicki[2][6]
+	Cube = copy.deepcopy(CubeClicki)
+	# Front face (face 0)
+	Cube[3][0] = CubeClicki[3][6]
+	Cube[3][1] = CubeClicki[3][3]
+	Cube[3][2] = CubeClicki[3][0]
+	Cube[3][3] = CubeClicki[3][7]
+	Cube[3][4] = CubeClicki[3][4]
+	Cube[3][5] = CubeClicki[3][1]
+	Cube[3][6] = CubeClicki[3][8]
+	Cube[3][7] = CubeClicki[3][5]
+	Cube[3][8] = CubeClicki[3][2]
+	# Right face (face 1)
+	Cube[0][0] = CubeClicki[5][2]
+	Cube[0][1] = CubeClicki[5][5]
+	Cube[0][2] = CubeClicki[5][8]
+	# Left face (face 3)
+	Cube[4][0] = CubeClicki[0][2]
+	Cube[4][3] = CubeClicki[0][1]
+	Cube[4][6] = CubeClicki[0][0]
+	# Top face (face 4)
+	Cube[2][6] = CubeClicki[4][0]
+	Cube[2][7] = CubeClicki[4][3]
+	Cube[2][8] = CubeClicki[4][6]
+	# Bottom face (face 5)
+	Cube[5][2] = CubeClicki[2][8]
+	Cube[5][5] = CubeClicki[2][7]
+	Cube[5][8] = CubeClicki[2][6]
 
-    return Cube
+	return Cube
 
 def Right(CubeClicki):
-    Cube = copy.deepcopy(CubeClicki)
-    # Front face (face 0)
-    Cube[1][0] = CubeClicki[1][2]
-    Cube[1][1] = CubeClicki[1][5]
-    Cube[1][2] = CubeClicki[1][8]
-    Cube[1][3] = CubeClicki[1][1]
-    Cube[1][4] = CubeClicki[1][4]
-    Cube[1][5] = CubeClicki[1][7]
-    Cube[1][6] = CubeClicki[1][0]
-    Cube[1][7] = CubeClicki[1][3]
-    Cube[1][8] = CubeClicki[1][6]
-    # Right face (face 1)
-    Cube[0][6] = CubeClicki[5][0]
-    Cube[0][7] = CubeClicki[5][3]
-    Cube[0][8] = CubeClicki[5][6]
-    # Left face (face 3)
-    Cube[4][2] = CubeClicki[0][8]
-    Cube[4][5] = CubeClicki[0][7]
-    Cube[4][8] = CubeClicki[0][6]
-    # Top face (face 4)
-    Cube[2][0] = CubeClicki[4][2]
-    Cube[2][1] = CubeClicki[4][5]
-    Cube[2][2] = CubeClicki[4][8]
-    # Bottom face (face 5)
-    Cube[5][0] = CubeClicki[2][2]
-    Cube[5][3] = CubeClicki[2][1]
-    Cube[5][6] = CubeClicki[2][0]
+	Cube = copy.deepcopy(CubeClicki)
+	# Front face (face 0)
+	Cube[1][0] = CubeClicki[1][2]
+	Cube[1][1] = CubeClicki[1][5]
+	Cube[1][2] = CubeClicki[1][8]
+	Cube[1][3] = CubeClicki[1][1]
+	Cube[1][4] = CubeClicki[1][4]
+	Cube[1][5] = CubeClicki[1][7]
+	Cube[1][6] = CubeClicki[1][0]
+	Cube[1][7] = CubeClicki[1][3]
+	Cube[1][8] = CubeClicki[1][6]
+	# Right face (face 1)
+	Cube[0][6] = CubeClicki[5][0]
+	Cube[0][7] = CubeClicki[5][3]
+	Cube[0][8] = CubeClicki[5][6]
+	# Left face (face 3)
+	Cube[4][2] = CubeClicki[0][8]
+	Cube[4][5] = CubeClicki[0][7]
+	Cube[4][8] = CubeClicki[0][6]
+	# Top face (face 4)
+	Cube[2][0] = CubeClicki[4][2]
+	Cube[2][1] = CubeClicki[4][5]
+	Cube[2][2] = CubeClicki[4][8]
+	# Bottom face (face 5)
+	Cube[5][0] = CubeClicki[2][2]
+	Cube[5][3] = CubeClicki[2][1]
+	Cube[5][6] = CubeClicki[2][0]
 
-    return Cube
+	return Cube
 
 def RightI(CubeClicki):
-    Cube = copy.deepcopy(CubeClicki)
-    # Front face (face 0)
-    Cube[1][0] = CubeClicki[1][6]
-    Cube[1][1] = CubeClicki[1][3]
-    Cube[1][2] = CubeClicki[1][0]
-    Cube[1][3] = CubeClicki[1][7]
-    Cube[1][4] = CubeClicki[1][4]
-    Cube[1][5] = CubeClicki[1][1]
-    Cube[1][6] = CubeClicki[1][8]
-    Cube[1][7] = CubeClicki[1][5]
-    Cube[1][8] = CubeClicki[1][2]
-    # Right face (face 1)
-    Cube[0][6] = CubeClicki[4][8]
-    Cube[0][7] = CubeClicki[4][5]
-    Cube[0][8] = CubeClicki[4][2]
-    # Left face (face 3)
-    Cube[4][2] = CubeClicki[2][0]
-    Cube[4][5] = CubeClicki[2][1]
-    Cube[4][8] = CubeClicki[2][2]
-    # Top face (face 4)
-    Cube[2][0] = CubeClicki[5][6]
-    Cube[2][1] = CubeClicki[5][3]
-    Cube[2][2] = CubeClicki[5][0]
-    # Bottom face (face 5)
-    Cube[5][0] = CubeClicki[0][6]
-    Cube[5][3] = CubeClicki[0][7]
-    Cube[5][6] = CubeClicki[0][8]
+	Cube = copy.deepcopy(CubeClicki)
+	# Front face (face 0)
+	Cube[1][0] = CubeClicki[1][6]
+	Cube[1][1] = CubeClicki[1][3]
+	Cube[1][2] = CubeClicki[1][0]
+	Cube[1][3] = CubeClicki[1][7]
+	Cube[1][4] = CubeClicki[1][4]
+	Cube[1][5] = CubeClicki[1][1]
+	Cube[1][6] = CubeClicki[1][8]
+	Cube[1][7] = CubeClicki[1][5]
+	Cube[1][8] = CubeClicki[1][2]
+	# Right face (face 1)
+	Cube[0][6] = CubeClicki[4][8]
+	Cube[0][7] = CubeClicki[4][5]
+	Cube[0][8] = CubeClicki[4][2]
+	# Left face (face 3)
+	Cube[4][2] = CubeClicki[2][0]
+	Cube[4][5] = CubeClicki[2][1]
+	Cube[4][8] = CubeClicki[2][2]
+	# Top face (face 4)
+	Cube[2][0] = CubeClicki[5][6]
+	Cube[2][1] = CubeClicki[5][3]
+	Cube[2][2] = CubeClicki[5][0]
+	# Bottom face (face 5)
+	Cube[5][0] = CubeClicki[0][6]
+	Cube[5][3] = CubeClicki[0][7]
+	Cube[5][6] = CubeClicki[0][8]
 
-    return Cube
+	return Cube
 
 def Up(CubeClicki):
-    Cube = copy.deepcopy(CubeClicki)
-    # Front face (face 0)
-    Cube[4][0] = CubeClicki[4][2]
-    Cube[4][1] = CubeClicki[4][5]
-    Cube[4][2] = CubeClicki[4][8]
-    Cube[4][3] = CubeClicki[4][1]
-    Cube[4][4] = CubeClicki[4][4]
-    Cube[4][5] = CubeClicki[4][7]
-    Cube[4][6] = CubeClicki[4][0]
-    Cube[4][7] = CubeClicki[4][3]
-    Cube[4][8] = CubeClicki[4][6]
-    # Right face (face 1)
-    Cube[0][0] = CubeClicki[1][0]
-    Cube[0][3] = CubeClicki[1][3]
-    Cube[0][6] = CubeClicki[1][6]
-    # Left face (face 3)
-    Cube[3][0] = CubeClicki[0][0]
-    Cube[3][3] = CubeClicki[0][3]
-    Cube[3][6] = CubeClicki[0][6]
-    # Top face (face 4)
-    Cube[2][0] = CubeClicki[3][0]
-    Cube[2][3] = CubeClicki[3][3]
-    Cube[2][6] = CubeClicki[3][6]
-    # Bottom face (face 5)
-    Cube[1][0] = CubeClicki[2][0]
-    Cube[1][3] = CubeClicki[2][3]
-    Cube[1][6] = CubeClicki[2][6]
+	Cube = copy.deepcopy(CubeClicki)
+	# Front face (face 0)
+	Cube[4][0] = CubeClicki[4][2]
+	Cube[4][1] = CubeClicki[4][5]
+	Cube[4][2] = CubeClicki[4][8]
+	Cube[4][3] = CubeClicki[4][1]
+	Cube[4][4] = CubeClicki[4][4]
+	Cube[4][5] = CubeClicki[4][7]
+	Cube[4][6] = CubeClicki[4][0]
+	Cube[4][7] = CubeClicki[4][3]
+	Cube[4][8] = CubeClicki[4][6]
+	# Right face (face 1)
+	Cube[0][0] = CubeClicki[1][0]
+	Cube[0][3] = CubeClicki[1][3]
+	Cube[0][6] = CubeClicki[1][6]
+	# Left face (face 3)
+	Cube[3][0] = CubeClicki[0][0]
+	Cube[3][3] = CubeClicki[0][3]
+	Cube[3][6] = CubeClicki[0][6]
+	# Top face (face 4)
+	Cube[2][0] = CubeClicki[3][0]
+	Cube[2][3] = CubeClicki[3][3]
+	Cube[2][6] = CubeClicki[3][6]
+	# Bottom face (face 5)
+	Cube[1][0] = CubeClicki[2][0]
+	Cube[1][3] = CubeClicki[2][3]
+	Cube[1][6] = CubeClicki[2][6]
 
-    return Cube  
+	return Cube  
 
 def UpI(CubeClicki):
-    Cube = copy.deepcopy(CubeClicki)
-    # Front face (face 0)
-    Cube[4][0] = CubeClicki[4][6]
-    Cube[4][1] = CubeClicki[4][3]
-    Cube[4][2] = CubeClicki[4][0]
-    Cube[4][3] = CubeClicki[4][7]
-    Cube[4][4] = CubeClicki[4][4]
-    Cube[4][5] = CubeClicki[4][1]
-    Cube[4][6] = CubeClicki[4][8]
-    Cube[4][7] = CubeClicki[4][5]
-    Cube[4][8] = CubeClicki[4][2]
-    # Right face (face 1)
-    Cube[0][0] = CubeClicki[3][0]
-    Cube[0][3] = CubeClicki[3][3]
-    Cube[0][6] = CubeClicki[3][6]
-    # Left face (face 3)
-    Cube[3][0] = CubeClicki[2][0]
-    Cube[3][3] = CubeClicki[2][3]
-    Cube[3][6] = CubeClicki[2][6]
-    # Top face (face 4)
-    Cube[2][0] = CubeClicki[1][0]
-    Cube[2][3] = CubeClicki[1][3]
-    Cube[2][6] = CubeClicki[1][6]
-    # Bottom face (face 5)
-    Cube[1][0] = CubeClicki[0][0]
-    Cube[1][3] = CubeClicki[0][3]
-    Cube[1][6] = CubeClicki[0][6]
+	Cube = copy.deepcopy(CubeClicki)
+	# Front face (face 0)
+	Cube[4][0] = CubeClicki[4][6]
+	Cube[4][1] = CubeClicki[4][3]
+	Cube[4][2] = CubeClicki[4][0]
+	Cube[4][3] = CubeClicki[4][7]
+	Cube[4][4] = CubeClicki[4][4]
+	Cube[4][5] = CubeClicki[4][1]
+	Cube[4][6] = CubeClicki[4][8]
+	Cube[4][7] = CubeClicki[4][5]
+	Cube[4][8] = CubeClicki[4][2]
+	# Right face (face 1)
+	Cube[0][0] = CubeClicki[3][0]
+	Cube[0][3] = CubeClicki[3][3]
+	Cube[0][6] = CubeClicki[3][6]
+	# Left face (face 3)
+	Cube[3][0] = CubeClicki[2][0]
+	Cube[3][3] = CubeClicki[2][3]
+	Cube[3][6] = CubeClicki[2][6]
+	# Top face (face 4)
+	Cube[2][0] = CubeClicki[1][0]
+	Cube[2][3] = CubeClicki[1][3]
+	Cube[2][6] = CubeClicki[1][6]
+	# Bottom face (face 5)
+	Cube[1][0] = CubeClicki[0][0]
+	Cube[1][3] = CubeClicki[0][3]
+	Cube[1][6] = CubeClicki[0][6]
 
-    return Cube  
+	return Cube  
 
 def Down(CubeClicki):
-    Cube = copy.deepcopy(CubeClicki)
-    # Front face (face 0)
-    Cube[5][0] = CubeClicki[5][2]
-    Cube[5][1] = CubeClicki[5][5]
-    Cube[5][2] = CubeClicki[5][8]
-    Cube[5][3] = CubeClicki[5][1]
-    Cube[5][4] = CubeClicki[5][4]
-    Cube[5][5] = CubeClicki[5][7]
-    Cube[5][6] = CubeClicki[5][0]
-    Cube[5][7] = CubeClicki[5][3]
-    Cube[5][8] = CubeClicki[5][6]
-    # Right face (face 1)
-    Cube[0][2] = CubeClicki[3][2]
-    Cube[0][5] = CubeClicki[3][5]
-    Cube[0][8] = CubeClicki[3][8]
-    # Left face (face 3)
-    Cube[3][2] = CubeClicki[2][2]
-    Cube[3][5] = CubeClicki[2][5]
-    Cube[3][8] = CubeClicki[2][8]
-    # Top face (face 4)
-    Cube[2][2] = CubeClicki[1][2]
-    Cube[2][5] = CubeClicki[1][5]
-    Cube[2][8] = CubeClicki[1][8]
-    # Bottom face (face 5)
-    Cube[1][2] = CubeClicki[0][2]
-    Cube[1][5] = CubeClicki[0][5]
-    Cube[1][8] = CubeClicki[0][8]
+	Cube = copy.deepcopy(CubeClicki)
+	# Front face (face 0)
+	Cube[5][0] = CubeClicki[5][2]
+	Cube[5][1] = CubeClicki[5][5]
+	Cube[5][2] = CubeClicki[5][8]
+	Cube[5][3] = CubeClicki[5][1]
+	Cube[5][4] = CubeClicki[5][4]
+	Cube[5][5] = CubeClicki[5][7]
+	Cube[5][6] = CubeClicki[5][0]
+	Cube[5][7] = CubeClicki[5][3]
+	Cube[5][8] = CubeClicki[5][6]
+	# Right face (face 1)
+	Cube[0][2] = CubeClicki[3][2]
+	Cube[0][5] = CubeClicki[3][5]
+	Cube[0][8] = CubeClicki[3][8]
+	# Left face (face 3)
+	Cube[3][2] = CubeClicki[2][2]
+	Cube[3][5] = CubeClicki[2][5]
+	Cube[3][8] = CubeClicki[2][8]
+	# Top face (face 4)
+	Cube[2][2] = CubeClicki[1][2]
+	Cube[2][5] = CubeClicki[1][5]
+	Cube[2][8] = CubeClicki[1][8]
+	# Bottom face (face 5)
+	Cube[1][2] = CubeClicki[0][2]
+	Cube[1][5] = CubeClicki[0][5]
+	Cube[1][8] = CubeClicki[0][8]
 
-    return Cube 
+	return Cube 
 
 def DownI(CubeClicki):
-    Cube = copy.deepcopy(CubeClicki)
-    # Front face (face 0)
-    Cube[5][0] = CubeClicki[5][6]
-    Cube[5][1] = CubeClicki[5][3]
-    Cube[5][2] = CubeClicki[5][0]
-    Cube[5][3] = CubeClicki[5][7]
-    Cube[5][4] = CubeClicki[5][4]
-    Cube[5][5] = CubeClicki[5][1]
-    Cube[5][6] = CubeClicki[5][8]
-    Cube[5][7] = CubeClicki[5][5]
-    Cube[5][8] = CubeClicki[5][2]
-    # Right face (face 1)
-    Cube[0][2] = CubeClicki[1][2]
-    Cube[0][5] = CubeClicki[1][5]
-    Cube[0][8] = CubeClicki[1][8]
-    # Left face (face 3)
-    Cube[3][2] = CubeClicki[0][2]
-    Cube[3][5] = CubeClicki[0][5]
-    Cube[3][8] = CubeClicki[0][8]
-    # Top face (face 4)
-    Cube[2][2] = CubeClicki[3][2]
-    Cube[2][5] = CubeClicki[3][5]
-    Cube[2][8] = CubeClicki[3][8]
-    # Bottom face (face 5)
-    Cube[1][2] = CubeClicki[2][2]
-    Cube[1][5] = CubeClicki[2][5]
-    Cube[1][8] = CubeClicki[2][8]
+	Cube = copy.deepcopy(CubeClicki)
+	# Front face (face 0)
+	Cube[5][0] = CubeClicki[5][6]
+	Cube[5][1] = CubeClicki[5][3]
+	Cube[5][2] = CubeClicki[5][0]
+	Cube[5][3] = CubeClicki[5][7]
+	Cube[5][4] = CubeClicki[5][4]
+	Cube[5][5] = CubeClicki[5][1]
+	Cube[5][6] = CubeClicki[5][8]
+	Cube[5][7] = CubeClicki[5][5]
+	Cube[5][8] = CubeClicki[5][2]
+	# Right face (face 1)
+	Cube[0][2] = CubeClicki[1][2]
+	Cube[0][5] = CubeClicki[1][5]
+	Cube[0][8] = CubeClicki[1][8]
+	# Left face (face 3)
+	Cube[3][2] = CubeClicki[0][2]
+	Cube[3][5] = CubeClicki[0][5]
+	Cube[3][8] = CubeClicki[0][8]
+	# Top face (face 4)
+	Cube[2][2] = CubeClicki[3][2]
+	Cube[2][5] = CubeClicki[3][5]
+	Cube[2][8] = CubeClicki[3][8]
+	# Bottom face (face 5)
+	Cube[1][2] = CubeClicki[2][2]
+	Cube[1][5] = CubeClicki[2][5]
+	Cube[1][8] = CubeClicki[2][8]
 
-    return Cube 
+	return Cube 
 
 def Scrambel():
-    global CubeClick
-    randnum = [randint(0,9) for i in range(20)]
-    for i in range(len(randnum)):
-        if randnum[i] == 0:
-            CubeClick = Left(CubeClick)
-        elif randnum[i] == 1:
-            CubeClick = LeftI(CubeClick)
-        elif randnum[i] == 2:
-            CubeClick = Right(CubeClick)
-        elif randnum[i] == 3:
-            CubeClick = RightI(CubeClick)
-        elif randnum[i] == 4:
-            CubeClick = Up(CubeClick)
-        elif randnum[i] == 5:
-            CubeClick = UpI(CubeClick)
-        elif randnum[i] == 6:
-            CubeClick = Down(CubeClick)
-        elif randnum[i] == 7:
-            CubeClick = DownI(CubeClick)
-        elif randnum[i] == 8:
-            CubeClick = Front(CubeClick)
-        elif randnum[i] == 9:
-            CubeClick = FrontI(CubeClick)
+	global CubeClick
+	randnum = [randint(0,9) for i in range(20)]
+	for i in range(len(randnum)):
+		if randnum[i] == 0:
+			CubeClick = Left(CubeClick)
+		elif randnum[i] == 1:
+			CubeClick = LeftI(CubeClick)
+		elif randnum[i] == 2:
+			CubeClick = Right(CubeClick)
+		elif randnum[i] == 3:
+			CubeClick = RightI(CubeClick)
+		elif randnum[i] == 4:
+			CubeClick = Up(CubeClick)
+		elif randnum[i] == 5:
+			CubeClick = UpI(CubeClick)
+		elif randnum[i] == 6:
+			CubeClick = Down(CubeClick)
+		elif randnum[i] == 7:
+			CubeClick = DownI(CubeClick)
+		elif randnum[i] == 8:
+			CubeClick = Front(CubeClick)
+		elif randnum[i] == 9:
+			CubeClick = FrontI(CubeClick)
 def FindWhite():
-    facelst = [0,1,2,4,5]
-    piecelst = [1,3,5,7]
-    for i in facelst:
-        for j in piecelst:
-            if CubeClick[i][j]%6 == 1:
-                retlist = [i,j]
-                return retlist
-    
+	facelst = [0,1,2,4,5]
+	piecelst = [1,3,5,7]
+	for i in facelst:
+		for j in piecelst:
+			if CubeClick[i][j]%6 == 1:
+				retlist = [i,j]
+				return retlist
+	
 def WhiteToYellow(loc):
-    global CubeClick
-    i = loc[0]
-    j = loc[1]
-    if loc[0] == 0:
-        if loc[1] == 1:
-            move = [3, i, j, Front, Up]
-            return move
-        elif loc[1] == 3: 
-            move = [3, i, j, Up]
-            return move
-        elif loc[1] == 5:
-            move = [5, i, j, DownI]
-            return move
-        elif loc[1] == 7:
-            move = [3, i, j, FrontI, Up]
-            return move 
+	global CubeClick
+	i = loc[0]
+	j = loc[1]
+	if loc[0] == 0:
+		if loc[1] == 1:
+			move = [3, i, j, Front, Up]
+			return move
+		elif loc[1] == 3: 
+			move = [3, i, j, Up]
+			return move
+		elif loc[1] == 5:
+			move = [5, i, j, DownI]
+			return move
+		elif loc[1] == 7:
+			move = [3, i, j, FrontI, Up]
+			return move 
 
-    elif loc[0] == 4:
-        if loc[1] == 1:
-            move = [7, i, j, FrontI]
-            return move
-        elif loc[1] == 3:
-            move = [7, i, j, UpI, FrontI] 
-            return move
-        elif loc[1] == 5:
-            move = [7, i, j, Up, FrontI]
-            return move
-        elif loc[1] == 7:  
-            move = [7, i, j, Up, Up, FrontI]
-            return move 
+	elif loc[0] == 4:
+		if loc[1] == 1:
+			move = [7, i, j, FrontI]
+			return move
+		elif loc[1] == 3:
+			move = [7, i, j, UpI, FrontI] 
+			return move
+		elif loc[1] == 5:
+			move = [7, i, j, Up, FrontI]
+			return move
+		elif loc[1] == 7:  
+			move = [7, i, j, Up, Up, FrontI]
+			return move 
 
-    elif loc[0] == 2:
-        if loc[1] == 1:
-            move = [7, i, j, RightI, Up, FrontI]
-            return move
-        elif loc[1] == 3: 
-            move = [3, i, j, UpI]
-            return move
-        elif loc[1] == 5:
-            move = [5, i, j, Down]
-            return move
-        elif loc[1] == 7:  
-            move = [7, i, j, Left, UpI, FrontI]
-            return move
+	elif loc[0] == 2:
+		if loc[1] == 1:
+			move = [7, i, j, RightI, Up, FrontI]
+			return move
+		elif loc[1] == 3: 
+			move = [3, i, j, UpI]
+			return move
+		elif loc[1] == 5:
+			move = [5, i, j, Down]
+			return move
+		elif loc[1] == 7:  
+			move = [7, i, j, Left, UpI, FrontI]
+			return move
 
-    elif loc[0] == 5:
-        if loc[1] == 1:
-            move = [7, i, j, Front]
-            return move
-        elif loc[1] == 3: 
-            move = [7, i, j, DownI, Front]
-            return move
-        elif loc[1] == 5:
-            move = [7, i, j, Down, Front]
-            return move
-        elif loc[1] == 7: 
-            move = [7, i, j, Down, Down, Front] 
-            return move
+	elif loc[0] == 5:
+		if loc[1] == 1:
+			move = [7, i, j, Front]
+			return move
+		elif loc[1] == 3: 
+			move = [7, i, j, DownI, Front]
+			return move
+		elif loc[1] == 5:
+			move = [7, i, j, Down, Front]
+			return move
+		elif loc[1] == 7: 
+			move = [7, i, j, Down, Down, Front] 
+			return move
 
-    elif loc[0] == 1:
-        if loc[1] == 1:
-            move = [7, i, j, Front, Front]
-            return move
-        elif loc[1] == 3: 
-            move = [3, i, j, Up, Up]
-            return move
-        elif loc[1] == 5:
-            move = [5, i, j, DownI, DownI]
-            return move
-        elif loc[1] == 7:  
-            move = [5, i, j, Right, DownI, DownI]
+	elif loc[0] == 1:
+		if loc[1] == 1:
+			move = [7, i, j, Front, Front]
+			return move
+		elif loc[1] == 3: 
+			move = [3, i, j, Up, Up]
+			return move
+		elif loc[1] == 5:
+			move = [5, i, j, DownI, DownI]
+			return move
+		elif loc[1] == 7:  
+			move = [5, i, j, Right, DownI, DownI]
+			return move
 
 def CheckTop():
+	edge = [1,3,5,7]
+	done = []
+	for i in edge:
+		if CubeClick[3][i] == 1:
+			done.append([3,i])
+	print(done)
 
 # Step 1
 def TopDaisy():
-    location = FindWhite()
-    print(location)
-    MoveSet = WhiteToYellow(location)
-    CheckTop(MoveSet)
-    
+	location = FindWhite()
+	print(location)
+	print(WhiteToYellow(location))
+	#MoveSet = WhiteToYellow(location)
+	CheckTop()
+	
 
 def solve():
-    pass
+	pass
 
 def GameMenu():
-    global InGame, InMenu, GameMenuCount, StickerLst, CubeClick
-    DrawSky()
-    pygame.mixer.Channel(0).set_volume(0)
-    pygame.mixer.music.set_volume(0.5)
+	global InGame, InMenu, GameMenuCount, StickerLst, CubeClick
+	DrawSky()
+	pygame.mixer.Channel(0).set_volume(0)
+	pygame.mixer.music.set_volume(0.5)
 
-    # Draw Solve Button
-    screen.blit(SolveBut, (width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight))
-    # draw Scramble
-    screen.blit(ScrambleBut, (width-SolveButtonWidth - 20, height - 2*SolveButtonHeight - 100 + TitleBarHeight))
+	# Draw Solve Button
+	screen.blit(SolveBut, (width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight))
+	# draw Scramble
+	screen.blit(ScrambleBut, (width-SolveButtonWidth - 20, height - 2*SolveButtonHeight - 100 + TitleBarHeight))
 
-    # Draw Title Bar 
-    for x in range(0, width, TitleBarWidth):
-        screen.blit(TitleBar, (x,0))
+	# Draw Title Bar 
+	for x in range(0, width, TitleBarWidth):
+		screen.blit(TitleBar, (x,0))
 
-    # Draw Home Button 
-    screen.blit(HomeBut, (width-HomeButWidth-20, 10))
+	# Draw Home Button 
+	screen.blit(HomeBut, (width-HomeButWidth-20, 10))
 
-    # Draw Sound Button 
-    screen.blit(SoundOn, (width-SoundOnWidth-HomeButWidth-40, 10))
+	# Draw Sound Button 
+	screen.blit(SoundOn, (width-SoundOnWidth-HomeButWidth-40, 10))
 
-    # Draw cube Fold
-    cubeDisX = width//2 - CubeFoldWidth//2 
-    cubeDisY = height//2 - CubeFoldHeight//2 + TitleBarHeight 
-    screen.blit(CubeFold, (cubeDisX, cubeDisY))
+	# Draw cube Fold
+	cubeDisX = width//2 - CubeFoldWidth//2 
+	cubeDisY = height//2 - CubeFoldHeight//2 + TitleBarHeight 
+	screen.blit(CubeFold, (cubeDisX, cubeDisY))
 
-    # Draw selection cube
-    x, y = pygame.mouse.get_pos() 
-    if x > cubeDisX+10 and x < cubeDisX+225 and y > cubeDisY+245 and y < cubeDisY+460:
-        screen.blit(CubeBL, (20, 20 + TitleBarHeight))
-    elif x > cubeDisX+245 and x<cubeDisX+460 and y > cubeDisY+245 and y < cubeDisY+460:
-        screen.blit(CubeTop, (20, 20 + TitleBarHeight))
-    elif x > cubeDisX+480 and x < cubeDisX+695 and y > cubeDisY+245 and y < cubeDisY+460:
-        screen.blit(CubeFR, (20, 20 + TitleBarHeight))
-    elif x > cubeDisX+715 and x < cubeDisX+930 and y > cubeDisY+245 and y < cubeDisY+460:
-        screen.blit(CubeBot, (20, 20 + TitleBarHeight))
-    elif x > cubeDisX+245 and x<cubeDisX+460 and y > cubeDisY+10 and y < cubeDisY+225:
-        screen.blit(CubeBR, (20, 20 + TitleBarHeight))
-    elif x > cubeDisX+245 and x<cubeDisX+460 and y > cubeDisY+480 and y < cubeDisY+695:
-        screen.blit(CubeFL, (20, 20 + TitleBarHeight))
-    else:
-        screen.blit(CubeEmpty, (20, 20 + TitleBarHeight)) 
+	# Draw selection cube
+	x, y = pygame.mouse.get_pos() 
+	if x > cubeDisX+10 and x < cubeDisX+225 and y > cubeDisY+245 and y < cubeDisY+460:
+		screen.blit(CubeBL, (20, 20 + TitleBarHeight))
+	elif x > cubeDisX+245 and x<cubeDisX+460 and y > cubeDisY+245 and y < cubeDisY+460:
+		screen.blit(CubeTop, (20, 20 + TitleBarHeight))
+	elif x > cubeDisX+480 and x < cubeDisX+695 and y > cubeDisY+245 and y < cubeDisY+460:
+		screen.blit(CubeFR, (20, 20 + TitleBarHeight))
+	elif x > cubeDisX+715 and x < cubeDisX+930 and y > cubeDisY+245 and y < cubeDisY+460:
+		screen.blit(CubeBot, (20, 20 + TitleBarHeight))
+	elif x > cubeDisX+245 and x<cubeDisX+460 and y > cubeDisY+10 and y < cubeDisY+225:
+		screen.blit(CubeBR, (20, 20 + TitleBarHeight))
+	elif x > cubeDisX+245 and x<cubeDisX+460 and y > cubeDisY+480 and y < cubeDisY+695:
+		screen.blit(CubeFL, (20, 20 + TitleBarHeight))
+	else:
+		screen.blit(CubeEmpty, (20, 20 + TitleBarHeight)) 
 
-    # Exit To Menu, Defining stickers
-    for ev in pygame.event.get(): 
-        if ev.type == pygame.MOUSEBUTTONDOWN:
-            x, y = ev.pos
-            # Exit To Menu 
-            if HomeBut.get_rect(topleft=(width-HomeButWidth-20, 10)).collidepoint(x, y):
-                InMenu = True
-                InGame = False 
-                CubeClick = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
-                             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-                             [2, 2, 2, 2, 2, 2, 2, 2, 2],
-                             [3, 3, 3, 3, 3, 3, 3, 3, 3],
-                             [4, 4, 4, 4, 4, 4, 4, 4, 4],
-                             [5, 5, 5, 5, 5, 5, 5, 5, 5]]
-            # Turn Sound Off 
-            elif SoundOn.get_rect(topleft=(width-SoundOnWidth-HomeButWidth-40, 10)).collidepoint(x, y):
-                GameMenuCount = GameMenuCount + 1
-            # Check if Scrambel is possible 
-            elif SolveBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight)).collidepoint(x, y):
-                CubeCheck()
-                print(TopDaisy())
-            # Scrambel
-            elif ScrambleBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - 2*SolveButtonHeight - 100 + TitleBarHeight)).collidepoint(x, y):
-                Scrambel()
+	# Exit To Menu, Defining stickers
+	for ev in pygame.event.get(): 
+		if ev.type == pygame.MOUSEBUTTONDOWN:
+			x, y = ev.pos
+			# Exit To Menu 
+			if HomeBut.get_rect(topleft=(width-HomeButWidth-20, 10)).collidepoint(x, y):
+				InMenu = True
+				InGame = False 
+				CubeClick = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+							 [1, 1, 1, 1, 1, 1, 1, 1, 1],
+							 [2, 2, 2, 2, 2, 2, 2, 2, 2],
+							 [3, 3, 3, 3, 3, 3, 3, 3, 3],
+							 [4, 4, 4, 4, 4, 4, 4, 4, 4],
+							 [5, 5, 5, 5, 5, 5, 5, 5, 5]]
+			# Turn Sound Off 
+			elif SoundOn.get_rect(topleft=(width-SoundOnWidth-HomeButWidth-40, 10)).collidepoint(x, y):
+				GameMenuCount = GameMenuCount + 1
+			# Check if Scrambel is possible 
+			elif SolveBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight)).collidepoint(x, y):
+				CubeCheck()
+				TopDaisy()
+			# Scrambel
+			elif ScrambleBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - 2*SolveButtonHeight - 100 + TitleBarHeight)).collidepoint(x, y):
+				Scrambel()
 
-            # Green 
-            elif x > cubeDisX + 10 and x < cubeDisX+75: 
-                if y > cubeDisY+245 and y < cubeDisY+310:
-                    CubeClick[0][0] = CubeClick[0][0] + 1
-                elif y > cubeDisY+320 and y < cubeDisY+385:
-                    CubeClick[0][1] = CubeClick[0][1] + 1
-                elif y > cubeDisY+395 and y < cubeDisY+460:
-                    CubeClick[0][2] = CubeClick[0][2] + 1
-            elif x > cubeDisX + 85 and x < cubeDisX+150:
-                if y > cubeDisY+245 and y < cubeDisY+310:
-                    CubeClick[0][3] = CubeClick[0][3] + 1
-                elif y > cubeDisY+395 and y < cubeDisY+460:
-                    CubeClick[0][5] = CubeClick[0][5] + 1   
-            elif x > cubeDisX + 160 and x < cubeDisX+225:
-                if y > cubeDisY+245 and y < cubeDisY+310:
-                    CubeClick[0][6] = CubeClick[0][6] + 1
-                elif y > cubeDisY+320 and y < cubeDisY+385:
-                    CubeClick[0][7] = CubeClick[0][7] + 1
-                elif y > cubeDisY+395 and y < cubeDisY+460:
-                    CubeClick[0][8] = CubeClick[0][8] + 1 
-            # White, Orange, Red 
-            elif x > cubeDisX+245 and x < cubeDisX+310:
-                # White
-                if y > cubeDisY+245 and y < cubeDisY+310:
-                    CubeClick[1][0] = CubeClick[1][0] + 1
-                elif y > cubeDisY+320 and y < cubeDisY+385:
-                    CubeClick[1][1] = CubeClick[1][1] + 1
-                elif y > cubeDisY+395 and y < cubeDisY+460:
-                    CubeClick[1][2] = CubeClick[1][2] + 1
-                # Red
-                elif y>cubeDisY+480 and y<cubeDisY+545:
-                    CubeClick[5][0] = CubeClick[5][0] + 1
-                elif y>cubeDisY+555 and y<cubeDisY+620:
-                    CubeClick[5][1] = CubeClick[5][1] + 1
-                elif y>cubeDisY+630 and y<cubeDisY+695:
-                    CubeClick[5][2] = CubeClick[5][2] + 1
-                # Orange
-                elif y>cubeDisY+10 and y<cubeDisY+75:
-                    CubeClick[4][0] = CubeClick[4][0] + 1
-                elif y>cubeDisY+85 and y<cubeDisY+150:
-                    CubeClick[4][1] = CubeClick[4][1] + 1
-                elif y>cubeDisY+160 and y<cubeDisY+225:
-                    CubeClick[4][2] = CubeClick[4][2] + 1
-            # White, Orange, Red 
-            elif x > cubeDisX+320 and x < cubeDisX+385:
-                # White
-                if y > cubeDisY+245 and y < cubeDisY+310:
-                    CubeClick[1][3] = CubeClick[1][3] + 1
-                elif y > cubeDisY+395 and y < cubeDisY+460:
-                    CubeClick[1][5] = CubeClick[1][5] + 1  
-                # Red
-                elif y>cubeDisY+480 and y<cubeDisY+545:
-                    CubeClick[5][3] = CubeClick[5][3] + 1
-                elif y>cubeDisY+630 and y<cubeDisY+695:
-                    CubeClick[5][5] = CubeClick[5][5] + 1
-                # Orange
-                elif y>cubeDisY+10 and y<cubeDisY+75:
-                    CubeClick[4][3] = CubeClick[4][3] + 1
-                elif y>cubeDisY+160 and y<cubeDisY+225:
-                    CubeClick[4][5] = CubeClick[4][5] + 1
-            # White, Orange, Red 
-            elif x > cubeDisX+395 and x < cubeDisX+460:
-                # White
-                if y > cubeDisY+245 and y < cubeDisY+310:
-                    CubeClick[1][6] = CubeClick[1][6] + 1
-                elif y > cubeDisY+320 and y < cubeDisY+385:
-                    CubeClick[1][7] = CubeClick[1][7] + 1
-                elif y > cubeDisY+395 and y < cubeDisY+460:
-                    CubeClick[1][8] = CubeClick[1][8] + 1 
-                # Red
-                elif y>cubeDisY+480 and y<cubeDisY+545:
-                    CubeClick[5][6] = CubeClick[5][6] + 1
-                elif y>cubeDisY+555 and y<cubeDisY+620:
-                    CubeClick[5][7] = CubeClick[5][7] + 1
-                elif y>cubeDisY+630 and y<cubeDisY+695:
-                    CubeClick[5][8] = CubeClick[5][8] + 1 
-                # Orange
-                elif y>cubeDisY+10 and y<cubeDisY+75:
-                    CubeClick[4][6] = CubeClick[4][6] + 1
-                elif y>cubeDisY+85 and y<cubeDisY+150:
-                    CubeClick[4][7] = CubeClick[4][7] + 1
-                elif y>cubeDisY+160 and y<cubeDisY+225:
-                    CubeClick[4][8] = CubeClick[4][8] + 1       
-            # Blue
-            elif x > cubeDisX+480 and x < cubeDisX+545:
-                if y > cubeDisY+245 and y < cubeDisY+310:
-                    CubeClick[2][0] = CubeClick[2][0] + 1
-                elif y > cubeDisY+320 and y < cubeDisY+385:
-                    CubeClick[2][1] = CubeClick[2][1] + 1
-                elif y > cubeDisY+395 and y < cubeDisY+460:
-                    CubeClick[2][2] = CubeClick[2][2] + 1   
-            elif x > cubeDisX+555 and x < cubeDisX+620:
-                if y > cubeDisY+245 and y < cubeDisY+310:
-                    CubeClick[2][3] = CubeClick[2][3] + 1
-                elif y > cubeDisY+395 and y < cubeDisY+460:
-                    CubeClick[2][5] = CubeClick[2][5] + 1  
-            elif x > cubeDisX+630 and x < cubeDisX+695:
-                if y > cubeDisY+245 and y < cubeDisY+310:
-                    CubeClick[2][6] = CubeClick[2][6] + 1
-                elif y > cubeDisY+320 and y < cubeDisY+385:
-                    CubeClick[2][7] = CubeClick[2][7] + 1
-                elif y > cubeDisY+395 and y < cubeDisY+460:
-                    CubeClick[2][8] = CubeClick[2][8] + 1
-            # Yellow
-            elif x > cubeDisX+715 and x < cubeDisX+780:
-                if y > cubeDisY+245 and y < cubeDisY+310:
-                    CubeClick[3][0] = CubeClick[3][0] + 1
-                elif y > cubeDisY+320 and y < cubeDisY+385:
-                    CubeClick[3][1] = CubeClick[3][1] + 1
-                elif y > cubeDisY+395 and y < cubeDisY+460:
-                    CubeClick[3][2] = CubeClick[3][2] + 1  
-            elif x > cubeDisX+790 and x < cubeDisX+855:
-                if y > cubeDisY+245 and y < cubeDisY+310:
-                    CubeClick[3][3] = CubeClick[3][3] + 1
-                elif y > cubeDisY+395 and y < cubeDisY+460:
-                    CubeClick[3][5] = CubeClick[3][5] + 1 
-            elif x > cubeDisX+865 and x < cubeDisX+930:
-                if y > cubeDisY+245 and y < cubeDisY+310:
-                    CubeClick[3][6] = CubeClick[3][6] + 1
-                elif y > cubeDisY+320 and y < cubeDisY+385:
-                    CubeClick[3][7] = CubeClick[3][7] + 1
-                elif y > cubeDisY+395 and y < cubeDisY+460:
-                    CubeClick[3][8] = CubeClick[3][8] + 1
+			# Green 
+			elif x > cubeDisX + 10 and x < cubeDisX+75: 
+				if y > cubeDisY+245 and y < cubeDisY+310:
+					CubeClick[0][0] = CubeClick[0][0] + 1
+				elif y > cubeDisY+320 and y < cubeDisY+385:
+					CubeClick[0][1] = CubeClick[0][1] + 1
+				elif y > cubeDisY+395 and y < cubeDisY+460:
+					CubeClick[0][2] = CubeClick[0][2] + 1
+			elif x > cubeDisX + 85 and x < cubeDisX+150:
+				if y > cubeDisY+245 and y < cubeDisY+310:
+					CubeClick[0][3] = CubeClick[0][3] + 1
+				elif y > cubeDisY+395 and y < cubeDisY+460:
+					CubeClick[0][5] = CubeClick[0][5] + 1   
+			elif x > cubeDisX + 160 and x < cubeDisX+225:
+				if y > cubeDisY+245 and y < cubeDisY+310:
+					CubeClick[0][6] = CubeClick[0][6] + 1
+				elif y > cubeDisY+320 and y < cubeDisY+385:
+					CubeClick[0][7] = CubeClick[0][7] + 1
+				elif y > cubeDisY+395 and y < cubeDisY+460:
+					CubeClick[0][8] = CubeClick[0][8] + 1 
+			# White, Orange, Red 
+			elif x > cubeDisX+245 and x < cubeDisX+310:
+				# White
+				if y > cubeDisY+245 and y < cubeDisY+310:
+					CubeClick[1][0] = CubeClick[1][0] + 1
+				elif y > cubeDisY+320 and y < cubeDisY+385:
+					CubeClick[1][1] = CubeClick[1][1] + 1
+				elif y > cubeDisY+395 and y < cubeDisY+460:
+					CubeClick[1][2] = CubeClick[1][2] + 1
+				# Red
+				elif y>cubeDisY+480 and y<cubeDisY+545:
+					CubeClick[5][0] = CubeClick[5][0] + 1
+				elif y>cubeDisY+555 and y<cubeDisY+620:
+					CubeClick[5][1] = CubeClick[5][1] + 1
+				elif y>cubeDisY+630 and y<cubeDisY+695:
+					CubeClick[5][2] = CubeClick[5][2] + 1
+				# Orange
+				elif y>cubeDisY+10 and y<cubeDisY+75:
+					CubeClick[4][0] = CubeClick[4][0] + 1
+				elif y>cubeDisY+85 and y<cubeDisY+150:
+					CubeClick[4][1] = CubeClick[4][1] + 1
+				elif y>cubeDisY+160 and y<cubeDisY+225:
+					CubeClick[4][2] = CubeClick[4][2] + 1
+			# White, Orange, Red 
+			elif x > cubeDisX+320 and x < cubeDisX+385:
+				# White
+				if y > cubeDisY+245 and y < cubeDisY+310:
+					CubeClick[1][3] = CubeClick[1][3] + 1
+				elif y > cubeDisY+395 and y < cubeDisY+460:
+					CubeClick[1][5] = CubeClick[1][5] + 1  
+				# Red
+				elif y>cubeDisY+480 and y<cubeDisY+545:
+					CubeClick[5][3] = CubeClick[5][3] + 1
+				elif y>cubeDisY+630 and y<cubeDisY+695:
+					CubeClick[5][5] = CubeClick[5][5] + 1
+				# Orange
+				elif y>cubeDisY+10 and y<cubeDisY+75:
+					CubeClick[4][3] = CubeClick[4][3] + 1
+				elif y>cubeDisY+160 and y<cubeDisY+225:
+					CubeClick[4][5] = CubeClick[4][5] + 1
+			# White, Orange, Red 
+			elif x > cubeDisX+395 and x < cubeDisX+460:
+				# White
+				if y > cubeDisY+245 and y < cubeDisY+310:
+					CubeClick[1][6] = CubeClick[1][6] + 1
+				elif y > cubeDisY+320 and y < cubeDisY+385:
+					CubeClick[1][7] = CubeClick[1][7] + 1
+				elif y > cubeDisY+395 and y < cubeDisY+460:
+					CubeClick[1][8] = CubeClick[1][8] + 1 
+				# Red
+				elif y>cubeDisY+480 and y<cubeDisY+545:
+					CubeClick[5][6] = CubeClick[5][6] + 1
+				elif y>cubeDisY+555 and y<cubeDisY+620:
+					CubeClick[5][7] = CubeClick[5][7] + 1
+				elif y>cubeDisY+630 and y<cubeDisY+695:
+					CubeClick[5][8] = CubeClick[5][8] + 1 
+				# Orange
+				elif y>cubeDisY+10 and y<cubeDisY+75:
+					CubeClick[4][6] = CubeClick[4][6] + 1
+				elif y>cubeDisY+85 and y<cubeDisY+150:
+					CubeClick[4][7] = CubeClick[4][7] + 1
+				elif y>cubeDisY+160 and y<cubeDisY+225:
+					CubeClick[4][8] = CubeClick[4][8] + 1       
+			# Blue
+			elif x > cubeDisX+480 and x < cubeDisX+545:
+				if y > cubeDisY+245 and y < cubeDisY+310:
+					CubeClick[2][0] = CubeClick[2][0] + 1
+				elif y > cubeDisY+320 and y < cubeDisY+385:
+					CubeClick[2][1] = CubeClick[2][1] + 1
+				elif y > cubeDisY+395 and y < cubeDisY+460:
+					CubeClick[2][2] = CubeClick[2][2] + 1   
+			elif x > cubeDisX+555 and x < cubeDisX+620:
+				if y > cubeDisY+245 and y < cubeDisY+310:
+					CubeClick[2][3] = CubeClick[2][3] + 1
+				elif y > cubeDisY+395 and y < cubeDisY+460:
+					CubeClick[2][5] = CubeClick[2][5] + 1  
+			elif x > cubeDisX+630 and x < cubeDisX+695:
+				if y > cubeDisY+245 and y < cubeDisY+310:
+					CubeClick[2][6] = CubeClick[2][6] + 1
+				elif y > cubeDisY+320 and y < cubeDisY+385:
+					CubeClick[2][7] = CubeClick[2][7] + 1
+				elif y > cubeDisY+395 and y < cubeDisY+460:
+					CubeClick[2][8] = CubeClick[2][8] + 1
+			# Yellow
+			elif x > cubeDisX+715 and x < cubeDisX+780:
+				if y > cubeDisY+245 and y < cubeDisY+310:
+					CubeClick[3][0] = CubeClick[3][0] + 1
+				elif y > cubeDisY+320 and y < cubeDisY+385:
+					CubeClick[3][1] = CubeClick[3][1] + 1
+				elif y > cubeDisY+395 and y < cubeDisY+460:
+					CubeClick[3][2] = CubeClick[3][2] + 1  
+			elif x > cubeDisX+790 and x < cubeDisX+855:
+				if y > cubeDisY+245 and y < cubeDisY+310:
+					CubeClick[3][3] = CubeClick[3][3] + 1
+				elif y > cubeDisY+395 and y < cubeDisY+460:
+					CubeClick[3][5] = CubeClick[3][5] + 1 
+			elif x > cubeDisX+865 and x < cubeDisX+930:
+				if y > cubeDisY+245 and y < cubeDisY+310:
+					CubeClick[3][6] = CubeClick[3][6] + 1
+				elif y > cubeDisY+320 and y < cubeDisY+385:
+					CubeClick[3][7] = CubeClick[3][7] + 1
+				elif y > cubeDisY+395 and y < cubeDisY+460:
+					CubeClick[3][8] = CubeClick[3][8] + 1
 
-    # Draw Stickers 
-    for i in range(len(CubeClick)):
-        for j in range(len(CubeClick[i])):
-            if i == 0:
-                if j == 0:
-                    DrawStick(i,j,cubeDisX,cubeDisY,10,245)
-                elif j == 1:
-                    DrawStick(i,j,cubeDisX,cubeDisY,10,320)
-                elif j == 2:
-                    DrawStick(i,j,cubeDisX,cubeDisY,10,395)
-                elif j == 3:
-                    DrawStick(i,j,cubeDisX,cubeDisY,85,245)
-                elif j == 4:
-                    DrawStick(i,j,cubeDisX,cubeDisY,85,320)
-                elif j == 5:
-                    DrawStick(i,j,cubeDisX,cubeDisY,85,395)
-                elif j == 6:
-                    DrawStick(i,j,cubeDisX,cubeDisY,160,245)
-                elif j == 7:
-                    DrawStick(i,j,cubeDisX,cubeDisY,160,320)
-                elif j == 8:
-                    DrawStick(i,j,cubeDisX,cubeDisY,160,395) 
-            elif i == 1:
-                if j == 0:
-                    DrawStick(i,j,cubeDisX,cubeDisY,245,245)
-                elif j == 1:
-                    DrawStick(i,j,cubeDisX,cubeDisY,245,320)
-                elif j == 2:
-                    DrawStick(i,j,cubeDisX,cubeDisY,245,395)
-                elif j == 3:
-                    DrawStick(i,j,cubeDisX,cubeDisY,320,245)
-                elif j == 4:
-                    DrawStick(i,j,cubeDisX,cubeDisY,320,320)
-                elif j == 5:
-                    DrawStick(i,j,cubeDisX,cubeDisY,320,395)
-                elif j == 6:
-                    DrawStick(i,j,cubeDisX,cubeDisY,395,245)
-                elif j == 7:
-                    DrawStick(i,j,cubeDisX,cubeDisY,395,320)
-                elif j == 8:
-                    DrawStick(i,j,cubeDisX,cubeDisY,395,395)
-            elif i == 2:
-                if j == 0:
-                    DrawStick(i,j,cubeDisX,cubeDisY,480,245)
-                elif j == 1:
-                    DrawStick(i,j,cubeDisX,cubeDisY,480,320)
-                elif j == 2:
-                    DrawStick(i,j,cubeDisX,cubeDisY,480,395)
-                elif j == 3:
-                    DrawStick(i,j,cubeDisX,cubeDisY,555,245)
-                elif j == 4:
-                    DrawStick(i,j,cubeDisX,cubeDisY,555,320)
-                elif j == 5:
-                    DrawStick(i,j,cubeDisX,cubeDisY,555,395)
-                elif j == 6:
-                    DrawStick(i,j,cubeDisX,cubeDisY,630,245)
-                elif j == 7:
-                    DrawStick(i,j,cubeDisX,cubeDisY,630,320)
-                elif j == 8:
-                    DrawStick(i,j,cubeDisX,cubeDisY,630,395)
-            elif i == 3:
-                if j == 0:
-                    DrawStick(i,j,cubeDisX,cubeDisY,715,245)
-                elif j == 1:
-                    DrawStick(i,j,cubeDisX,cubeDisY,715,320)
-                elif j == 2:
-                    DrawStick(i,j,cubeDisX,cubeDisY,715,395)
-                elif j == 3:
-                    DrawStick(i,j,cubeDisX,cubeDisY,790,245)
-                elif j == 4:
-                    DrawStick(i,j,cubeDisX,cubeDisY,790,320)
-                elif j == 5:
-                    DrawStick(i,j,cubeDisX,cubeDisY,790,395)
-                elif j == 6:
-                    DrawStick(i,j,cubeDisX,cubeDisY,865,245)
-                elif j == 7:
-                    DrawStick(i,j,cubeDisX,cubeDisY,865,320)
-                elif j == 8:
-                    DrawStick(i,j,cubeDisX,cubeDisY,865,395)
-            elif i == 4:
-                if j == 0:
-                    DrawStick(i,j,cubeDisX,cubeDisY,245,10)
-                elif j == 1:
-                    DrawStick(i,j,cubeDisX,cubeDisY,245,85)
-                elif j == 2:
-                    DrawStick(i,j,cubeDisX,cubeDisY,245,160)
-                elif j == 3:
-                    DrawStick(i,j,cubeDisX,cubeDisY,320,10)
-                elif j == 4:
-                    DrawStick(i,j,cubeDisX,cubeDisY,320,85)
-                elif j == 5:
-                    DrawStick(i,j,cubeDisX,cubeDisY,320,160)
-                elif j == 6:
-                    DrawStick(i,j,cubeDisX,cubeDisY,395,10)
-                elif j == 7:
-                    DrawStick(i,j,cubeDisX,cubeDisY,395,85)
-                elif j == 8:
-                    DrawStick(i,j,cubeDisX,cubeDisY,395,160)
-            elif i == 5:
-                if j == 0:
-                    DrawStick(i,j,cubeDisX,cubeDisY,245,480)
-                elif j == 1:
-                    DrawStick(i,j,cubeDisX,cubeDisY,245,555)
-                elif j == 2:
-                    DrawStick(i,j,cubeDisX,cubeDisY,245,630)
-                elif j == 3:
-                    DrawStick(i,j,cubeDisX,cubeDisY,320,480)
-                elif j == 4:
-                    DrawStick(i,j,cubeDisX,cubeDisY,320,555)
-                elif j == 5:
-                    DrawStick(i,j,cubeDisX,cubeDisY,320,630)
-                elif j == 6:
-                    DrawStick(i,j,cubeDisX,cubeDisY,395,480)
-                elif j == 7:
-                    DrawStick(i,j,cubeDisX,cubeDisY,395,555)
-                elif j == 8:
-                    DrawStick(i,j,cubeDisX,cubeDisY,395,630)
+	# Draw Stickers 
+	for i in range(len(CubeClick)):
+		for j in range(len(CubeClick[i])):
+			if i == 0:
+				if j == 0:
+					DrawStick(i,j,cubeDisX,cubeDisY,10,245)
+				elif j == 1:
+					DrawStick(i,j,cubeDisX,cubeDisY,10,320)
+				elif j == 2:
+					DrawStick(i,j,cubeDisX,cubeDisY,10,395)
+				elif j == 3:
+					DrawStick(i,j,cubeDisX,cubeDisY,85,245)
+				elif j == 4:
+					DrawStick(i,j,cubeDisX,cubeDisY,85,320)
+				elif j == 5:
+					DrawStick(i,j,cubeDisX,cubeDisY,85,395)
+				elif j == 6:
+					DrawStick(i,j,cubeDisX,cubeDisY,160,245)
+				elif j == 7:
+					DrawStick(i,j,cubeDisX,cubeDisY,160,320)
+				elif j == 8:
+					DrawStick(i,j,cubeDisX,cubeDisY,160,395) 
+			elif i == 1:
+				if j == 0:
+					DrawStick(i,j,cubeDisX,cubeDisY,245,245)
+				elif j == 1:
+					DrawStick(i,j,cubeDisX,cubeDisY,245,320)
+				elif j == 2:
+					DrawStick(i,j,cubeDisX,cubeDisY,245,395)
+				elif j == 3:
+					DrawStick(i,j,cubeDisX,cubeDisY,320,245)
+				elif j == 4:
+					DrawStick(i,j,cubeDisX,cubeDisY,320,320)
+				elif j == 5:
+					DrawStick(i,j,cubeDisX,cubeDisY,320,395)
+				elif j == 6:
+					DrawStick(i,j,cubeDisX,cubeDisY,395,245)
+				elif j == 7:
+					DrawStick(i,j,cubeDisX,cubeDisY,395,320)
+				elif j == 8:
+					DrawStick(i,j,cubeDisX,cubeDisY,395,395)
+			elif i == 2:
+				if j == 0:
+					DrawStick(i,j,cubeDisX,cubeDisY,480,245)
+				elif j == 1:
+					DrawStick(i,j,cubeDisX,cubeDisY,480,320)
+				elif j == 2:
+					DrawStick(i,j,cubeDisX,cubeDisY,480,395)
+				elif j == 3:
+					DrawStick(i,j,cubeDisX,cubeDisY,555,245)
+				elif j == 4:
+					DrawStick(i,j,cubeDisX,cubeDisY,555,320)
+				elif j == 5:
+					DrawStick(i,j,cubeDisX,cubeDisY,555,395)
+				elif j == 6:
+					DrawStick(i,j,cubeDisX,cubeDisY,630,245)
+				elif j == 7:
+					DrawStick(i,j,cubeDisX,cubeDisY,630,320)
+				elif j == 8:
+					DrawStick(i,j,cubeDisX,cubeDisY,630,395)
+			elif i == 3:
+				if j == 0:
+					DrawStick(i,j,cubeDisX,cubeDisY,715,245)
+				elif j == 1:
+					DrawStick(i,j,cubeDisX,cubeDisY,715,320)
+				elif j == 2:
+					DrawStick(i,j,cubeDisX,cubeDisY,715,395)
+				elif j == 3:
+					DrawStick(i,j,cubeDisX,cubeDisY,790,245)
+				elif j == 4:
+					DrawStick(i,j,cubeDisX,cubeDisY,790,320)
+				elif j == 5:
+					DrawStick(i,j,cubeDisX,cubeDisY,790,395)
+				elif j == 6:
+					DrawStick(i,j,cubeDisX,cubeDisY,865,245)
+				elif j == 7:
+					DrawStick(i,j,cubeDisX,cubeDisY,865,320)
+				elif j == 8:
+					DrawStick(i,j,cubeDisX,cubeDisY,865,395)
+			elif i == 4:
+				if j == 0:
+					DrawStick(i,j,cubeDisX,cubeDisY,245,10)
+				elif j == 1:
+					DrawStick(i,j,cubeDisX,cubeDisY,245,85)
+				elif j == 2:
+					DrawStick(i,j,cubeDisX,cubeDisY,245,160)
+				elif j == 3:
+					DrawStick(i,j,cubeDisX,cubeDisY,320,10)
+				elif j == 4:
+					DrawStick(i,j,cubeDisX,cubeDisY,320,85)
+				elif j == 5:
+					DrawStick(i,j,cubeDisX,cubeDisY,320,160)
+				elif j == 6:
+					DrawStick(i,j,cubeDisX,cubeDisY,395,10)
+				elif j == 7:
+					DrawStick(i,j,cubeDisX,cubeDisY,395,85)
+				elif j == 8:
+					DrawStick(i,j,cubeDisX,cubeDisY,395,160)
+			elif i == 5:
+				if j == 0:
+					DrawStick(i,j,cubeDisX,cubeDisY,245,480)
+				elif j == 1:
+					DrawStick(i,j,cubeDisX,cubeDisY,245,555)
+				elif j == 2:
+					DrawStick(i,j,cubeDisX,cubeDisY,245,630)
+				elif j == 3:
+					DrawStick(i,j,cubeDisX,cubeDisY,320,480)
+				elif j == 4:
+					DrawStick(i,j,cubeDisX,cubeDisY,320,555)
+				elif j == 5:
+					DrawStick(i,j,cubeDisX,cubeDisY,320,630)
+				elif j == 6:
+					DrawStick(i,j,cubeDisX,cubeDisY,395,480)
+				elif j == 7:
+					DrawStick(i,j,cubeDisX,cubeDisY,395,555)
+				elif j == 8:
+					DrawStick(i,j,cubeDisX,cubeDisY,395,630)
 
-    # Draw Stickers Hover over
-    if x > cubeDisX + 10 and x < cubeDisX+75:
-        StickerSel(y, cubeDisX, cubeDisY, 10, 245) 
-    elif x > cubeDisX + 85 and x < cubeDisX+150:
-        StickerSel(y, cubeDisX, cubeDisY, 85, 245)  
-    elif x > cubeDisX + 160 and x < cubeDisX+225:
-        StickerSel(y, cubeDisX, cubeDisY, 160, 245)
-    elif x > cubeDisX+245 and x < cubeDisX+310:
-        StickerSel(y, cubeDisX, cubeDisY, 245, 245)   
-        StickerSel(y, cubeDisX, cubeDisY, 245, 480)
-        StickerSel(y, cubeDisX, cubeDisY, 245, 10)
-    elif x > cubeDisX+320 and x < cubeDisX+385:
-        StickerSel(y, cubeDisX, cubeDisY, 320, 245)
-        StickerSel(y, cubeDisX, cubeDisY, 320, 480)
-        StickerSel(y, cubeDisX, cubeDisY, 320, 10)
-    elif x > cubeDisX+395 and x < cubeDisX+460:
-        StickerSel(y, cubeDisX, cubeDisY, 395, 245)
-        StickerSel(y, cubeDisX, cubeDisY, 395, 480)
-        StickerSel(y, cubeDisX, cubeDisY, 395, 10)       
-    elif x > cubeDisX+480 and x < cubeDisX+545:
-        StickerSel(y, cubeDisX, cubeDisY, 480, 245) 
-    elif x > cubeDisX+555 and x < cubeDisX+620:
-        StickerSel(y, cubeDisX, cubeDisY, 555, 245) 
-    elif x > cubeDisX+630 and x < cubeDisX+695:
-        StickerSel(y, cubeDisX, cubeDisY, 630, 245) 
-    elif x > cubeDisX+715 and x < cubeDisX+780:
-        StickerSel(y, cubeDisX, cubeDisY, 715, 245)  
-    elif x > cubeDisX+790 and x < cubeDisX+855:
-        StickerSel(y, cubeDisX, cubeDisY, 790, 245)
-    elif x > cubeDisX+865 and x < cubeDisX+930:
-        StickerSel(y, cubeDisX, cubeDisY, 865, 245) 
+	# Draw Stickers Hover over
+	if x > cubeDisX + 10 and x < cubeDisX+75:
+		StickerSel(y, cubeDisX, cubeDisY, 10, 245) 
+	elif x > cubeDisX + 85 and x < cubeDisX+150:
+		StickerSel(y, cubeDisX, cubeDisY, 85, 245)  
+	elif x > cubeDisX + 160 and x < cubeDisX+225:
+		StickerSel(y, cubeDisX, cubeDisY, 160, 245)
+	elif x > cubeDisX+245 and x < cubeDisX+310:
+		StickerSel(y, cubeDisX, cubeDisY, 245, 245)   
+		StickerSel(y, cubeDisX, cubeDisY, 245, 480)
+		StickerSel(y, cubeDisX, cubeDisY, 245, 10)
+	elif x > cubeDisX+320 and x < cubeDisX+385:
+		StickerSel(y, cubeDisX, cubeDisY, 320, 245)
+		StickerSel(y, cubeDisX, cubeDisY, 320, 480)
+		StickerSel(y, cubeDisX, cubeDisY, 320, 10)
+	elif x > cubeDisX+395 and x < cubeDisX+460:
+		StickerSel(y, cubeDisX, cubeDisY, 395, 245)
+		StickerSel(y, cubeDisX, cubeDisY, 395, 480)
+		StickerSel(y, cubeDisX, cubeDisY, 395, 10)       
+	elif x > cubeDisX+480 and x < cubeDisX+545:
+		StickerSel(y, cubeDisX, cubeDisY, 480, 245) 
+	elif x > cubeDisX+555 and x < cubeDisX+620:
+		StickerSel(y, cubeDisX, cubeDisY, 555, 245) 
+	elif x > cubeDisX+630 and x < cubeDisX+695:
+		StickerSel(y, cubeDisX, cubeDisY, 630, 245) 
+	elif x > cubeDisX+715 and x < cubeDisX+780:
+		StickerSel(y, cubeDisX, cubeDisY, 715, 245)  
+	elif x > cubeDisX+790 and x < cubeDisX+855:
+		StickerSel(y, cubeDisX, cubeDisY, 790, 245)
+	elif x > cubeDisX+865 and x < cubeDisX+930:
+		StickerSel(y, cubeDisX, cubeDisY, 865, 245) 
 
-    if GameMenuCount%2 != 0:
-        pygame.mixer.music.unpause()
-    if GameMenuCount%2 == 0:
-        pygame.mixer.music.pause()
+	if GameMenuCount%2 != 0:
+		pygame.mixer.music.unpause()
+	if GameMenuCount%2 == 0:
+		pygame.mixer.music.pause()
 
 clock = pygame.time.Clock()
 done = False
 while not done: 
-    # Frame rate 
-    clock.tick(60)
+	# Frame rate 
+	clock.tick(60)
 
-    if InMenu == True:
-        MainMenu()
+	if InMenu == True:
+		MainMenu()
 
-    elif InGame == True:
-        GameMenu()
-        
-    # updates the frames of the game 
-    pygame.display.update() 
+	elif InGame == True:
+		GameMenu()
+		
+	# updates the frames of the game 
+	pygame.display.update() 
