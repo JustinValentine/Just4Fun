@@ -1118,6 +1118,7 @@ def WhiteToYellow(loc):
 	global CubeClick
 	i = loc[0]
 	j = loc[1]
+
 	if loc[0] == 0:
 		if loc[1] == 1:
 			move = [3, i, j, Front, Up]
@@ -1194,15 +1195,45 @@ def CheckTop():
 	for i in edge:
 		if CubeClick[3][i] == 1:
 			done.append([3,i])
-	print(done)
+	return done
+
+def MoveUpdate(move, top):
+	# Check if the spot that the piece is being moved to is empty 
+	# Check if the moves will move any of the existing pecies  
+	# This is the face: move[1]
+	# This is the piece num: move[2]
+
+	if move[1] == 0:
+		for i in move[3:]:
+			if i == Front or i == FrontI:
+				pass
+			elif i == Up or i == UpI:
+				pass
+			elif i == Down or i == DownI:
+				pass
+		# Front effects: 7
+		# Up effects: 3
+		# Down effects: 5
+		pass
+	
+	elif move[1] == 1:
+
+		pass
+	elif move[1] == 2:
+		pass
+	elif move[1] == 4:
+		pass
+	elif move[1] == 5:
+		pass
 
 # Step 1
 def TopDaisy():
 	location = FindWhite()
 	print(location)
 	print(WhiteToYellow(location))
-	#MoveSet = WhiteToYellow(location)
-	CheckTop()
+	MoveSet = WhiteToYellow(location)
+	TopLst = CheckTop()
+	MoveUpdate(MoveSet, TopLst)
 	
 
 def solve():
