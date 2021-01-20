@@ -1116,21 +1116,22 @@ def FindWhite():
 	
 def WhiteToYellow(loc):
 	global CubeClick
+	# [locaction on yellow, face, piece]
 	i = loc[0]
 	j = loc[1]
 
 	if loc[0] == 0:
 		if loc[1] == 1:
-			move = [3, i, j, Front, Up]
+			move = [[3, i, j], [Front, Up], [7, 3]]
 			return move
 		elif loc[1] == 3: 
-			move = [3, i, j, Up]
+			move = [[3, i, j], [Up], [3]]
 			return move
 		elif loc[1] == 5:
-			move = [5, i, j, DownI]
+			move = [[5, i, j], [DownI], [5]]
 			return move
 		elif loc[1] == 7:
-			move = [3, i, j, FrontI, Up]
+			move = [[3, i, j], [FrontI, Up], [7, 3]]
 			return move 
 
 	elif loc[0] == 4:
@@ -1202,37 +1203,24 @@ def MoveUpdate(move, top):
 	# Check if the moves will move any of the existing pecies  
 	# This is the face: move[1]
 	# This is the piece num: move[2]
+	#[[3, i, j], [Front, Up], [7, 3]]
 
-	if move[1] == 0:
-		for i in move[3:]:
-			if i == Front or i == FrontI:
-				pass
-			elif i == Up or i == UpI:
-				pass
-			elif i == Down or i == DownI:
-				pass
-		# Front effects: 7
-		# Up effects: 3
-		# Down effects: 5
-		pass
-	
-	elif move[1] == 1:
+	bad = move[]
+	moves = []
 
+	if move[0][1] == 0:
+		# Check if there is a peice on yellow that is in the way
+			for i in range(len(top)):
+				if top[i][1] == 
 		pass
-	elif move[1] == 2:
-		pass
-	elif move[1] == 4:
-		pass
-	elif move[1] == 5:
-		pass
+
 
 # Step 1
 def TopDaisy():
 	location = FindWhite()
-	print(location)
-	print(WhiteToYellow(location))
 	MoveSet = WhiteToYellow(location)
 	TopLst = CheckTop()
+	print(TopLst)
 	MoveUpdate(MoveSet, TopLst)
 	
 
