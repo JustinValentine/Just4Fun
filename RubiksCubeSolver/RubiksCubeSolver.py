@@ -330,236 +330,231 @@ def CubeCheck():
 	# Check Edges 
 	if CubeClick[0][1]%6==0 and (CubeClick[3][7]%6==3 or CubeClick[3][7]%6==4 or CubeClick[3][7]%6==1 or CubeClick[3][7]%6==5):
 		edge += 1
-		print('1')
+		#print('1')
 	elif CubeClick[0][1]%6==3 and (CubeClick[3][7]%6==5 or CubeClick[3][7]%6==4 or CubeClick[3][7]%6==2 or CubeClick[3][7]%6==0):
 		edge += 1
-		print('1')
+		#print('1')
 	elif CubeClick[0][1]%6==1 and (CubeClick[3][7]%6==5 or CubeClick[3][7]%6==4 or CubeClick[3][7]%6==2 or CubeClick[3][7]%6==0):
 		edge += 1
-		print('1')
+		#print('1')
 	elif CubeClick[0][1]%6==2 and (CubeClick[3][7]%6==3 or CubeClick[3][7]%6==4 or CubeClick[3][7]%6==1 or CubeClick[3][7]%6==5):
 		edge += 1
-		print('1')
+		#print('1')
 	elif CubeClick[0][1]%6==4 and (CubeClick[3][7]%6==0 or CubeClick[3][7]%6==1 or CubeClick[3][7]%6==2 or CubeClick[3][7]%6==3):
 		edge += 1
-		print('1')
+		#print('1')
 	elif CubeClick[0][1]%6==5 and (CubeClick[3][7]%6==0 or CubeClick[3][7]%6==1 or CubeClick[3][7]%6==2 or CubeClick[3][7]%6==3):
 		edge += 1
-		print('1')
+		#print('1')
 
 	if CubeClick[0][3]%6==0 and (CubeClick[4][1]%6==3 or CubeClick[4][1]%6==4 or CubeClick[4][1]%6==1 or CubeClick[4][1]%6==5):
 		edge += 1
-		print('2')
+		#print('2')
 	elif CubeClick[0][3]%6==3 and (CubeClick[4][1]%6==5 or CubeClick[4][1]%6==4 or CubeClick[4][1]%6==2 or CubeClick[4][1]%6==0):
 		edge += 1
-		print('2')
+		#print('2')
 	elif CubeClick[0][3]%6==1 and (CubeClick[4][1]%6==5 or CubeClick[4][1]%6==4 or CubeClick[4][1]%6==2 or CubeClick[4][1]%6==0):
 		edge += 1
-		print('2')
+		#print('2')
 	elif CubeClick[0][3]%6==2 and (CubeClick[4][1]%6==3 or CubeClick[4][1]%6==4 or CubeClick[4][1]%6==1 or CubeClick[4][1]%6==5):
 		edge += 1
-		print('2')
+		#print('2')
 	elif CubeClick[0][3]%6==4 and (CubeClick[4][1]%6==0 or CubeClick[4][1]%6==1 or CubeClick[4][1]%6==2 or CubeClick[4][1]%6==3):
 		edge += 1
-		print('2')
+		#print('2')
 	elif CubeClick[0][3]%6==5 and (CubeClick[4][1]%6==0 or CubeClick[4][1]%6==1 or CubeClick[4][1]%6==2 or CubeClick[4][1]%6==3):
 		edge += 1
-		print('2')
+		#print('2')
 
 	if CubeClick[0][7]%6==0 and (CubeClick[1][1]%6==3 or CubeClick[1][1]%6==4 or CubeClick[1][1]%6==1 or CubeClick[1][1]%6==5):
 		edge += 1
-		print('3')
+		#print('3')
 	elif CubeClick[0][7]%6==3 and (CubeClick[1][1]%6==5 or CubeClick[1][1]%6==4 or CubeClick[1][1]%6==2 or CubeClick[1][1]%6==0):
 		edge += 1
-		print('3')
+		#print('3')
 	elif CubeClick[0][7]%6==1 and (CubeClick[1][1]%6==5 or CubeClick[1][1]%6==4 or CubeClick[1][1]%6==2 or CubeClick[1][1]%6==0):
 		edge += 1
-		print('3')
+		#print('3')
 	elif CubeClick[0][7]%6==2 and (CubeClick[1][1]%6==3 or CubeClick[1][1]%6==4 or CubeClick[1][1]%6==1 or CubeClick[1][1]%6==5):
 		edge += 1
-		print('3')
+		#print('3')
 	elif CubeClick[0][7]%6==4 and (CubeClick[1][1]%6==0 or CubeClick[1][1]%6==1 or CubeClick[1][1]%6==2 or CubeClick[1][1]%6==3):
 		edge += 1
-		print('3')
+		#print('3')
 	elif CubeClick[0][7]%6==5 and (CubeClick[1][1]%6==0 or CubeClick[1][1]%6==1 or CubeClick[1][1]%6==2 or CubeClick[1][1]%6==3):
 		edge += 1
-		print('3')
+		#print('3')
 
 	if CubeClick[0][5]%6==0 and (CubeClick[5][1]%6==3 or CubeClick[5][1]%6==4 or CubeClick[5][1]%6==1 or CubeClick[5][1]%6==5):
 		edge += 1
-		print('4')
+		#print('4')
 	elif CubeClick[0][5]%6==3 and (CubeClick[5][1]%6==5 or CubeClick[5][1]%6==4 or CubeClick[5][1]%6==2 or CubeClick[5][1]%6==0):
 		edge += 1
-		print('4')
+		#print('4')
 	elif CubeClick[0][5]%6==1 and (CubeClick[5][1]%6==5 or CubeClick[5][1]%6==4 or CubeClick[5][1]%6==2 or CubeClick[5][1]%6==0):
 		edge += 1
-		print('4') 
+		#print('4') 
 	elif CubeClick[0][5]%6==2 and (CubeClick[5][1]%6==3 or CubeClick[5][1]%6==4 or CubeClick[5][1]%6==1 or CubeClick[5][1]%6==5):
 		edge += 1
-		print('4')
+		#print('4')
 	elif CubeClick[0][5]%6==4 and (CubeClick[5][1]%6==0 or CubeClick[5][1]%6==1 or CubeClick[5][1]%6==2 or CubeClick[5][1]%6==3):
 		edge += 1
-		print('4')
+		#print('4')
 	elif CubeClick[0][5]%6==5 and (CubeClick[5][1]%6==0 or CubeClick[5][1]%6==1 or CubeClick[5][1]%6==2 or CubeClick[5][1]%6==3):
 		edge += 1
-		print('4')
+		#print('4')
 
 	if CubeClick[3][1]%6==0 and (CubeClick[2][7]%6==3 or CubeClick[2][7]%6==4 or CubeClick[2][7]%6==1 or CubeClick[2][7]%6==5):
 		edge += 1
-		print('5')
+		#print('5')
 	elif CubeClick[3][1]%6==3 and (CubeClick[2][7]%6==5 or CubeClick[2][7]%6==4 or CubeClick[2][7]%6==2 or CubeClick[2][7]%6==0):
 		edge += 1
-		print('5')
+		#print('5')
 	elif CubeClick[3][1]%6==1 and (CubeClick[2][7]%6==5 or CubeClick[2][7]%6==4 or CubeClick[2][7]%6==2 or CubeClick[2][7]%6==0):
 		edge += 1
-		print('5')
+		#print('5')
 	elif CubeClick[3][1]%6==2 and (CubeClick[2][7]%6==3 or CubeClick[2][7]%6==4 or CubeClick[2][7]%6==1 or CubeClick[2][7]%6==5):
 		edge += 1
-		print('5')
+		#print('5')
 	elif CubeClick[3][1]%6==4 and (CubeClick[2][7]%6==0 or CubeClick[2][7]%6==1 or CubeClick[2][7]%6==2 or CubeClick[2][7]%6==3):
 		edge += 1
-		print('5')
+		#print('5')
 	elif CubeClick[3][1]%6==5 and (CubeClick[2][7]%6==0 or CubeClick[2][7]%6==1 or CubeClick[2][7]%6==2 or CubeClick[2][7]%6==3):
 		edge += 1
-		print('5')
+		#print('5')
 
 	if CubeClick[3][3]%6==0 and (CubeClick[4][3]%6==3 or CubeClick[4][3]%6==4 or CubeClick[4][3]%6==1 or CubeClick[4][3]%6==5):
 		edge += 1
-		print('6')
+		#print('6')
 	elif CubeClick[3][3]%6==3 and (CubeClick[4][3]%6==5 or CubeClick[4][3]%6==4 or CubeClick[4][3]%6==2 or CubeClick[4][3]%6==0):
 		edge += 1
-		print('6')
+		#print('6')
 	elif CubeClick[3][3]%6==1 and (CubeClick[4][3]%6==5 or CubeClick[4][3]%6==4 or CubeClick[4][3]%6==2 or CubeClick[4][3]%6==0):
 		edge += 1
-		print('6')
+		#print('6')
 	elif CubeClick[3][3]%6==2 and (CubeClick[4][3]%6==3 or CubeClick[4][3]%6==4 or CubeClick[4][3]%6==1 or CubeClick[4][3]%6==5):
 		edge += 1
-		print('6')
+		#print('6')
 	elif CubeClick[3][3]%6==4 and (CubeClick[4][3]%6==0 or CubeClick[4][3]%6==1 or CubeClick[4][3]%6==2 or CubeClick[4][3]%6==3):
 		edge += 1
-		print('6')
+		#print('6')
 	elif CubeClick[3][3]%6==5 and (CubeClick[4][3]%6==0 or CubeClick[4][3]%6==1 or CubeClick[4][3]%6==2 or CubeClick[4][3]%6==3):
 		edge += 1
-		print('6')
+		#print('6')
 
 	if CubeClick[3][5]%6==0 and (CubeClick[5][5]%6==3 or CubeClick[5][5]%6==4 or CubeClick[5][5]%6==1 or CubeClick[5][5]%6==5):
 		edge += 1
-		print('7')
+		#print('7')
 	elif CubeClick[3][5]%6==3 and (CubeClick[5][5]%6==5 or CubeClick[5][5]%6==4 or CubeClick[5][5]%6==2 or CubeClick[5][5]%6==0):
 		edge += 1
-		print('7')
+		#print('7')
 	elif CubeClick[3][5]%6==1 and (CubeClick[5][5]%6==5 or CubeClick[5][5]%6==4 or CubeClick[5][5]%6==2 or CubeClick[5][5]%6==0):
 		edge += 1
-		print('7')
+		#print('7')
 	elif CubeClick[3][5]%6==2 and (CubeClick[5][5]%6==3 or CubeClick[5][5]%6==4 or CubeClick[5][5]%6==1 or CubeClick[5][5]%6==5):
 		edge += 1
-		print('7')
+		#print('7')
 	elif CubeClick[3][5]%6==4 and (CubeClick[5][5]%6==0 or CubeClick[5][5]%6==1 or CubeClick[5][5]%6==2 or CubeClick[5][5]%6==3):
 		edge += 1
-		print('7')
+		#print('7')
 	elif CubeClick[3][5]%6==5 and (CubeClick[5][5]%6==0 or CubeClick[5][5]%6==1 or CubeClick[5][5]%6==2 or CubeClick[5][5]%6==3):
 		edge += 1
-		print('7')
+		#print('7')
 
 	if CubeClick[1][7]%6==0 and (CubeClick[2][1]%6==3 or CubeClick[2][1]%6==4 or CubeClick[2][1]%6==1 or CubeClick[2][1]%6==5):
 		edge += 1
-		print('8')
+		#print('8')
 	elif CubeClick[1][7]%6==3 and (CubeClick[2][1]%6==5 or CubeClick[2][1]%6==4 or CubeClick[2][1]%6==2 or CubeClick[2][1]%6==0):
 		edge += 1
-		print('8')
+		#print('8')
 	elif CubeClick[1][7]%6==1 and (CubeClick[2][1]%6==5 or CubeClick[2][1]%6==4 or CubeClick[2][1]%6==2 or CubeClick[2][1]%6==0):
 		edge += 1
-		print('8')
+		#print('8')
 	elif CubeClick[1][7]%6==2 and (CubeClick[2][1]%6==3 or CubeClick[2][1]%6==4 or CubeClick[2][1]%6==1 or CubeClick[2][1]%6==5):
 		edge += 1
-		print('8')
+		#print('8')
 	elif CubeClick[1][7]%6==4 and (CubeClick[2][1]%6==0 or CubeClick[2][1]%6==1 or CubeClick[2][1]%6==2 or CubeClick[2][1]%6==3):
 		edge += 1
-		print('8')
+		#print('8')
 	elif CubeClick[1][7]%6==5 and (CubeClick[2][1]%6==0 or CubeClick[2][1]%6==1 or CubeClick[2][1]%6==2 or CubeClick[2][1]%6==3):
 		edge += 1
-		print('8')
+		#print('8')
 
 	if CubeClick[1][3]%6==0 and (CubeClick[4][5]%6==3 or CubeClick[4][5]%6==4 or CubeClick[4][5]%6==1 or CubeClick[4][5]%6==5):
 		edge += 1
-		print('9')
+		#print('9')
 	elif CubeClick[1][3]%6==3 and (CubeClick[4][5]%6==5 or CubeClick[4][5]%6==4 or CubeClick[4][5]%6==2 or CubeClick[4][5]%6==0):
 		edge += 1
-		print('9')
+		#print('9')
 	elif CubeClick[1][3]%6==1 and (CubeClick[4][5]%6==5 or CubeClick[4][5]%6==4 or CubeClick[4][5]%6==2 or CubeClick[4][5]%6==0):
 		edge += 1
-		print('9')
+		#print('9')
 	elif CubeClick[1][3]%6==2 and (CubeClick[4][5]%6==3 or CubeClick[4][5]%6==4 or CubeClick[4][5]%6==1 or CubeClick[4][5]%6==5):
 		edge += 1
-		print('9')
+		#print('9')
 	elif CubeClick[1][3]%6==4 and (CubeClick[4][5]%6==0 or CubeClick[4][5]%6==1 or CubeClick[4][5]%6==2 or CubeClick[4][5]%6==3):
 		edge += 1
-		print('9')
+		#print('9')
 	elif CubeClick[1][3]%6==5 and (CubeClick[4][5]%6==0 or CubeClick[4][5]%6==1 or CubeClick[4][5]%6==2 or CubeClick[4][5]%6==3):
 		edge += 1
-		print('9')
+		#print('9')
 
 	if CubeClick[1][5]%6==0 and (CubeClick[5][3]%6==3 or CubeClick[5][3]%6==4 or CubeClick[5][3]%6==1 or CubeClick[5][3]%6==5):
 		edge += 1
-		print('10')
+		#print('10')
 	elif CubeClick[1][5]%6==3 and (CubeClick[5][3]%6==5 or CubeClick[5][3]%6==4 or CubeClick[5][3]%6==2 or CubeClick[5][3]%6==0):
 		edge += 1
-		print('10')
+		#print('10')
 	elif CubeClick[1][5]%6==1 and (CubeClick[5][3]%6==5 or CubeClick[5][3]%6==4 or CubeClick[5][3]%6==2 or CubeClick[5][3]%6==0):
 		edge += 1
-		print('10')
+		#print('10')
 	elif CubeClick[1][5]%6==2 and (CubeClick[5][3]%6==3 or CubeClick[5][3]%6==4 or CubeClick[5][3]%6==1 or CubeClick[5][3]%6==5):
 		edge += 1
-		print('10')
+		#print('10')
 	elif CubeClick[1][5]%6==4 and (CubeClick[5][3]%6==0 or CubeClick[5][3]%6==1 or CubeClick[5][3]%6==2 or CubeClick[5][3]%6==3):
 		edge += 1
-		print('10')
+		#print('10')
 	elif CubeClick[1][5]%6==5 and (CubeClick[3][5]%6==0 or CubeClick[3][5]%6==1 or CubeClick[3][5]%6==2 or CubeClick[5][3]%6==3):
 		edge += 1
-		print('10')
+		#print('10')
 
 	if CubeClick[2][3]%6==0 and (CubeClick[4][7]%6==3 or CubeClick[4][7]%6==4 or CubeClick[4][7]%6==1 or CubeClick[4][7]%6==5):
 		edge += 1
-		print('11')
+		#print('11')
 	elif CubeClick[2][3]%6==3 and (CubeClick[4][7]%6==5 or CubeClick[4][7]%6==4 or CubeClick[4][7]%6==2 or CubeClick[4][7]%6==0):
 		edge += 1
-		print('11')
+		#print('11')
 	elif CubeClick[2][3]%6==1 and (CubeClick[4][7]%6==5 or CubeClick[4][7]%6==4 or CubeClick[4][7]%6==2 or CubeClick[4][7]%6==0):
 		edge += 1
-		print('11')
+		#print('11')
 	elif CubeClick[2][3]%6==2 and (CubeClick[4][7]%6==3 or CubeClick[4][7]%6==4 or CubeClick[4][7]%6==1 or CubeClick[4][7]%6==5):
 		edge += 1
-		print('11')
+		#print('11')
 	elif CubeClick[2][3]%6==4 and (CubeClick[4][7]%6==0 or CubeClick[4][7]%6==1 or CubeClick[4][7]%6==2 or CubeClick[4][7]%6==3):
 		edge += 1
-		print('11')
+		#print('11')
 	elif CubeClick[2][3]%6==5 and (CubeClick[4][7]%6==0 or CubeClick[4][7]%6==1 or CubeClick[4][7]%6==2 or CubeClick[4][7]%6==3):
 		edge += 1
-		print('11')
+		#print('11')
 
 	if CubeClick[2][5]%6==0 and (CubeClick[5][7]%6==3 or CubeClick[5][7]%6==4 or CubeClick[5][7]%6==1 or CubeClick[5][7]%6==5):
 		edge += 1
-		print('12')
+		#print('12')
 	elif CubeClick[2][5]%6==3 and (CubeClick[5][7]%6==5 or CubeClick[5][7]%6==4 or CubeClick[5][7]%6==2 or CubeClick[5][7]%6==0):
 		edge += 1
-		print('12')
+		#print('12')
 	elif CubeClick[2][5]%6==1 and (CubeClick[5][7]%6==5 or CubeClick[5][7]%6==4 or CubeClick[5][7]%6==2 or CubeClick[5][7]%6==0):
 		edge += 1
-		print('12')
+		#print('12')
 	elif CubeClick[2][5]%6==2 and (CubeClick[5][7]%6==3 or CubeClick[5][7]%6==4 or CubeClick[5][7]%6==1 or CubeClick[5][7]%6==5):
 		edge += 1
-		print('12')
+		#print('12')
 	elif CubeClick[2][5]%6==4 and (CubeClick[5][7]%6==0 or CubeClick[5][7]%6==1 or CubeClick[5][7]%6==2 or CubeClick[5][7]%6==3):
 		edge += 1
-		print('12')
+		#print('12')
 	elif CubeClick[2][5]%6==5 and (CubeClick[5][7]%6==0 or CubeClick[5][7]%6==1 or CubeClick[5][7]%6==2 or CubeClick[5][7]%6==3):
 		edge += 1
-		print('12')
-
-	if edge == 12:
-		print('Edge - nice')
-	else:
-		print('Edge - ' + str(edge))
+		#print('12')
 
 	Corner = 0
 	if ((CubeClick[0][0]%6==0 and CubeClick[3][6]%6==3 and CubeClick[4][0]%6==4) or 
@@ -768,8 +763,6 @@ def CubeCheck():
 	   (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==1) or 
 	   (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==3)):
 		Corner += 1
-
-	print(Corner)
 	
 def Front(CubeClicki):
 	Cube = copy.deepcopy(CubeClicki)
@@ -1136,83 +1129,88 @@ def WhiteToYellow(loc):
 
 	elif loc[0] == 4:
 		if loc[1] == 1:
-			move = [7, i, j, FrontI]
+			move = [[7, i, j], [FrontI], [7]]
 			return move
 		elif loc[1] == 3:
-			move = [7, i, j, UpI, FrontI] 
+			move = [[7, i, j], [UpI, FrontI], [3, 7]] 
 			return move
 		elif loc[1] == 5:
-			move = [7, i, j, Up, FrontI]
+			move = [[7, i, j], [Up, FrontI], [3, 7]]
 			return move
 		elif loc[1] == 7:  
-			move = [7, i, j, Up, Up, FrontI]
+			move = [[7, i, j], [Up, Up, FrontI], [3, 3, 7]]
 			return move 
 
 	elif loc[0] == 2:
 		if loc[1] == 1:
-			move = [7, i, j, RightI, Up, FrontI]
+			move = [[7, i, j], [RightI, Up, FrontI], [None, 3, 7]]
 			return move
 		elif loc[1] == 3: 
-			move = [3, i, j, UpI]
+			move = [[3, i, j], [UpI], [3]]
 			return move
 		elif loc[1] == 5:
-			move = [5, i, j, Down]
+			move = [[5, i, j], [Down], [5]]
 			return move
 		elif loc[1] == 7:  
-			move = [7, i, j, Left, UpI, FrontI]
+			move = [[7, i, j], [Left, UpI, FrontI], [None, 3, 7]]
 			return move
 
 	elif loc[0] == 5:
 		if loc[1] == 1:
-			move = [7, i, j, Front]
+			move = [[7, i, j], [Front], [7]]
 			return move
 		elif loc[1] == 3: 
-			move = [7, i, j, DownI, Front]
+			move = [[7, i, j], [DownI, Front], [5, 7]]
 			return move
 		elif loc[1] == 5:
-			move = [7, i, j, Down, Front]
+			move = [[7, i, j], [Down, Front], [5, 7]]
 			return move
 		elif loc[1] == 7: 
-			move = [7, i, j, Down, Down, Front] 
+			move = [[7, i, j], [Down, Down, Front], [5, 5, 7]] 
 			return move
 
 	elif loc[0] == 1:
 		if loc[1] == 1:
-			move = [7, i, j, Front, Front]
+			move = [[7, i, j], [Front, Front], [7, 7]]
 			return move
 		elif loc[1] == 3: 
-			move = [3, i, j, Up, Up]
+			move = [[3, i, j], [Up, Up], [3, 3]]
 			return move
 		elif loc[1] == 5:
-			move = [5, i, j, DownI, DownI]
+			move = [[5, i, j], [DownI, DownI], [5, 5]]
 			return move
 		elif loc[1] == 7:  
-			move = [5, i, j, Right, DownI, DownI]
+			move = [[5, i, j], [Right, DownI, DownI], [None, 5, 5]]
 			return move
 
 def CheckTop():
+	global CubeClick
+
 	edge = [1,3,5,7]
 	done = []
 	for i in edge:
-		if CubeClick[3][i] == 1:
-			done.append([3,i])
+		if CubeClick[3][i]%6 == 1:
+			done.append(i)
 	return done
 
 def MoveUpdate(move, top):
-	# Check if the spot that the piece is being moved to is empty 
-	# Check if the moves will move any of the existing pecies  
-	# This is the face: move[1]
-	# This is the piece num: move[2]
-	#[[3, i, j], [Front, Up], [7, 3]]
-
-	bad = move[]
-	moves = []
+	# [[5, i, j], [Right, DownI, DownI], [None, 5, 5]]
+	global CubeClick
+	TheTop = copy.deepcopy(top)
+	FinMove = copy.deepcopy(move[1])
 
 	if move[0][1] == 0:
-		# Check if there is a peice on yellow that is in the way
-			for i in range(len(top)):
-				if top[i][1] == 
-		pass
+		# goes through each move 
+		for i in range(len(move[1])):
+			good = False
+			while not good:
+				if move[2][i] in TheTop:
+					CubeClick = Left(CubeClick)
+					FinMove.insert(i, 1)
+					TheTop = CheckTop()
+				else:
+					good = True
+	print(FinMove)
 
 
 # Step 1
@@ -1220,12 +1218,8 @@ def TopDaisy():
 	location = FindWhite()
 	MoveSet = WhiteToYellow(location)
 	TopLst = CheckTop()
-	print(TopLst)
 	MoveUpdate(MoveSet, TopLst)
 	
-
-def solve():
-	pass
 
 def GameMenu():
 	global InGame, InMenu, GameMenuCount, StickerLst, CubeClick
