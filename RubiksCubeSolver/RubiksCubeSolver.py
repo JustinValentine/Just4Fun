@@ -1115,72 +1115,72 @@ def WhiteToYellow(loc):
 
 	if loc[0] == 0:
 		if loc[1] == 1:
-			move = [[3, i, j], [Front, Up], [7, 3]]
+			move = [[3, i, j], ['Front', 'Up'], [7, 3]]
 			return move
 		elif loc[1] == 3: 
-			move = [[3, i, j], [Up], [3]]
+			move = [[3, i, j], ['Up'], [3]]
 			return move
 		elif loc[1] == 5:
-			move = [[5, i, j], [DownI], [5]]
+			move = [[5, i, j], ['DownI'], [5]]
 			return move
 		elif loc[1] == 7:
-			move = [[3, i, j], [FrontI, Up], [7, 3]]
+			move = [[3, i, j], ['FrontI', 'Up'], [7, 3]]
 			return move 
 
 	elif loc[0] == 4:
 		if loc[1] == 1:
-			move = [[7, i, j], [FrontI], [7]]
+			move = [[7, i, j], ['FrontI'], [7]]
 			return move
 		elif loc[1] == 3:
-			move = [[7, i, j], [UpI, FrontI], [3, 7]] 
+			move = [[7, i, j], ['UpI', 'FrontI'], [3, 7]] 
 			return move
 		elif loc[1] == 5:
-			move = [[7, i, j], [Up, FrontI], [3, 7]]
+			move = [[7, i, j], ['Up', 'FrontI'], [3, 7]]
 			return move
 		elif loc[1] == 7:  
-			move = [[7, i, j], [Up, Up, FrontI], [3, 3, 7]]
+			move = [[7, i, j], ['Up', 'Up', 'FrontI'], [3, 3, 7]]
 			return move 
 
 	elif loc[0] == 2:
 		if loc[1] == 1:
-			move = [[7, i, j], [RightI, Up, FrontI], [None, 3, 7]]
+			move = [[7, i, j], ['RightI', 'Up', 'FrontI'], [None, 3, 7]]
 			return move
 		elif loc[1] == 3: 
-			move = [[3, i, j], [UpI], [3]]
+			move = [[3, i, j], ['UpI'], [3]]
 			return move
 		elif loc[1] == 5:
-			move = [[5, i, j], [Down], [5]]
+			move = [[5, i, j], ['Down'], [5]]
 			return move
 		elif loc[1] == 7:  
-			move = [[7, i, j], [Left, UpI, FrontI], [None, 3, 7]]
+			move = [[7, i, j], ['Left', 'UpI', 'FrontI'], [None, 3, 7]]
 			return move
 
 	elif loc[0] == 5:
 		if loc[1] == 1:
-			move = [[7, i, j], [Front], [7]]
+			move = [[7, i, j], ['Front'], [7]]
 			return move
 		elif loc[1] == 3: 
-			move = [[7, i, j], [DownI, Front], [5, 7]]
+			move = [[7, i, j], ['DownI', 'Front'], [5, 7]]
 			return move
 		elif loc[1] == 5:
-			move = [[7, i, j], [Down, Front], [5, 7]]
+			move = [[7, i, j], ['Down', 'Front'], [5, 7]]
 			return move
 		elif loc[1] == 7: 
-			move = [[7, i, j], [Down, Down, Front], [5, 5, 7]] 
+			move = [[7, i, j], ['Down', 'Down', 'Front'], [5, 5, 7]] 
 			return move
 
 	elif loc[0] == 1:
 		if loc[1] == 1:
-			move = [[7, i, j], [Front, Front], [7, 7]]
+			move = [[7, i, j], ['Front', 'Front'], [7, 7]]
 			return move
 		elif loc[1] == 3: 
-			move = [[3, i, j], [Up, Up], [3, 3]]
+			move = [[3, i, j], ['Up', 'Up'], [3, 3]]
 			return move
 		elif loc[1] == 5:
-			move = [[5, i, j], [DownI, DownI], [5, 5]]
+			move = [[5, i, j], ['DownI', 'DownI'], [5, 5]]
 			return move
 		elif loc[1] == 7:  
-			move = [[5, i, j], [Right, DownI, DownI], [None, 5, 5]]
+			move = [[5, i, j], ['Right', 'DownI', 'DownI'], [None, 5, 5]]
 			return move
 
 def CheckTop():
@@ -1206,9 +1206,16 @@ def MoveUpdate(move, top):
 			while not good:
 				if move[2][i] in TheTop:
 					CubeClick = Left(CubeClick)
-					FinMove.insert(i, 1)
 					TheTop = CheckTop()
 				else:
+					if move[1][i] == 'Front':
+						CubeClick = Front(CubeClick)
+					elif move[1][i] == 'FrontI':
+						CubeClick = FrontI(CubeClick)
+					elif move[1][i] == 'DownI':
+						CubeClick = DownI(CubeClick)
+					elif move[1][i] == 'Up':
+						CubeClick = Up(CubeClick)
 					good = True
 	print(FinMove)
 
