@@ -1133,9 +1133,48 @@ def DownI(CubeClicki):
 
 	return Cube 
 
+def Back(CubeClicki):
+	Cube = copy.deepcopy(CubeClicki)
+	# Back face (face 0)
+	Cube[2][0] = CubeClicki[2][2]
+	Cube[2][1] = CubeClicki[2][5]
+	Cube[2][2] = CubeClicki[2][8]
+	Cube[2][3] = CubeClicki[2][1]
+	Cube[2][4] = CubeClicki[2][4]
+	Cube[2][5] = CubeClicki[2][7]
+	Cube[2][6] = CubeClicki[2][0]
+	Cube[2][7] = CubeClicki[2][3]
+	Cube[2][8] = CubeClicki[2][6]
+	# Right face (face 1)
+	Cube[3][0] = CubeClicki[4][8]
+	Cube[3][1] = CubeClicki[4][7]
+	Cube[3][2] = CubeClicki[4][6]
+	# Left face (face 3)
+	Cube[1][6] = CubeClicki[5][6]
+	Cube[1][7] = CubeClicki[5][7]
+	Cube[1][8] = CubeClicki[5][8]
+	# Top face (face 4)
+	Cube[4][6] = CubeClicki[1][6]
+	Cube[4][7] = CubeClicki[1][7]
+	Cube[4][8] = CubeClicki[1][8]
+	# Bottom face (face 5)
+	Cube[5][6] = CubeClicki[3][2]
+	Cube[5][7] = CubeClicki[3][1]
+	Cube[5][8] = CubeClicki[3][0]
+
+	return Cube
+
 def Scrambel():
 	global CubeClick
-	randnum = [randint(0,9) for i in range(20)]
+
+	CubeClick = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			    [1, 1, 1, 1, 1, 1, 1, 1, 1],
+			    [2, 2, 2, 2, 2, 2, 2, 2, 2],
+			    [3, 3, 3, 3, 3, 3, 3, 3, 3],
+		        [4, 4, 4, 4, 4, 4, 4, 4, 4],
+			    [5, 5, 5, 5, 5, 5, 5, 5, 5]]
+
+	randnum = [randint(0,10) for i in range(20)]
 	for i in range(len(randnum)):
 		if randnum[i] == 0:
 			CubeClick = Left(CubeClick)
@@ -1157,6 +1196,8 @@ def Scrambel():
 			CubeClick = Front(CubeClick)
 		elif randnum[i] == 9:
 			CubeClick = FrontI(CubeClick)
+		elif randnum[i] == 10:
+			CubeClick = Back(CubeClick)
 
 def FindWhite():
 	facelst = [0,1,2,4,5]
@@ -1264,7 +1305,6 @@ def MoveUpdate(move, top):
 	global CubeClick
 	TheTop = copy.deepcopy(top)
 	FinMove = copy.deepcopy(move[1])
-	print(move[0][0])
 
 	if move[0][0] == 0:
 		for i in range(len(move[1])):
@@ -1282,7 +1322,6 @@ def MoveUpdate(move, top):
 						CubeClick = DownI(CubeClick)
 					elif move[1][i] == 'Up':
 						CubeClick = Up(CubeClick)
-					print('here')
 					good = True
 
 	elif move[0][0] == 4 :
@@ -1357,7 +1396,6 @@ def MoveUpdate(move, top):
 						CubeClick = Right(CubeClick)
 					good = True
 
-# Step 1
 def TopDaisy():
 	Done = False
 	while not Done:
@@ -1368,8 +1406,105 @@ def TopDaisy():
 			location = FindWhite()
 			MoveSet = WhiteToYellow(location)
 			MoveUpdate(MoveSet, TopLst)
-			print(CubeClick)
-	
+
+def FirstLayer():
+	global CubeClick
+
+	for i in [1, 3, 5, 7]:
+		if CubeClick[3][i] == 1:
+			if i == 1:
+				side = CubeClick[2][7]
+				if side == 2:
+					CubeClick = Back(CubeClick)
+					CubeClick = Back(CubeClick)
+				elif side == 4:
+					CubeClick = Left(CubeClick)
+					CubeClick = Up(CubeClick)
+					CubeClick = Up(CubeClick)
+					CubeClick = LeftI(CubeClick)
+				elif side == 0:
+					CubeClick = Left(CubeClick)
+					CubeClick = Left(CubeClick)
+					CubeClick = Front(CubeClick)
+					CubeClick = Front(CubeClick)
+					CubeClick = LeftI(CubeClick)
+					CubeClick = LeftI(CubeClick)
+				elif side == 5:
+					CubeClick = LeftI(CubeClick)
+					CubeClick = Down(CubeClick)
+					CubeClick = Down(CubeClick)
+					CubeClick = Left(CubeClick)
+
+			elif i == 3:
+				side = CubeClick[4][3]
+				if side == 4:
+					CubeClick = Up(CubeClick)
+					CubeClick = Up(CubeClick)
+				elif side == 2:
+					CubeClick = LeftI(CubeClick)
+					CubeClick = Back(CubeClick)
+					CubeClick = Back(CubeClick)
+					CubeClick = Left(CubeClick)
+				elif side == 0:
+					CubeClick = Left(CubeClick)
+					CubeClick = Front(CubeClick)
+					CubeClick = Front(CubeClick)
+					CubeClick = LeftI(CubeClick)
+				elif side == 5:
+					CubeClick = Left(CubeClick)
+					CubeClick = Left(CubeClick)
+					CubeClick = Down(CubeClick)
+					CubeClick = Down(CubeClick)	 
+					CubeClick = LeftI(CubeClick)
+					CubeClick = LeftI(CubeClick)
+
+			elif i == 5:
+				side = CubeClick[5][5]
+				if side == 5:
+					CubeClick = Down(CubeClick)
+					CubeClick = Down(CubeClick)
+				elif side == 2:
+					CubeClick = Left(CubeClick)
+					CubeClick = Back(CubeClick)
+					CubeClick = Back(CubeClick)
+					CubeClick = LeftI(CubeClick)
+				elif side == 0:
+					CubeClick = LeftI(CubeClick)
+					CubeClick = Front(CubeClick)
+					CubeClick = Front(CubeClick)
+					CubeClick = Left(CubeClick)
+				elif side == 4:
+					CubeClick = Left(CubeClick)
+					CubeClick = Left(CubeClick)
+					CubeClick = Up(CubeClick)
+					CubeClick = Up(CubeClick)
+					CubeClick = LeftI(CubeClick)
+					CubeClick = LeftI(CubeClick)
+
+			elif i == 7:
+				side = CubeClick[0][1]
+				if side == 0:
+					CubeClick = Front(CubeClick)
+					CubeClick = Front(CubeClick)
+				elif side == 2:
+					CubeClick = LeftI(CubeClick)
+					CubeClick = LeftI(CubeClick)
+					CubeClick = Back(CubeClick)
+					CubeClick = Back(CubeClick)
+					CubeClick = Left(CubeClick)
+					CubeClick = Left(CubeClick)
+				elif side == 5:
+					CubeClick = Left(CubeClick)
+					CubeClick = Down(CubeClick)
+					CubeClick = Down(CubeClick)
+					CubeClick = LeftI(CubeClick)
+				elif side == 4:
+					CubeClick = LeftI(CubeClick)
+					CubeClick = Up(CubeClick)
+					CubeClick = Up(CubeClick)
+					CubeClick = Left(CubeClick)
+
+
 
 def GameMenu():
 	global InGame, InMenu, GameMenuCount, StickerLst, CubeClick
@@ -1451,6 +1586,7 @@ def GameMenu():
 			elif SolveBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight)).collidepoint(x, y):
 				CubeCheck()
 				TopDaisy()
+				FirstLayer()
 
 			# Scrambel
 			elif ScrambleBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - 2*SolveButtonHeight - 100 + TitleBarHeight)).collidepoint(x, y):
@@ -1460,7 +1596,7 @@ def GameMenu():
 			elif LeftBut.get_rect(topleft=(startBut, 100)).collidepoint(x,y):
 				CubeClick = Left(CubeClick)
 			elif LeftBut.get_rect(topleft=(startBut+140, 100)).collidepoint(x,y):
-				CubeClick = LeftI(CubeClick) 
+				CubeClick = Back(CubeClick) 
 			elif LeftBut.get_rect(topleft=(startBut+280, 100)).collidepoint(x,y):
 				CubeClick = Right(CubeClick)
 			elif LeftBut.get_rect(topleft=(startBut+420, 100)).collidepoint(x,y):
