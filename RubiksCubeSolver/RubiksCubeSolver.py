@@ -2,32 +2,35 @@ import pygame, sys, math, time, os, copy
 from random import randint
 from pygame import mixer
   
-# initialize
-pygame.mixer.pre_init()
+# initializes the mixer for in game sounds 
 pygame.mixer.init()
+# initializes all imported pygame modules
 pygame.init()
 
 # start playing the background music
 pygame.mixer.music.load(os.path.join(os.getcwd(), 'assets', 'Loop.wav'))
 pygame.mixer.music.set_volume(0.5)
-pygame.mixer.music.play(loops=-1)  # loop forever
-
-# Set Screen res(1920, 1080)
-screen = pygame.display.set_mode(size = (1920, 1080)) 
+pygame.mixer.music.play(loops=-1)  # loops forever
 
 # width of the screen
-width = screen.get_width() 
+width = 1920
 # height of the screen
-height = screen.get_height()  
+height = 1080
 
+# initializes a window 
+screen = pygame.display.set_mode(size = (width, height)) 
+
+# Booleans used in the main loop
 InMenu = True
 InGame = True
+NotValid = True
 
 # ===== Assets ===== 
 
-# Sky 
+# Sky tiles
 SkyWidth = 320
 SkyHeight = math.floor((SkyWidth * 5) / 8)
+
 sky1t = pygame.image.load('assets/sky0.png')
 sky1 = pygame.transform.scale(sky1t, (SkyWidth, SkyHeight))
 
@@ -37,14 +40,14 @@ sky2 = pygame.transform.scale(sky2t, (SkyWidth, SkyHeight))
 sky3t = pygame.image.load('assets/sky2.png')
 sky3 = pygame.transform.scale(sky3t, (SkyWidth, SkyHeight))
 
-# Grass 
+# Grass tiles 
 GrassWidth = 250
 GrassHeight = 140
 grass1 = pygame.image.load('assets/Grass0.png')
 grass2 = pygame.image.load('assets/Grass1.png')
 grass3 = pygame.image.load('assets/Grass2.png')
 
-# Cube 
+# Menu Cube big
 CubeFrame = 0
 scalerC = 0.75
 CubeWidth = math.floor(690 * scalerC)
@@ -56,6 +59,7 @@ cube1 = pygame.transform.scale(cube1t, (CubeWidth, CubeHeight))
 cube2t = pygame.image.load('assets/Cube2.png')
 cube2 = pygame.transform.scale(cube2t, (CubeWidth, CubeHeight))
 
+# Menu Cube small
 scalerCs = 0.55
 CubeWidths = math.floor(690 * scalerCs)
 CubeHeights = math.floor(800 * scalerCs)
@@ -63,11 +67,11 @@ cube0s = pygame.transform.scale(cube0t, (CubeWidths, CubeHeights))
 cube1s = pygame.transform.scale(cube1t, (CubeWidths, CubeHeights))
 cube2s = pygame.transform.scale(cube2t, (CubeWidths, CubeHeights))
 
+# Lists for the cubes sprite animations 
 CubeLst = [cube0, cube1, cube2, cube1, cube0]
 CubeLsts = [cube2s, cube1s, cube0s, cube1s, cube2s]
 
-
-# Title 
+# Title in Menu
 TitleWidth = 800
 TitleHeight = math.floor(TitleWidth / 2)
 Titlet0 = pygame.image.load('assets/TitleW.png')
@@ -75,7 +79,7 @@ Titlet1 = pygame.image.load('assets/TitleB.png')
 Title = pygame.transform.scale(Titlet1, (TitleWidth, TitleHeight))
 Title1 = pygame.transform.scale(Titlet0, (TitleWidth, TitleHeight))
 
-# Fire 
+# Menu Fire Animation
 FireFrame = 0
 scalerF = 0.75
 FireWidth = math.floor(400*scalerF)
@@ -105,15 +109,16 @@ Fire10 = pygame.transform.scale(Fire10t, (FireWidth, FireHeight))
 Fire11t = pygame.image.load('assets/Fire11.png')
 Fire11 = pygame.transform.scale(Fire11t, (FireWidth, FireHeight))
 
+# list for the fire sprite animation
 FireLst = [Fire0, Fire1, Fire2, Fire3, Fire4, Fire5, Fire6, Fire7, Fire8, Fire9, Fire10, Fire11]
 
-# Glow 
+# The Glow of the Title 
 light_t0 = pygame.image.load('assets/glow.png')
 light_t1 = pygame.image.load('assets/GlowTitle.png')
 light = pygame.transform.scale(light_t0, (width, height))
 light1 = pygame.transform.scale(light_t1, (width, height))
 
-# FaceSelect 
+# The 3d Face Selection indicator  
 CubeSelWidth = 250
 CubeSelHeight = CubeSelWidth
 CubeEmptyt = pygame.image.load('assets/CubeEmpty.png')
@@ -131,7 +136,7 @@ CubeFR = pygame.transform.scale(CubeFRt, (CubeSelWidth, CubeSelHeight))
 CubeBott = pygame.image.load('assets/CubeBot.png')
 CubeBot = pygame.transform.scale(CubeBott, (CubeSelWidth, CubeSelHeight))
 
-# Cube Fold 
+# The main Cube 
 scalerCube = 5
 CubeFoldWidth = 188*scalerCube
 CubeFoldHeight = 141*scalerCube
@@ -152,7 +157,6 @@ ScrambleButtonHeight = math.floor(146*scaleSBut)
 ScrambleButt = pygame.image.load('assets/Scramble.png')
 ScrambleBut = pygame.transform.scale(ScrambleButt, (ScrambleButtonWidth, ScrambleButtonHeight))
 
-
 # Home Button 
 scalerHome = 6
 HomeButWidth = math.floor(11*scalerHome)
@@ -160,14 +164,14 @@ HomeButHeight = math.floor(7*scalerHome)
 HomeButt = pygame.image.load('assets/Home.png')
 HomeBut = pygame.transform.scale(HomeButt, (HomeButWidth, HomeButHeight))
 
-# Sound-On Button 
+# Sound Button 
 scalerSound = 6
 SoundOnWidth = math.floor(11*scalerHome)
 SoundOnHeight = math.floor(7*scalerHome)
 SoundOnt = pygame.image.load('assets/SoundON.png')
 SoundOn = pygame.transform.scale(SoundOnt, (SoundOnWidth, SoundOnHeight))
 
-# Title Bar 
+# Top Title Bar 
 scalerTitleBar = 0.25
 TitleBarWidth = math.floor(250 * scalerTitleBar)
 TitleBarHeight = TitleBarWidth
@@ -181,7 +185,7 @@ ExitHeight = math.floor(110 * ScaleBut)
 ExitButtont = pygame.image.load('assets/Exit.png')
 ExitButton = pygame.transform.scale(ExitButtont, (ExitWidth, ExitHeight))
 
-#Stikers
+# Cube Stikers
 StickerWidth = 13*scalerCube
 StickerHeight = StickerWidth
 Stickert = pygame.image.load('assets/Test.png')
@@ -201,14 +205,47 @@ Yellow = pygame.transform.scale(Yellowt, (StickerWidth, StickerHeight))
 Oranget = pygame.image.load('assets/Orange.png')
 Orange = pygame.transform.scale(Oranget, (StickerWidth, StickerHeight))
 
+# Movement buttons 
+MoveWidth = 100
+MoveHeight = 100
+UpButt = pygame.image.load('assets/Up.png')
+UpBut = pygame.transform.scale(UpButt, (MoveWidth, MoveHeight))
+UpIButt = pygame.image.load('assets/UpI.png')
+UpIBut = pygame.transform.scale(UpIButt, (MoveWidth, MoveHeight))
+DownButt = pygame.image.load('assets/Down.png')
+DownBut = pygame.transform.scale(DownButt, (MoveWidth, MoveHeight))
+DownIButt = pygame.image.load('assets/DownI.png')
+DownIBut = pygame.transform.scale(DownIButt, (MoveWidth, MoveHeight))
+LeftButt = pygame.image.load('assets/Left.png')
+LeftBut = pygame.transform.scale(LeftButt, (MoveWidth, MoveHeight))
+LeftIButt = pygame.image.load('assets/LeftI.png')
+LeftIBut = pygame.transform.scale(LeftIButt, (MoveWidth, MoveHeight))
+RightButt = pygame.image.load('assets/Right.png')
+RightBut = pygame.transform.scale(RightButt, (MoveWidth, MoveHeight))
+RightIButt = pygame.image.load('assets/RightI.png')
+RightIBut = pygame.transform.scale(RightIButt, (MoveWidth, MoveHeight))
+FrontButt = pygame.image.load('assets/Front.png')
+FrontBut = pygame.transform.scale(FrontButt, (MoveWidth, MoveHeight))
+FrontIButt = pygame.image.load('assets/FrontI.png')
+FrontIBut = pygame.transform.scale(FrontIButt, (MoveWidth, MoveHeight))
 
+#NotValidCube
+CubeSignS = 0.6
+CubeSignW = math.floor(728 * CubeSignS)
+CubeSignH = math.floor(790 * CubeSignS)
+CubeSignt = pygame.image.load('assets/CubeSign.png')
+CubeSign = pygame.transform.scale(CubeSignt, (CubeSignW, CubeSignH))
 
+# Returns a minimal list of random numbers
+# Used as instructions for drawing the sky  
 def SkyTiles(w, h, skyW, skyH):
 	SkyHorzTile = math.ceil(w / skyW)
 	SkyVerTile = math.ceil(h / skyH) 
 	rand = [randint(1,3) for i in range(SkyHorzTile*SkyVerTile)]
 	return rand
 
+# Returns a minimal list of random numbers
+# Used as instructions for drawing the grass 
 def GrassTiles(w, GrassW):
 	GrassHorzTile = math.ceil(w / GrassW)
 	rand = [randint(1,3) for i in range(GrassHorzTile)]
@@ -217,6 +254,7 @@ def GrassTiles(w, GrassW):
 RandSky = SkyTiles(width, height, SkyWidth, SkyHeight)
 RandGrass = GrassTiles(width, GrassWidth)
 
+# Draws the sky using the instructions
 def DrawSky():
 	count = 0
 	for y in range(0, height, SkyHeight):
@@ -232,29 +270,31 @@ def DrawSky():
 
 TitleCount = 0
 
+# Draws the correct title 
+# Plays the correct music 
 def title():
 	global TitleCount, InMenu, GameMenu
 
-	if Title.get_rect().collidepoint(pygame.mouse.get_pos()):
-		TitleCount = TitleCount + 1
+	if Title.get_rect().collidepoint(pygame.mouse.get_pos()): # If the mouse is over the title 
+		TitleCount += 1
 		screen.blit(Title1, (50, 50))
 
-		if TitleCount == 1:
+		if TitleCount == 1: # Only play heaven sound when first hovered over
 			pygame.mixer.Channel(0).play(pygame.mixer.Sound('assets/Heaven.wav'), maxtime=-1)
-			pygame.mixer.Channel(0).set_volume(1)
-		pygame.mixer.music.set_volume(0)
+			pygame.mixer.Channel(0).set_volume(1) 
 
-	else:
+	else:  # Mouse is not over the title 
+		TitleCount = 0
 		screen.blit(Title, (50, 50))
 		screen.blit(light, (0,0))
-		TitleCount = 0
 		pygame.mixer.Channel(0).set_volume(0)
 		pygame.mixer.music.set_volume(0.5)
 
+# The main menu function
+# Draws assets and flags if the game is launched 
 def MainMenu():
 	global FireFrame, CubeFrame, InGame, InMenu, done
 
-	# Draw Sky
 	DrawSky()
 
 	# Draw Grass 
@@ -269,7 +309,7 @@ def MainMenu():
 			screen.blit( grass3, (x, height-GrassHeight))
 		count = count + 1
 
-	# Draw Cube
+	# Draw Dancing Cubes
 	screen.blit(CubeLst[math.ceil((CubeFrame%12)/3)], (width-CubeWidth, height-GrassHeight-CubeHeight+40))
 	screen.blit(CubeLsts[math.ceil((CubeFrame%12)/3)], (width-CubeWidth-FireWidth-CubeWidths+80, height-GrassHeight-CubeHeights+40))
 	CubeFrame = CubeFrame + 1
@@ -278,12 +318,13 @@ def MainMenu():
 	screen.blit(FireLst[FireFrame%12], (width-CubeWidth-FireWidth+45, height-GrassHeight-FireHeight+95))
 	FireFrame = FireFrame + 1
 
-	# Draw Exit 
+	# Draw Exit button
 	screen.blit(ExitButton, (width-ExitWidth, 0))
 
 	# Draw Title
 	title()
-
+	
+	# Checks if the tile was clicked or if the exit button was clicked 
 	for ev in pygame.event.get(): 
 		if ev.type == pygame.MOUSEBUTTONDOWN:
 			x, y = ev.pos
@@ -293,6 +334,22 @@ def MainMenu():
 			elif ExitButton.get_rect(topleft=(width-ExitWidth, 0)).collidepoint(x, y):
 				done = True
 
+# CubeClick[0][i] = Green face 
+# CubeClick[1][i] = white face 
+# CubeClick[2][i] = blue face 
+# CubeClick[3][i] = yellow face 
+# CubeClick[4][i] = orange face 
+# CubeClick[5][i] = red face 
+# 0 -> green, 1 -> white, 2 -> blue, 3 -> yellow, 4 -> orange, 5 -> red    
+
+CubeClick = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			 [1, 1, 1, 1, 1, 1, 1, 1, 1],
+			 [2, 2, 2, 2, 2, 2, 2, 2, 2],
+			 [3, 3, 3, 3, 3, 3, 3, 3, 3],
+			 [4, 4, 4, 4, 4, 4, 4, 4, 4],
+			 [5, 5, 5, 5, 5, 5, 5, 5, 5]]
+
+# Draws a highlight on the sticker your mouse is over 
 def StickerSel(y, cubeDisX, cubeDisY, xdis1, ydis1): 
 	if y > cubeDisY+ydis1 and y < cubeDisY+ydis1+65:
 		screen.blit(Sticker, (cubeDisX + xdis1, cubeDisY+ydis1))
@@ -301,7 +358,7 @@ def StickerSel(y, cubeDisX, cubeDisY, xdis1, ydis1):
 	elif y > cubeDisY+ydis1+65+10+65+10 and y < cubeDisY+ydis1+65+10+65+10+65:
 		screen.blit(Sticker, (cubeDisX + xdis1, cubeDisY+ydis1+65+10+65+10)) 
 
-
+# Draws the sticks based off the input cube index values
 def DrawStick(i, j, cubeDisX, cubeDisY, DisX, DisY):
 	if CubeClick[i][j]%6 == 0:
 		screen.blit(Green, (cubeDisX + DisX, cubeDisY+DisY))
@@ -318,15 +375,12 @@ def DrawStick(i, j, cubeDisX, cubeDisY, DisX, DisY):
 
 GameMenuCount = 1
 			  
-CubeClick = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
-			 [1, 1, 1, 1, 1, 1, 1, 1, 1],
-			 [2, 2, 2, 2, 2, 2, 2, 2, 2],
-			 [3, 3, 3, 3, 3, 3, 3, 3, 3],
-			 [4, 4, 4, 4, 4, 4, 4, 4, 4],
-			 [5, 5, 5, 5, 5, 5, 5, 5, 5]]
-
+# Verifies that the scramble input is valid
 def CubeCheck():
-	edge = 0
+	global NotValid, InGame
+	
+	edge = 0 # num or correct edges 
+
 	# Check Edges 
 	if CubeClick[0][1]%6==0 and (CubeClick[3][7]%6==3 or CubeClick[3][7]%6==4 or CubeClick[3][7]%6==1 or CubeClick[3][7]%6==5):
 		edge += 1
@@ -763,6 +817,11 @@ def CubeCheck():
 	   (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==0 and CubeClick[5][8]%6==1) or 
 	   (CubeClick[2][8]%6==5 and CubeClick[3][2]%6==2 and CubeClick[5][8]%6==3)):
 		Corner += 1
+	print(edge)
+	print(Corner)
+	if edge != 12 or Corner != 8:
+		InGame = False
+		NotValid = True
 	
 def Front(CubeClicki):
 	Cube = copy.deepcopy(CubeClicki)
@@ -1098,89 +1157,93 @@ def Scrambel():
 			CubeClick = Front(CubeClick)
 		elif randnum[i] == 9:
 			CubeClick = FrontI(CubeClick)
+
 def FindWhite():
 	facelst = [0,1,2,4,5]
 	piecelst = [1,3,5,7]
-	for i in facelst:
-		for j in piecelst:
-			if CubeClick[i][j]%6 == 1:
-				retlist = [i,j]
-				return retlist
+	found = False
+
+	while found == False:
+		for i in facelst:
+			for j in piecelst:
+				if CubeClick[i][j]%6 == 1:
+					retlist = [i,j]
+					found = True
+	return retlist
 	
 def WhiteToYellow(loc):
 	global CubeClick
-	# [locaction on yellow, face, piece]
-	i = loc[0]
-	j = loc[1]
+	i = loc[0] #Face That the white piece is on
+	j = loc[1] #Location number on the face 
 
 	if loc[0] == 0:
 		if loc[1] == 1:
-			move = [[3, i, j], ['Front', 'Up'], [7, 3]]
+			move = [[i, j], ['Front', 'Up'], [7, 3]]
 			return move
 		elif loc[1] == 3: 
-			move = [[3, i, j], ['Up'], [3]]
+			move = [[i, j], ['Up'], [3]]
 			return move
 		elif loc[1] == 5:
-			move = [[5, i, j], ['DownI'], [5]]
+			move = [[i, j], ['DownI'], [5]]
 			return move
 		elif loc[1] == 7:
-			move = [[3, i, j], ['FrontI', 'Up'], [7, 3]]
+			move = [[i, j], ['FrontI', 'Up'], [7, 3]]
 			return move 
 
 	elif loc[0] == 4:
 		if loc[1] == 1:
-			move = [[7, i, j], ['FrontI'], [7]]
+			move = [[i, j], ['FrontI'], [7]]
 			return move
 		elif loc[1] == 3:
-			move = [[7, i, j], ['UpI', 'FrontI'], [3, 7]] 
+			move = [[i, j], ['UpI', 'FrontI'], [3, 7]] 
 			return move
 		elif loc[1] == 5:
-			move = [[7, i, j], ['Up', 'FrontI'], [3, 7]]
+			move = [[i, j], ['Up', 'FrontI'], [3, 7]]
 			return move
 		elif loc[1] == 7:  
-			move = [[7, i, j], ['Up', 'Up', 'FrontI'], [3, 3, 7]]
+			move = [[i, j], ['Up', 'Up', 'FrontI'], [3, 3, 7]]
 			return move 
 
 	elif loc[0] == 2:
 		if loc[1] == 1:
-			move = [[7, i, j], ['RightI', 'Up', 'FrontI'], [None, 3, 7]]
+			move = [[i, j], ['RightI', 'Up', 'FrontI'], ['', 3, 7]]
 			return move
 		elif loc[1] == 3: 
-			move = [[3, i, j], ['UpI'], [3]]
+			move = [[i, j], ['UpI'], [3]]
 			return move
 		elif loc[1] == 5:
-			move = [[5, i, j], ['Down'], [5]]
+			move = [[i, j], ['Down'], [5]]
 			return move
 		elif loc[1] == 7:  
-			move = [[7, i, j], ['Left', 'UpI', 'FrontI'], [None, 3, 7]]
+			move = [[i, j], ['Left', 'UpI', 'FrontI'], ['', 3, 7]]
 			return move
 
 	elif loc[0] == 5:
 		if loc[1] == 1:
-			move = [[7, i, j], ['Front'], [7]]
+			move = [[i, j], ['Front'], [7]]
 			return move
 		elif loc[1] == 3: 
-			move = [[7, i, j], ['DownI', 'Front'], [5, 7]]
+			move = [[i, j], ['DownI', 'Front'], [5, 7]]
 			return move
 		elif loc[1] == 5:
-			move = [[7, i, j], ['Down', 'Front'], [5, 7]]
+			move = [[i, j], ['Down', 'Front'], [5, 7]]
 			return move
 		elif loc[1] == 7: 
-			move = [[7, i, j], ['Down', 'Down', 'Front'], [5, 5, 7]] 
+			move = [[i, j], ['Down', 'Down', 'Front'], [5, 5, 7]] 
 			return move
 
 	elif loc[0] == 1:
 		if loc[1] == 1:
-			move = [[7, i, j], ['Front', 'Front'], [7, 7]]
+			move = [[i, j], ['Front', 'Front'], [7, 7]]
 			return move
 		elif loc[1] == 3: 
-			move = [[3, i, j], ['Up', 'Up'], [3, 3]]
+			move = [[i, j], ['Up', 'Up'], [3, 3]]
 			return move
 		elif loc[1] == 5:
-			move = [[5, i, j], ['DownI', 'DownI'], [5, 5]]
+			move = [[i, j], ['DownI', 'DownI'], [5, 5]]
 			return move
 		elif loc[1] == 7:  
-			move = [[5, i, j], ['Right', 'DownI', 'DownI'], [None, 5, 5]]
+			move = [[i, j], ['Right', 'DownI', 'DownI'], ['', 5, 5]]
 			return move
 
 def CheckTop():
@@ -1191,16 +1254,19 @@ def CheckTop():
 	for i in edge:
 		if CubeClick[3][i]%6 == 1:
 			done.append(i)
+	if len(done) == 4:
+		done = True
 	return done
 
 def MoveUpdate(move, top):
-	# [[5, i, j], [Right, DownI, DownI], [None, 5, 5]]
+	# move = [[i, j], ['Right', 'DownI', 'DownI'], ['', 5, 5]]
+	# top = [ List of white pieces on the top]
 	global CubeClick
 	TheTop = copy.deepcopy(top)
 	FinMove = copy.deepcopy(move[1])
+	print(move[0][0])
 
-	if move[0][1] == 0:
-		# goes through each move 
+	if move[0][0] == 0:
 		for i in range(len(move[1])):
 			good = False
 			while not good:
@@ -1216,26 +1282,105 @@ def MoveUpdate(move, top):
 						CubeClick = DownI(CubeClick)
 					elif move[1][i] == 'Up':
 						CubeClick = Up(CubeClick)
+					print('here')
 					good = True
-	print(FinMove)
 
+	elif move[0][0] == 4 :
+		for i in range(len(move[1])):
+			good = False
+			while not good:
+				if move[2][i] in TheTop:
+					CubeClick = Left(CubeClick)
+					TheTop = CheckTop()
+				else:
+					if move[1][i] == 'FrontI':
+						CubeClick = FrontI(CubeClick)
+					elif move[1][i] == 'Up':
+						CubeClick = Up(CubeClick)
+					elif move[1][i] == 'UpI':
+						CubeClick = UpI(CubeClick)
+					good = True
+
+	elif move[0][0] == 2 :
+		for i in range(len(move[1])):
+			good = False
+			while not good:
+				if move[2][i] in TheTop:
+					CubeClick = Left(CubeClick)
+					TheTop = CheckTop()
+				else:
+					if move[1][i] == 'FrontI':
+						CubeClick = FrontI(CubeClick)
+					elif move[1][i] == 'Up':
+						CubeClick = Up(CubeClick)
+					elif move[1][i] == 'UpI':
+						CubeClick = UpI(CubeClick)
+					elif move[1][i] == 'RightI':
+						CubeClick = RightI(CubeClick)
+					elif move[1][i] == 'Down':
+						CubeClick = Down(CubeClick) 
+					elif move[1][i] == 'Left':
+						CubeClick = Left(CubeClick)   
+					good = True
+
+	elif move[0][0] == 5 :
+		for i in range(len(move[1])):
+			good = False
+			while not good:
+				if move[2][i] in TheTop:
+					CubeClick = Left(CubeClick)
+					TheTop = CheckTop()
+				else:
+					if move[1][i] == 'Front':
+						CubeClick = Front(CubeClick)
+					elif move[1][i] == 'Down':
+						CubeClick = Down(CubeClick) 
+					elif move[1][i] == 'DownI':
+						CubeClick = DownI(CubeClick) 
+					good = True
+
+	elif move[0][0] == 1 :
+		for i in range(len(move[1])):
+			good = False
+			while not good:
+				if move[2][i] in TheTop:
+					CubeClick = Left(CubeClick)
+					TheTop = CheckTop()
+				else:
+					if move[1][i] == 'Front':
+						CubeClick = Front(CubeClick)
+					elif move[1][i] == 'Up':
+						CubeClick = Up(CubeClick) 
+					elif move[1][i] == 'DownI':
+						CubeClick = DownI(CubeClick) 
+					elif move[1][i] == 'Right':
+						CubeClick = Right(CubeClick)
+					good = True
 
 # Step 1
 def TopDaisy():
-	location = FindWhite()
-	MoveSet = WhiteToYellow(location)
-	TopLst = CheckTop()
-	MoveUpdate(MoveSet, TopLst)
+	Done = False
+	while not Done:
+		TopLst = CheckTop()
+		if TopLst == True:
+			Done = True 
+		else:
+			location = FindWhite()
+			MoveSet = WhiteToYellow(location)
+			MoveUpdate(MoveSet, TopLst)
+			print(CubeClick)
 	
 
 def GameMenu():
 	global InGame, InMenu, GameMenuCount, StickerLst, CubeClick
+
 	DrawSky()
 	pygame.mixer.Channel(0).set_volume(0)
 	pygame.mixer.music.set_volume(0.5)
 
 	# Draw Solve Button
 	screen.blit(SolveBut, (width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight))
+
 	# draw Scramble
 	screen.blit(ScrambleBut, (width-SolveButtonWidth - 20, height - 2*SolveButtonHeight - 100 + TitleBarHeight))
 
@@ -1254,22 +1399,35 @@ def GameMenu():
 	cubeDisY = height//2 - CubeFoldHeight//2 + TitleBarHeight 
 	screen.blit(CubeFold, (cubeDisX, cubeDisY))
 
+	# Draw Moves
+	startBut = 280
+	screen.blit(LeftBut, (startBut, 100))
+	screen.blit(LeftIBut, (startBut+100+40, 100))
+	screen.blit(RightBut, (startBut+200+80, 100))
+	screen.blit(RightIBut, (startBut+300+120, 100))
+	screen.blit(UpBut, (startBut+400+160, 100))
+	screen.blit(UpIBut, (startBut+500+200, 100))
+	screen.blit(DownBut, (startBut+600+240, 100))
+	screen.blit(DownIBut, (startBut+700+280, 100))
+	screen.blit(FrontBut, (startBut+800+320, 100))
+	screen.blit(FrontIBut, (startBut+900+360, 100))
+
 	# Draw selection cube
 	x, y = pygame.mouse.get_pos() 
 	if x > cubeDisX+10 and x < cubeDisX+225 and y > cubeDisY+245 and y < cubeDisY+460:
-		screen.blit(CubeBL, (20, 20 + TitleBarHeight))
+		screen.blit(CubeBL, (20, height-260))
 	elif x > cubeDisX+245 and x<cubeDisX+460 and y > cubeDisY+245 and y < cubeDisY+460:
-		screen.blit(CubeTop, (20, 20 + TitleBarHeight))
+		screen.blit(CubeTop, (20, height-260))
 	elif x > cubeDisX+480 and x < cubeDisX+695 and y > cubeDisY+245 and y < cubeDisY+460:
-		screen.blit(CubeFR, (20, 20 + TitleBarHeight))
+		screen.blit(CubeFR, (20, height-260))
 	elif x > cubeDisX+715 and x < cubeDisX+930 and y > cubeDisY+245 and y < cubeDisY+460:
-		screen.blit(CubeBot, (20, 20 + TitleBarHeight))
+		screen.blit(CubeBot, (20, height-260))
 	elif x > cubeDisX+245 and x<cubeDisX+460 and y > cubeDisY+10 and y < cubeDisY+225:
-		screen.blit(CubeBR, (20, 20 + TitleBarHeight))
+		screen.blit(CubeBR, (20, height-260))
 	elif x > cubeDisX+245 and x<cubeDisX+460 and y > cubeDisY+480 and y < cubeDisY+695:
-		screen.blit(CubeFL, (20, 20 + TitleBarHeight))
+		screen.blit(CubeFL, (20, height-260))
 	else:
-		screen.blit(CubeEmpty, (20, 20 + TitleBarHeight)) 
+		screen.blit(CubeEmpty, (20, height-260))
 
 	# Exit To Menu, Defining stickers
 	for ev in pygame.event.get(): 
@@ -1288,13 +1446,37 @@ def GameMenu():
 			# Turn Sound Off 
 			elif SoundOn.get_rect(topleft=(width-SoundOnWidth-HomeButWidth-40, 10)).collidepoint(x, y):
 				GameMenuCount = GameMenuCount + 1
+
 			# Check if Scrambel is possible 
 			elif SolveBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight)).collidepoint(x, y):
 				CubeCheck()
 				TopDaisy()
+
 			# Scrambel
 			elif ScrambleBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - 2*SolveButtonHeight - 100 + TitleBarHeight)).collidepoint(x, y):
 				Scrambel()
+
+			# Moves
+			elif LeftBut.get_rect(topleft=(startBut, 100)).collidepoint(x,y):
+				CubeClick = Left(CubeClick)
+			elif LeftBut.get_rect(topleft=(startBut+140, 100)).collidepoint(x,y):
+				CubeClick = LeftI(CubeClick) 
+			elif LeftBut.get_rect(topleft=(startBut+280, 100)).collidepoint(x,y):
+				CubeClick = Right(CubeClick)
+			elif LeftBut.get_rect(topleft=(startBut+420, 100)).collidepoint(x,y):
+				CubeClick = RightI(CubeClick)
+			elif LeftBut.get_rect(topleft=(startBut+560, 100)).collidepoint(x,y):
+				CubeClick = Up(CubeClick)
+			elif LeftBut.get_rect(topleft=(startBut+700, 100)).collidepoint(x,y):
+				CubeClick = UpI(CubeClick)
+			elif LeftBut.get_rect(topleft=(startBut+840, 100)).collidepoint(x,y):
+				CubeClick = Down(CubeClick)
+			elif LeftBut.get_rect(topleft=(startBut+980, 100)).collidepoint(x,y):
+				CubeClick = DownI(CubeClick)
+			elif LeftBut.get_rect(topleft=(startBut+1120, 100)).collidepoint(x,y):
+				CubeClick = Front(CubeClick)
+			elif LeftBut.get_rect(topleft=(startBut+1260, 100)).collidepoint(x,y):
+				CubeClick = FrontI(CubeClick)
 
 			# Green 
 			elif x > cubeDisX + 10 and x < cubeDisX+75: 
@@ -1316,6 +1498,7 @@ def GameMenu():
 					CubeClick[0][7] = CubeClick[0][7] + 1
 				elif y > cubeDisY+395 and y < cubeDisY+460:
 					CubeClick[0][8] = CubeClick[0][8] + 1 
+
 			# White, Orange, Red 
 			elif x > cubeDisX+245 and x < cubeDisX+310:
 				# White
@@ -1339,6 +1522,7 @@ def GameMenu():
 					CubeClick[4][1] = CubeClick[4][1] + 1
 				elif y>cubeDisY+160 and y<cubeDisY+225:
 					CubeClick[4][2] = CubeClick[4][2] + 1
+
 			# White, Orange, Red 
 			elif x > cubeDisX+320 and x < cubeDisX+385:
 				# White
@@ -1574,6 +1758,23 @@ def GameMenu():
 		pygame.mixer.music.unpause()
 	if GameMenuCount%2 == 0:
 		pygame.mixer.music.pause()
+	
+def NotValidMenu():
+	DrawSky()
+
+	# Draw Grass 
+	count = 0
+	for x in range(0, width, GrassWidth):
+		rand = RandGrass[count]
+		if rand == 1:
+			screen.blit( grass2, (x, height-GrassHeight))
+		elif rand == 2:
+			screen.blit( grass2, (x, height-GrassHeight))
+		elif rand == 3:
+			screen.blit( grass3, (x, height-GrassHeight))
+		count = count + 1
+
+	screen.blit(CubeSign, (width//2-CubeSignW//2, height-GrassHeight-CubeSignH+40))
 
 clock = pygame.time.Clock()
 done = False
@@ -1586,6 +1787,9 @@ while not done:
 
 	elif InGame == True:
 		GameMenu()
+	
+	elif NotValid == True:
+		NotValidMenu()
 		
 	# updates the frames of the game 
 	pygame.display.update() 
