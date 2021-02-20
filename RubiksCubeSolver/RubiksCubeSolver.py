@@ -1407,7 +1407,7 @@ def TopDaisy():
 			MoveSet = WhiteToYellow(location)
 			MoveUpdate(MoveSet, TopLst)
 
-def FirstLayer():
+def BottomCross():
 	global CubeClick
 
 	for i in [1, 3, 5, 7]:
@@ -1504,6 +1504,229 @@ def FirstLayer():
 					CubeClick = Up(CubeClick)
 					CubeClick = Left(CubeClick)
 
+SolvedCorners = [0, 0, 0, 0] #based off index white 0,2,6,8 corners
+
+def FindCorner():
+	# Seach for one on bottom 
+	# If none exist and not all are placed then move one down
+	# Check position of the corner 
+	# If white facing down then flip it the correct way 
+	global CubeClick, SolvedCorners
+
+	found = False 
+
+	while not found:
+		if CubeClick[3][0]%6 == 1 or CubeClick[2][6]%6 == 1 or CubeClick[4][6]%6 == 1:
+			Corner = [[CubeClick[3][0], 3, 0], [CubeClick[2][6], 2, 6], [CubeClick[4][6], 4, 6]]
+			found = True
+
+		elif CubeClick[3][2]%6 == 1 or CubeClick[2][8]%6 == 1 or CubeClick[5][8]%6 == 1:
+			Corner = [[CubeClick[3][2], 3, 2], [CubeClick[2][8], 2, 8], [CubeClick[5][8], 5, 8]]
+			found = True
+
+		elif CubeClick[3][6]%6 == 1 or CubeClick[4][0]%6 == 1 or CubeClick[0][0]%6 == 1:
+			Corner = [[CubeClick[3][6], 3, 6], [CubeClick[4][0], 4, 0], [CubeClick[0][0], 0, 0]]
+			found = True
+
+		elif CubeClick[3][8]%6 == 1 or CubeClick[5][2]%6 == 1 or CubeClick[0][2]%6 == 1:
+			Corner = [[CubeClick[3][8], 3, 8], [CubeClick[5][2], 5, 2], [CubeClick[0][2], 0, 2]]
+			found = True
+
+		else:
+			if SolvedCorners[0] == 0:
+				CubeClick = Up(CubeClick)
+				CubeClick - Left(CubeClick)
+				CubeClick = UpI(CubeClick) 
+			elif SolvedCorners[1] == 0:
+				CubeClick = DownI(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = Down(CubeClick)
+			elif SolvedCorners[2] == 0:
+				CubeClick = UpI(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = Up(CubeClick) 
+			elif SolvedCorners[3] == 0:
+				CubeClick = Down(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = DownI(CubeClick)
+
+	if Corner[0][0]%6 == 1:
+		if Corner[0][2]%6 == 0:
+			if SolvedCorners[0] == 0:
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+			elif SolvedCorners[1] == 0:
+				CubeClick = Right(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = RightI(CubeClick)
+			elif SolvedCorners[2] == 0:
+				CubeClick = RightI(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = Right(CubeClick)
+			elif SolvedCorners[3] == 0:
+				CubeClick = Right(CubeClick)
+				CubeClick = Right(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = RightI(CubeClick)
+				CubeClick = RightI(CubeClick)
+			Corner = [[CubeClick[3][0], 3, 0], [CubeClick[2][6], 2, 6], [CubeClick[4][6], 4, 6]]
+
+		elif Corner[0][2]%6 == 2:
+			if SolvedCorners[0] == 0:
+				CubeClick = Left(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = LeftI(CubeClick)
+			elif SolvedCorners[1] == 0:
+				CubeClick = Left(CubeClick)
+				CubeClick = Right(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = RightI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+			elif SolvedCorners[2] == 0:
+				CubeClick = Left(CubeClick)
+				CubeClick = RightI(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = Right(CubeClick)
+				CubeClick = LeftI(CubeClick)
+			elif SolvedCorners[3] == 0:
+				CubeClick = Left(CubeClick)
+				CubeClick = Right(CubeClick)
+				CubeClick = Right(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = RightI(CubeClick)
+				CubeClick = RightI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+			Corner = [[CubeClick[3][2], 3, 2], [CubeClick[2][8], 2, 8], [CubeClick[5][8], 5, 8]]
+
+		elif Corner[0][2]%6 == 6:
+			if SolvedCorners[0] == 0:
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = LeftI(CubeClick)
+			elif SolvedCorners[1] == 0:
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Right(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = RightI(CubeClick)
+				CubeClick = Left(CubeClick)
+			elif SolvedCorners[2] == 0:
+				CubeClick = LeftI(CubeClick)
+				CubeClick = RightI(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = Right(CubeClick)
+				CubeClick = Left(CubeClick)
+			elif SolvedCorners[3] == 0:
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Right(CubeClick)
+				CubeClick = Right(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = RightI(CubeClick)
+				CubeClick = RightI(CubeClick)
+				CubeClick = Left(CubeClick)
+			Corner = [[CubeClick[3][6], 3, 6], [CubeClick[4][0], 4, 0], [CubeClick[0][0], 0, 0]]
+
+		elif Corner[0][2]%6 == 8:
+			if SolvedCorners[0] == 0:
+				CubeClick = LeftI(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = Left(CubeClick)
+			elif SolvedCorners[1] == 0:
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Right(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = RightI(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = Left(CubeClick)
+			elif SolvedCorners[2] == 0:
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = RightI(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = Right(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = Left(CubeClick)
+			elif SolvedCorners[3] == 0:
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Right(CubeClick)
+				CubeClick = Right(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = FrontI(CubeClick) 
+				CubeClick = LeftI(CubeClick)
+				CubeClick = LeftI(CubeClick)
+				CubeClick = Front(CubeClick)
+				CubeClick = RightI(CubeClick)
+				CubeClick = RightI(CubeClick)
+				CubeClick = Left(CubeClick)
+				CubeClick = Left(CubeClick)
+			Corner = [[CubeClick[3][8], 3, 8], [CubeClick[5][2], 5, 2], [CubeClick[0][2], 0, 2]]
+
+def MoveCornerIntoPosition():
+	pass
+
+def BottomLayer():
+	while SolvedCorners != [1,1,1,1]:
+		corner = FindCorner()
+
+
 
 
 def GameMenu():
@@ -1585,8 +1808,9 @@ def GameMenu():
 			# Check if Scrambel is possible 
 			elif SolveBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - SolveButtonHeight - 80 + TitleBarHeight)).collidepoint(x, y):
 				CubeCheck()
+				pygame.time.delay(500)
 				TopDaisy()
-				FirstLayer()
+				BottomCross()
 
 			# Scrambel
 			elif ScrambleBut.get_rect(topleft=(width-SolveButtonWidth - 20, height - 2*SolveButtonHeight - 100 + TitleBarHeight)).collidepoint(x, y):
